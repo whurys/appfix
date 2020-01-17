@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Limit Order",
+    "source": null,
+    "fix": "35=D|52=$SENDINGTIME|11=$UNIQUE|21=1|44=100.0|38=1000.0|15=GBp|40=2|54=1|55=VOD.L|59=0|60=$TIMESTAMP|"
+  },
+  {
+    "name": "Market Order",
+    "source": null,
+    "fix": "35=D|52=$SENDINGTIME|11=$UNIQUE|21=1|38=1000.0|15=GBp|40=1|54=1|55=VOD.L|59=0|60=$TIMESTAMP|"
+  },
+  {
+    "name": "Ack",
+    "source": [
+      "D"
+    ],
+    "fix": "35=8|52=$SENDINGTIME|6=0|11=$COPY|14=0|15=$COPY|17=$UNIQUE|21=$COPY|31=0|32=0|37=$UNIQUE|38=$COPY|39=0|40=$COPY|44=$COPY|48=VOD.L|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|76=$COPY|150=0|151=$COPY(38)|"
+  },
+  {
+    "name": "Fill",
+    "source": [
+      "D"
+    ],
+    "fix": "35=8|52=$SENDINGTIME|6=0|11=$COPY|14=$COPY(38)|15=$COPY|17=$UNIQUE|21=$COPY|31=0|32=$COPY(38)|37=$UNIQUE|38=$COPY|39=0|40=$COPY|44=$COPY|48=VOD.L|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|76=$COPY|150=F|151=0|"
+  },
+  {
+    "name": "Fill (Qty 1)",
+    "source": [
+      "D"
+    ],
+    "fix": "35=8|52=$SENDINGTIME|6=0|11=$COPY|14=1|15=$COPY|17=$UNIQUE|21=$COPY|31=0|32=1|37=$UNIQUE|38=$COPY|39=0|40=$COPY|44=$COPY|48=VOD.L|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|76=$COPY|150=F|151=0|"
+  },
+  {
+    "name": "Amend Request",
+    "source": [
+      "D"
+    ],
+    "fix": "35=G|11=$UNIQUE|21=$COPY|38=$COPY|40=$COPY|41=$COPY(11)|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|"
+  },
+  {
+    "name": "Cancel Request",
+    "source": [
+      "D"
+    ],
+    "fix": "35=F|11=$UNIQUE|21=$COPY|38=$COPY|40=$COPY|41=$COPY(11)|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|"
+  },
+  {
+    "name": "Reject Order",
+    "source": [
+      "D"
+    ],
+    "fix": "35=8|52=$SENDINGTIME|6=0|11=$COPY|14=0|15=$COPY|17=$UNIQUE|21=$COPY|31=0|32=0|37=$UNIQUE|38=$COPY|39=0|40=$COPY|44=$COPY|48=VOD.L|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|76=$COPY|150=8|151=$COPY(38)|"
+  }
+]
