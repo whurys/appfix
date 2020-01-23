@@ -5,10 +5,13 @@ package appfix;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import appfix.model.ExecutionReportBean;
+import appfix.tools.Inspector;
 import quickfix.Application;
 import quickfix.ConfigError;
 import quickfix.DefaultMessageFactory;
@@ -39,6 +42,19 @@ public class Client implements Application {
 	private static volatile SessionID sessionID;
 
 	private String msg;
+	private ExecutionReportBean execution;
+	private Map<String,String> mapExecType;
+	private Map<String,String> mapOrdStatus;
+	private Map<String,String> mapSide;
+	
+	public Client() {
+		execution = new ExecutionReportBean();
+		
+		mapExecType = Inspector.getFieldsAndValues("ExecType");
+		mapOrdStatus = Inspector.getFieldsAndValues("OrdStatus");
+		mapSide = Inspector.getFieldsAndValues("Side");
+		
+	}
 
 	@Override
 	public void onCreate(SessionID sessionID) {
@@ -86,7 +102,6 @@ public class Client implements Application {
 
 		SessionSettings settings = new SessionSettings(new FileInputStream("C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\initiator.properties"));
 
-
 		Application application = new Client();
 		MessageStoreFactory messageStoreFactory = new FileStoreFactory(settings);
 		LogFactory logFactory = new ScreenLogFactory(true, true, true);
@@ -128,7 +143,7 @@ public class Client implements Application {
 		}
 
 		try {
-			Session.sendToTarget(message, sessionID);
+		
 			if (Session.sendToTarget(message, sessionID)) {
 				System.out.println("Mensagem SENT!");
 			} else {
@@ -146,5 +161,25 @@ public class Client implements Application {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public ExecutionReportBean getExecution() {
+		return execution;
+	}
+
+	public void setExecution(ExecutionReportBean execution) {
+		this.execution = execution;
+	}
+
+	public Map<String, String> getMapExecType() {
+		return mapExecType;
+	}
+
+	public Map<String, String> getMapOrdStatus() {
+		return mapOrdStatus;
+	}
+
+	public Map<String, String> getMapSide() {
+		return mapSide;
 	}
 }

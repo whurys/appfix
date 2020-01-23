@@ -7,12 +7,7 @@
 
 <h:head>
 
-	<f:metadata>
-		<f:viewParam name="message" value="#{serviceView.message}" />
-	</f:metadata>
-
-	<title>Service</title>
-
+	<title>Client</title>
 
 	<style type="text/css">
 #boxLogin {
@@ -31,12 +26,22 @@
 <h:body>
 
 	<h:form>
-		<p:panel header="Messages">
-
+		<p:panel header="Client Side">
+	
+			<p:outputLabel value="Execution Type: " />
+	        <p:selectOneMenu id="execType" value="#{clientView.execution.execType}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{clientView.mapExecType.entrySet()}" var="entry" itemValue="#{entry.value}" itemLabel="#{entry.key}"/>
+	        </p:selectOneMenu>
 			
 
 		</p:panel>
+
+
 	</h:form>
+
+
+
 
 </h:body>
 </html>

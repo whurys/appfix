@@ -79,6 +79,7 @@ public class Server implements Application {
 
 	@Override
 	public void toApp(Message message, SessionID sessionID) throws DoNotSend {
+	
 	}
 
 	@Override
