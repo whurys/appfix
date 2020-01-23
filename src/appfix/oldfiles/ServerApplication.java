@@ -1,4 +1,4 @@
-package appfix;
+package appfix.oldfiles;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<f:metadata>
+		<f:viewParam name="message" value="#{serviceView.message}" />
+	</f:metadata>
+
+	<title>Service</title>
+
+
+	<style type="text/css">
+#boxLogin {
+	background-color: #ededed;
+	text-align: center;
+	border: 1px solid #fafafa;
+}
+
+#emptyBox {
+	height: 50px
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:panel header="DOZO (Line Handler)">
+
+			<p:commandButton action="#{serverView.start}" value="Start"
+				style="color:green;" />
+			<p:commandButton action="#{serverView.stop}" value="Stop"
+				style="color:red;" />
+			<p:commandButton action="#{serverView.stopForce}" value="Stop Force"
+				style="color:red;" />
+
+		</p:panel>
+
+
+	</h:form>
+
+
+
+
+</h:body>
+</html>
