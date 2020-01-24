@@ -2,11 +2,16 @@ package appfix;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.CountDownLatch;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import appfix.model.connectivity.SessionApp;
 import quickfix.Acceptor;
 import quickfix.Application;
 import quickfix.ConfigError;
@@ -33,8 +38,26 @@ import quickfix.UnsupportedMessageType;
 @ManagedBean(name = "serverView")
 @SessionScoped
 public class Server implements Application {
+	
+	private static final String CONFIG_PATH="C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\acceptor\\";
+	
+	private String sessionApp;
+	
+	private Map<String,String> mapSessionApp;
+	
 
 	private Acceptor acceptor;
+	
+	
+	public Server() {
+		mapSessionApp = new TreeMap<>();
+
+		mapSessionApp.put("Local Acceptor", CONFIG_PATH + "acceptor.properties");
+		mapSessionApp.put("DOZO", CONFIG_PATH + "dozo.properties");
+		
+		this.sessionApp = CONFIG_PATH + "acceptor.properties"; //Default when start cycle of web
+		
+	}
 
 	/**
 	 * This method is called when quickfix creates a new session. A session comes
@@ -89,11 +112,10 @@ public class Server implements Application {
 	}
 
 	public void start() throws ConfigError, FileNotFoundException, InterruptedException, SessionNotFound {
+		
+		System.out.println("Start session for "+sessionApp);
 
-		// SessionSettings settings = new SessionSettings(new
-		// FileInputStream("C:\\Users\\wlopes\\eclipse-workspace\\appfix\\acceptor.properties"));
-		SessionSettings settings = new SessionSettings(
-				new FileInputStream("C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\dozo.properties"));
+		SessionSettings settings = new SessionSettings(new FileInputStream(sessionApp));
 
 		Application application = new Server();
 		MessageStoreFactory messageStoreFactory = new FileStoreFactory(settings);
@@ -103,30 +125,11 @@ public class Server implements Application {
 		acceptor = new SocketAcceptor(application, messageStoreFactory, settings, logFactory, messageFactory);
 		acceptor.start();
 
-		// while(condition == true) { do something; }
-		// acceptor.stop();
-
-//		Message message = null;
-//		try {
-//			message = new Message("35=8|52=$SENDINGTIME|6=0|11=$COPY|14=0|15=$COPY|17=$UNIQUE|21=$COPY|31=0|32=0|37=$UNIQUE|38=$COPY|39=0|40=$COPY|44=$COPY|48=VOD.L|54=$COPY|55=$COPY|59=$COPY|60=$TIMESTAMP|76=$COPY|150=0|151=$COPY(38)|");
-//		} catch (InvalidMessage e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		
-//		if (Session.sendToTarget(message)) {
-//			System.out.println("Mensagem SENT!");
-//		} else {
-//			System.out.println("ERRORRRRR !");
-//		}
-
-		CountDownLatch latch = new CountDownLatch(1);
-		latch.await();
 	}
 
 	public void stop() {
 		acceptor.stop();
+		System.out.println("Acceptor was stopped!");
 	}
 
 	/**
@@ -137,4 +140,25 @@ public class Server implements Application {
 	public void stopForce() {
 		acceptor.stop(true);
 	}
+
+	
+
+	public String getSessionApp() {
+		return sessionApp;
+	}
+
+	public void setSessionApp(String sessionApp) {
+		this.sessionApp = sessionApp;
+	}
+
+	
+	public Map<String, String> getMapSessionApp() {
+		return mapSessionApp;
+	}
+
+	public void setMapSessionApp(Map<String, String> mapSessionApp) {
+		this.mapSessionApp = mapSessionApp;
+	}
+
+
 }

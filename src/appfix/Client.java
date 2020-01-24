@@ -111,22 +111,8 @@ public class Client implements Application {
 				messageFactory);
 		initiator.start();
 
-		while (sessionID == null) {
-			Thread.sleep(1000);
-		}
+		System.out.println("Finished Start Client.... ");
 
-		Message message = new Message(
-				"8=FIX.4.29=020535=D49=DEAN356=MSRX334=466252=20160621-12:31:08128=MSCO10016=DEAN55=AIZ54=238=1340=159=047=I18=563=021=160=20160621-12:31:07100=N11=SOS045920160621083107682S/AIZ9321=EQ2016062108310768210=046");
-
-		if (Session.sendToTarget(message, sessionID)) {
-			System.out.println("Mensagem SENT!");
-		} else {
-			System.out.println("ERRORRRRR !");
-		}
-		
-		System.out.println("finish Client.... ");
-
-		Thread.sleep(5000);
 	}
 
 	public void send() throws UnsupportedEncodingException {
