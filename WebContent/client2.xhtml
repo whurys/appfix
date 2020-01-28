@@ -22,28 +22,17 @@
 </style>
 
 </h:head>
-<!-- AJAX Events [blur, change, valueChange, click, dblclick, focus, keydown, keypress, keyup,
- mousedown, mousemove, mouseout, mouseover, mouseup, select, itemSelect,
- itemUnselect, query, moreText, clear] -->
+
 <h:body>
 
-	<h:form id="form">
+		<h:form id="form">
 
-		
-		<p:panel header="Client">
 
-			<p:commandButton action="#{clientView.start}" value="Start"
-				style="color:green;" />
-			<p:commandButton action="#{clientView.stop}" value="Stop"
-				style="color:red;" />
-			<p:commandButton action="#{clientView.stopForce}" value="Stop Force"
-				style="color:red;" />
-
-		</p:panel>
 		
 		<br />
 
- 		<p:poll interval="2"  update="tableId" />
+
+		
 		<p:dataTable id="tableId" var="msg" value="#{viewMessage.listMessage}" >
 			<p:column headerText="Message">
 				<h:outputText value="#{msg}" />
@@ -51,7 +40,10 @@
 
 		</p:dataTable>
 
+
 	</h:form>
+
+
 
 
 

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.PrimeFaces;
@@ -38,7 +39,7 @@ import quickfix.SocketInitiator;
 import quickfix.UnsupportedMessageType;
 
 @ManagedBean(name = "clientView")
-@SessionScoped
+@RequestScoped
 public class Client implements Application {
 
 	private static volatile SessionID sessionID;
@@ -50,7 +51,7 @@ public class Client implements Application {
 	private Map<String, String> mapSide;
 
 	private Initiator initiator;
-	private List<String> listMsg = new ArrayList<>();
+	private static List<String> listMsg;
 
 	public Client() {
 		execution = new ExecutionReportBean();
@@ -58,6 +59,8 @@ public class Client implements Application {
 		mapExecType = Inspector.getFieldsAndValues("ExecType");
 		mapOrdStatus = Inspector.getFieldsAndValues("OrdStatus");
 		mapSide = Inspector.getFieldsAndValues("Side");
+		
+		listMsg = new ArrayList<>();
 
 	}
 
@@ -80,17 +83,19 @@ public class Client implements Application {
 
 	@Override
 	public void toAdmin(Message message, SessionID sessionID) {
-		System.out.println("ToAdmin: " + message.toString());
+		System.out.println("To Admin: " + message.toString());
 		listMsg.add(message.toString());
-		PrimeFaces.current().ajax().update("msgTable");
+		System.out.println(listMsg.size());
+		//PrimeFaces.current().ajax().update("msgTable");
 	}
 
 	@Override
 	public void fromAdmin(Message message, SessionID sessionID)
 			throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, RejectLogon {
-		System.out.println("FromAdmin: " + message.toString());
+		System.out.println("From Admin: " + message.toString());
 		listMsg.add(message.toString());
-		PrimeFaces.current().ajax().update("msgTable");
+		System.out.println(listMsg.size());
+		//PrimeFaces.current().ajax().update("msgTable");
 	}
 
 	@Override
@@ -193,11 +198,9 @@ public class Client implements Application {
 		return mapSide;
 	}
 
-	public List<String> getListMsg() {
+	public static List<String> getListMsg() {
 		return listMsg;
 	}
 
-	public void setListMsg(List<String> listMsg) {
-		this.listMsg = listMsg;
-	}
+
 }
