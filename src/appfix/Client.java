@@ -1,14 +1,16 @@
 package appfix;
 
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import org.primefaces.PrimeFaces;
 
 import appfix.model.ExecutionReportBean;
 import appfix.tools.Inspector;
@@ -43,17 +45,20 @@ public class Client implements Application {
 
 	private String msg;
 	private ExecutionReportBean execution;
-	private Map<String,String> mapExecType;
-	private Map<String,String> mapOrdStatus;
-	private Map<String,String> mapSide;
-	
+	private Map<String, String> mapExecType;
+	private Map<String, String> mapOrdStatus;
+	private Map<String, String> mapSide;
+
+	private Initiator initiator;
+	private List<String> listMsg = new ArrayList<>();
+
 	public Client() {
 		execution = new ExecutionReportBean();
-		
+
 		mapExecType = Inspector.getFieldsAndValues("ExecType");
 		mapOrdStatus = Inspector.getFieldsAndValues("OrdStatus");
 		mapSide = Inspector.getFieldsAndValues("Side");
-		
+
 	}
 
 	@Override
@@ -75,13 +80,17 @@ public class Client implements Application {
 
 	@Override
 	public void toAdmin(Message message, SessionID sessionID) {
-		System.out.println("ToAdmin");
+		System.out.println("ToAdmin: " + message.toString());
+		listMsg.add(message.toString());
+		PrimeFaces.current().ajax().update("msgTable");
 	}
 
 	@Override
 	public void fromAdmin(Message message, SessionID sessionID)
 			throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, RejectLogon {
-		System.out.println("FromAdmin");
+		System.out.println("FromAdmin: " + message.toString());
+		listMsg.add(message.toString());
+		PrimeFaces.current().ajax().update("msgTable");
 	}
 
 	@Override
@@ -97,18 +106,19 @@ public class Client implements Application {
 
 	public void start()
 			throws ConfigError, FileNotFoundException, InterruptedException, InvalidMessage, SessionNotFound {
-		
+
 		System.out.println("Start Client.... ");
 
-		SessionSettings settings = new SessionSettings(new FileInputStream("C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\initiator.properties"));
+		SessionSettings settings = new SessionSettings(new FileInputStream(
+				"C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\initiator\\initiator.properties"));
 
 		Application application = new Client();
 		MessageStoreFactory messageStoreFactory = new FileStoreFactory(settings);
-		LogFactory logFactory = new ScreenLogFactory(true, true, true);
+		// LogFactory logFactory = new ScreenLogFactory(true, true, true);
+		LogFactory logFactory = new ScreenLogFactory(false, false, false);
 		MessageFactory messageFactory = new DefaultMessageFactory();
 
-		Initiator initiator = new SocketInitiator(application, messageStoreFactory, settings, logFactory,
-				messageFactory);
+		initiator = new SocketInitiator(application, messageStoreFactory, settings, logFactory, messageFactory);
 		initiator.start();
 
 		System.out.println("Finished Start Client.... ");
@@ -116,12 +126,12 @@ public class Client implements Application {
 	}
 
 	public void send() throws UnsupportedEncodingException {
-		
+
 		String s = new String(this.msg.toString());
 
 		Message message = null;
 		try {
-			
+
 			message = new Message(s);
 
 		} catch (InvalidMessage e) {
@@ -129,7 +139,7 @@ public class Client implements Application {
 		}
 
 		try {
-		
+
 			if (Session.sendToTarget(message, sessionID)) {
 				System.out.println("Mensagem SENT!");
 			} else {
@@ -139,6 +149,20 @@ public class Client implements Application {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void stop() {
+		initiator.stop();
+		System.out.println("Acceptor was stopped!");
+	}
+
+	/**
+	 * Stops all sessions, optionally waiting for logout completion.This method must
+	 * not be called by several threads concurrently.Parameters:force don't wait for
+	 * logout before disconnect.
+	 */
+	public void stopForce() {
+		initiator.stop(true);
 	}
 
 	public String getMsg() {
@@ -167,5 +191,13 @@ public class Client implements Application {
 
 	public Map<String, String> getMapSide() {
 		return mapSide;
+	}
+
+	public List<String> getListMsg() {
+		return listMsg;
+	}
+
+	public void setListMsg(List<String> listMsg) {
+		this.listMsg = listMsg;
 	}
 }

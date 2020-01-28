@@ -2,6 +2,7 @@ package appfix;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.util.concurrent.CountDownLatch;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import appfix.model.connectivity.SessionApp;
 import quickfix.Acceptor;
@@ -48,8 +51,18 @@ public class Server implements Application {
 
 	private Acceptor acceptor;
 	
+	private List<Message> listMsg;
+	
 	
 	public Server() {
+		
+		listMsg = new ArrayList<>();
+		
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		InputStream input = externalContext.getResourceAsStream("/resources/movies.xml");
+		
+		
 		mapSessionApp = new TreeMap<>();
 
 		mapSessionApp.put("Local Acceptor", CONFIG_PATH + "acceptor.properties");
@@ -93,11 +106,16 @@ public class Server implements Application {
 
 	@Override
 	public void toAdmin(Message message, SessionID sessionID) {
+		
+		listMsg.add(message);
+		
 	}
 
 	@Override
 	public void fromAdmin(Message message, SessionID sessionID)
 			throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, RejectLogon {
+		
+		listMsg.add(message);
 	}
 
 	@Override
@@ -158,6 +176,14 @@ public class Server implements Application {
 
 	public void setMapSessionApp(Map<String, String> mapSessionApp) {
 		this.mapSessionApp = mapSessionApp;
+	}
+
+	public List<Message> getListMsg() {
+		return listMsg;
+	}
+
+	public void setListMsg(List<Message> listMsg) {
+		this.listMsg = listMsg;
 	}
 
 

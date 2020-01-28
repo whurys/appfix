@@ -25,7 +25,7 @@
 
 <h:body>
 
-	<h:form>
+	<h:form id="form">
 		<p:panel header="Client Side">
 	
 			<p:outputLabel value="Execution Type: " />
@@ -36,6 +36,26 @@
 			
 
 		</p:panel>
+		
+		<p:panel header="Client">
+
+			<p:commandButton action="#{clientView.start}" value="Start"
+				style="color:green;" />
+			<p:commandButton action="#{clientView.stop}" value="Stop"
+				style="color:red;" />
+			<p:commandButton action="#{clientView.stopForce}" value="Stop Force"
+				style="color:red;" />
+
+		</p:panel>
+		
+		<br />
+		
+		<p:dataTable id="msgTable" var="msg" value="#{clientView.listMsg}" >
+			<p:column headerText="Message">
+				<h:outputText value="#{msg}" />
+			</p:column>
+
+		</p:dataTable>
 
 
 	</h:form>
