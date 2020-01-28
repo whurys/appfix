@@ -29,25 +29,35 @@
 
 	<h:form id="form">
 
-		
+
 		<p:panel header="Client">
 
-			<p:commandButton action="#{clientView.start}" value="Start"
+			<p:commandButton action="#{clientApp.start}" value="Start"
 				style="color:green;" />
-			<p:commandButton action="#{clientView.stop}" value="Stop"
-				style="color:red;" />
-			<p:commandButton action="#{clientView.stopForce}" value="Stop Force"
+			<p:commandButton action="#{clientApp.stop}" value="Stop"
 				style="color:red;" />
 
 		</p:panel>
-		
+
 		<br />
 
- 		<p:poll interval="2"  update="tableId" />
-		<p:dataTable id="tableId" var="msg" value="#{viewMessage.listMessage}" >
-			<p:column headerText="Message">
-				<h:outputText value="#{msg}" />
+		<p:poll interval="2" update="tableId" />
+		<p:dataTable id="tableId" var="msg" value="#{clientView.listMessage}">
+		
+			<p:column style="width:16px">
+				<p:rowToggler />
 			</p:column>
+
+			<p:column headerText="Message">
+				<h:outputText value="#{msg.toString()}" />
+			</p:column>
+
+			<p:rowExpansion>
+
+				<p:column headerText="Message String">
+					<h:outputText value="#{msg.toString()}" />
+				</p:column>
+			</p:rowExpansion>
 
 		</p:dataTable>
 
