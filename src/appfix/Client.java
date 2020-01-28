@@ -38,7 +38,7 @@ import quickfix.SessionSettings;
 import quickfix.SocketInitiator;
 import quickfix.UnsupportedMessageType;
 
-@ManagedBean(name = "clientView")
+@ManagedBean(name = "clientApp")
 @RequestScoped
 public class Client implements Application {
 
@@ -52,6 +52,7 @@ public class Client implements Application {
 
 	private Initiator initiator;
 	private static List<String> listMsg;
+	private static List<Message> listMessage;
 
 	public Client() {
 		execution = new ExecutionReportBean();
@@ -61,6 +62,7 @@ public class Client implements Application {
 		mapSide = Inspector.getFieldsAndValues("Side");
 		
 		listMsg = new ArrayList<>();
+		listMessage = new ArrayList<>();
 
 	}
 
@@ -86,7 +88,8 @@ public class Client implements Application {
 		System.out.println("To Admin: " + message.toString());
 		listMsg.add(message.toString());
 		System.out.println(listMsg.size());
-		//PrimeFaces.current().ajax().update("msgTable");
+		listMessage.add(message);
+
 	}
 
 	@Override
@@ -95,18 +98,20 @@ public class Client implements Application {
 		System.out.println("From Admin: " + message.toString());
 		listMsg.add(message.toString());
 		System.out.println(listMsg.size());
-		//PrimeFaces.current().ajax().update("msgTable");
+		listMessage.add(message);
 	}
 
 	@Override
 	public void toApp(Message message, SessionID sessionID) throws DoNotSend {
-		System.out.println("ToApp: " + message);
+		System.out.println("To App: " + message);
+		listMessage.add(message);
 	}
 
 	@Override
 	public void fromApp(Message message, SessionID sessionID)
 			throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, UnsupportedMessageType {
-		System.out.println("FromApp");
+		System.out.println("From App");
+		listMessage.add(message);
 	}
 
 	public void start()
@@ -200,6 +205,10 @@ public class Client implements Application {
 
 	public static List<String> getListMsg() {
 		return listMsg;
+	}
+
+	public static List<Message> getListMessage() {
+		return listMessage;
 	}
 
 
