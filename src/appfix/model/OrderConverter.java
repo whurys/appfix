@@ -1,9 +1,15 @@
 package appfix.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import appfix.model.convert.FixJson;
 import quickfix.FieldNotFound;
 import quickfix.Message;
 
 public class OrderConverter {
+	
+	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
 		// Create FIX message
@@ -13,6 +19,7 @@ public class OrderConverter {
 
 		// Convert message to object Order
 		Order order = new Order(fixMessage);
+		
 		// print something to verify if object Order was populate
 		System.out.println("TransactTime =  " + order.getTransactTime());
 		System.out.println("HandlInst =  " + order.getHandlInst());
@@ -25,89 +32,129 @@ public class OrderConverter {
 		System.out.println("OrderQty =  " + order.getOrderQty());
 		System.out.println("OrdType =  " + order.getOrdType());
 		System.out.println("ClOrdID = "+ order.getClOrdID());
+		System.out.println("CheckSum = "+ order.getCheckSum());
 		
-		System.out.println(toMessage(order, fixMessage));
 		
-		if(fixMessage.toString().equals(toMessage(order, fixMessage).toString())) {
+		Message m = toMessage(order, (Message) fixMessage);
+		
+		System.out.println(m);
+		
+		if(fixMessage.toString().equals(m.toString())) {
 			System.out.println("Sim");
 		}
+		
+		System.out.println(FixJson.fix2Json(m));
+		
+		
+		System.out.println(gson.toJson(order, Order.class));
 	}
 
-	public static Order converter(Order order, quickfix.fix42.NewOrderSingle message) {
-		quickfix.field.Account Account = new quickfix.field.Account(); if(message.isSet(Account)) {try {message.get(Account);order.setAccount(Account.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.CashOrderQty CashOrderQty = new quickfix.field.CashOrderQty(); if(message.isSet(CashOrderQty)) {try {message.get(CashOrderQty);order.setCashOrderQty(CashOrderQty.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.CheckSum CheckSum = new quickfix.field.CheckSum(); if(message.isSet(CheckSum)) {try {message.get(CheckSum);order.setCheckSum(CheckSum.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ClOrdID ClOrdID = new quickfix.field.ClOrdID(); if(message.isSet(ClOrdID)) {try {message.get(ClOrdID);order.setClOrdID(ClOrdID.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ClearingAccount ClearingAccount = new quickfix.field.ClearingAccount(); if(message.isSet(ClearingAccount)) {try {message.get(ClearingAccount);order.setClearingAccount(ClearingAccount.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ClearingFirm ClearingFirm = new quickfix.field.ClearingFirm(); if(message.isSet(ClearingFirm)) {try {message.get(ClearingFirm);order.setClearingFirm(ClearingFirm.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ClientID ClientID = new quickfix.field.ClientID(); if(message.isSet(ClientID)) {try {message.get(ClientID);order.setClientID(ClientID.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.CommType CommType = new quickfix.field.CommType(); if(message.isSet(CommType)) {try {message.get(CommType);order.setCommType(CommType.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Commission Commission = new quickfix.field.Commission(); if(message.isSet(Commission)) {try {message.get(Commission);order.setCommission(Commission.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ComplianceID ComplianceID = new quickfix.field.ComplianceID(); if(message.isSet(ComplianceID)) {try {message.get(ComplianceID);order.setComplianceID(ComplianceID.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ContractMultiplier ContractMultiplier = new quickfix.field.ContractMultiplier(); if(message.isSet(ContractMultiplier)) {try {message.get(ContractMultiplier);order.setContractMultiplier(ContractMultiplier.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.CouponRate CouponRate = new quickfix.field.CouponRate(); if(message.isSet(CouponRate)) {try {message.get(CouponRate);order.setCouponRate(CouponRate.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.CoveredOrUncovered CoveredOrUncovered = new quickfix.field.CoveredOrUncovered(); if(message.isSet(CoveredOrUncovered)) {try {message.get(CoveredOrUncovered);order.setCoveredOrUncovered(CoveredOrUncovered.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Currency Currency = new quickfix.field.Currency(); if(message.isSet(Currency)) {try {message.get(Currency);order.setCurrency(Currency.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.CustomerOrFirm CustomerOrFirm = new quickfix.field.CustomerOrFirm(); if(message.isSet(CustomerOrFirm)) {try {message.get(CustomerOrFirm);order.setCustomerOrFirm(CustomerOrFirm.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.DiscretionInst DiscretionInst = new quickfix.field.DiscretionInst(); if(message.isSet(DiscretionInst)) {try {message.get(DiscretionInst);order.setDiscretionInst(DiscretionInst.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.DiscretionOffset DiscretionOffset = new quickfix.field.DiscretionOffset(); if(message.isSet(DiscretionOffset)) {try {message.get(DiscretionOffset);order.setDiscretionOffset(DiscretionOffset.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EffectiveTime EffectiveTime = new quickfix.field.EffectiveTime(); if(message.isSet(EffectiveTime)) {try {message.get(EffectiveTime);order.setEffectiveTime(EffectiveTime.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EncodedIssuer EncodedIssuer = new quickfix.field.EncodedIssuer(); if(message.isSet(EncodedIssuer)) {try {message.get(EncodedIssuer);order.setEncodedIssuer(EncodedIssuer.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EncodedIssuerLen EncodedIssuerLen = new quickfix.field.EncodedIssuerLen(); if(message.isSet(EncodedIssuerLen)) {try {message.get(EncodedIssuerLen);order.setEncodedIssuerLen(EncodedIssuerLen.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EncodedSecurityDesc EncodedSecurityDesc = new quickfix.field.EncodedSecurityDesc(); if(message.isSet(EncodedSecurityDesc)) {try {message.get(EncodedSecurityDesc);order.setEncodedSecurityDesc(EncodedSecurityDesc.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EncodedSecurityDescLen EncodedSecurityDescLen = new quickfix.field.EncodedSecurityDescLen(); if(message.isSet(EncodedSecurityDescLen)) {try {message.get(EncodedSecurityDescLen);order.setEncodedSecurityDescLen(EncodedSecurityDescLen.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EncodedText EncodedText = new quickfix.field.EncodedText(); if(message.isSet(EncodedText)) {try {message.get(EncodedText);order.setEncodedText(EncodedText.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.EncodedTextLen EncodedTextLen = new quickfix.field.EncodedTextLen(); if(message.isSet(EncodedTextLen)) {try {message.get(EncodedTextLen);order.setEncodedTextLen(EncodedTextLen.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ExDestination ExDestination = new quickfix.field.ExDestination(); if(message.isSet(ExDestination)) {try {message.get(ExDestination);order.setExDestination(ExDestination.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ExecBroker ExecBroker = new quickfix.field.ExecBroker(); if(message.isSet(ExecBroker)) {try {message.get(ExecBroker);order.setExecBroker(ExecBroker.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ExecInst ExecInst = new quickfix.field.ExecInst(); if(message.isSet(ExecInst)) {try {message.get(ExecInst);order.setExecInst(ExecInst.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ExpireDate ExpireDate = new quickfix.field.ExpireDate(); if(message.isSet(ExpireDate)) {try {message.get(ExpireDate);order.setExpireDate(ExpireDate.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ExpireTime ExpireTime = new quickfix.field.ExpireTime(); if(message.isSet(ExpireTime)) {try {message.get(ExpireTime);order.setExpireTime(ExpireTime.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ForexReq ForexReq = new quickfix.field.ForexReq(); if(message.isSet(ForexReq)) {try {message.get(ForexReq);order.setForexReq(ForexReq.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.FutSettDate FutSettDate = new quickfix.field.FutSettDate(); if(message.isSet(FutSettDate)) {try {message.get(FutSettDate);order.setFutSettDate(FutSettDate.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.FutSettDate2 FutSettDate2 = new quickfix.field.FutSettDate2(); if(message.isSet(FutSettDate2)) {try {message.get(FutSettDate2);order.setFutSettDate2(FutSettDate2.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.GTBookingInst GTBookingInst = new quickfix.field.GTBookingInst(); if(message.isSet(GTBookingInst)) {try {message.get(GTBookingInst);order.setGTBookingInst(GTBookingInst.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.HandlInst HandlInst = new quickfix.field.HandlInst(); if(message.isSet(HandlInst)) {try {message.get(HandlInst);order.setHandlInst(HandlInst.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.IDSource IDSource = new quickfix.field.IDSource(); if(message.isSet(IDSource)) {try {message.get(IDSource);order.setIDSource(IDSource.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.IOIID IOIID = new quickfix.field.IOIID(); if(message.isSet(IOIID)) {try {message.get(IOIID);order.setIOIID(IOIID.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Issuer Issuer = new quickfix.field.Issuer(); if(message.isSet(Issuer)) {try {message.get(Issuer);order.setIssuer(Issuer.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.LocateReqd LocateReqd = new quickfix.field.LocateReqd(); if(message.isSet(LocateReqd)) {try {message.get(LocateReqd);order.setLocateReqd(LocateReqd.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.MaturityDay MaturityDay = new quickfix.field.MaturityDay(); if(message.isSet(MaturityDay)) {try {message.get(MaturityDay);order.setMaturityDay(MaturityDay.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.MaturityMonthYear MaturityMonthYear = new quickfix.field.MaturityMonthYear(); if(message.isSet(MaturityMonthYear)) {try {message.get(MaturityMonthYear);order.setMaturityMonthYear(MaturityMonthYear.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.MaxFloor MaxFloor = new quickfix.field.MaxFloor(); if(message.isSet(MaxFloor)) {try {message.get(MaxFloor);order.setMaxFloor(MaxFloor.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.MaxShow MaxShow = new quickfix.field.MaxShow(); if(message.isSet(MaxShow)) {try {message.get(MaxShow);order.setMaxShow(MaxShow.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.MinQty MinQty = new quickfix.field.MinQty(); if(message.isSet(MinQty)) {try {message.get(MinQty);order.setMinQty(MinQty.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.NoAllocs NoAllocs = new quickfix.field.NoAllocs(); if(message.isSet(NoAllocs)) {try {message.get(NoAllocs);order.setNoAllocs(NoAllocs.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.NoTradingSessions NoTradingSessions = new quickfix.field.NoTradingSessions(); if(message.isSet(NoTradingSessions)) {try {message.get(NoTradingSessions);order.setNoTradingSessions(NoTradingSessions.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.OpenClose OpenClose = new quickfix.field.OpenClose(); if(message.isSet(OpenClose)) {try {message.get(OpenClose);order.setOpenClose(OpenClose.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.OptAttribute OptAttribute = new quickfix.field.OptAttribute(); if(message.isSet(OptAttribute)) {try {message.get(OptAttribute);order.setOptAttribute(OptAttribute.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.OrdType OrdType = new quickfix.field.OrdType(); if(message.isSet(OrdType)) {try {message.get(OrdType);order.setOrdType(OrdType.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.OrderQty OrderQty = new quickfix.field.OrderQty(); if(message.isSet(OrderQty)) {try {message.get(OrderQty);order.setOrderQty(OrderQty.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.OrderQty2 OrderQty2 = new quickfix.field.OrderQty2(); if(message.isSet(OrderQty2)) {try {message.get(OrderQty2);order.setOrderQty2(OrderQty2.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.PegDifference PegDifference = new quickfix.field.PegDifference(); if(message.isSet(PegDifference)) {try {message.get(PegDifference);order.setPegDifference(PegDifference.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.PrevClosePx PrevClosePx = new quickfix.field.PrevClosePx(); if(message.isSet(PrevClosePx)) {try {message.get(PrevClosePx);order.setPrevClosePx(PrevClosePx.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Price Price = new quickfix.field.Price(); if(message.isSet(Price)) {try {message.get(Price);order.setPrice(Price.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.ProcessCode ProcessCode = new quickfix.field.ProcessCode(); if(message.isSet(ProcessCode)) {try {message.get(ProcessCode);order.setProcessCode(ProcessCode.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.PutOrCall PutOrCall = new quickfix.field.PutOrCall(); if(message.isSet(PutOrCall)) {try {message.get(PutOrCall);order.setPutOrCall(PutOrCall.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.QuoteID QuoteID = new quickfix.field.QuoteID(); if(message.isSet(QuoteID)) {try {message.get(QuoteID);order.setQuoteID(QuoteID.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Rule80A Rule80A = new quickfix.field.Rule80A(); if(message.isSet(Rule80A)) {try {message.get(Rule80A);order.setRule80A(Rule80A.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SecurityDesc SecurityDesc = new quickfix.field.SecurityDesc(); if(message.isSet(SecurityDesc)) {try {message.get(SecurityDesc);order.setSecurityDesc(SecurityDesc.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SecurityExchange SecurityExchange = new quickfix.field.SecurityExchange(); if(message.isSet(SecurityExchange)) {try {message.get(SecurityExchange);order.setSecurityExchange(SecurityExchange.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SecurityID SecurityID = new quickfix.field.SecurityID(); if(message.isSet(SecurityID)) {try {message.get(SecurityID);order.setSecurityID(SecurityID.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SecurityType SecurityType = new quickfix.field.SecurityType(); if(message.isSet(SecurityType)) {try {message.get(SecurityType);order.setSecurityType(SecurityType.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SettlCurrency SettlCurrency = new quickfix.field.SettlCurrency(); if(message.isSet(SettlCurrency)) {try {message.get(SettlCurrency);order.setSettlCurrency(SettlCurrency.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SettlmntTyp SettlmntTyp = new quickfix.field.SettlmntTyp(); if(message.isSet(SettlmntTyp)) {try {message.get(SettlmntTyp);order.setSettlmntTyp(SettlmntTyp.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Side Side = new quickfix.field.Side(); if(message.isSet(Side)) {try {message.get(Side);order.setSide(Side.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Signature Signature = new quickfix.field.Signature(); if(message.isSet(Signature)) {try {message.get(Signature);order.setSignature(Signature.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SignatureLength SignatureLength = new quickfix.field.SignatureLength(); if(message.isSet(SignatureLength)) {try {message.get(SignatureLength);order.setSignatureLength(SignatureLength.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SolicitedFlag SolicitedFlag = new quickfix.field.SolicitedFlag(); if(message.isSet(SolicitedFlag)) {try {message.get(SolicitedFlag);order.setSolicitedFlag(SolicitedFlag.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.StopPx StopPx = new quickfix.field.StopPx(); if(message.isSet(StopPx)) {try {message.get(StopPx);order.setStopPx(StopPx.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.StrikePrice StrikePrice = new quickfix.field.StrikePrice(); if(message.isSet(StrikePrice)) {try {message.get(StrikePrice);order.setStrikePrice(StrikePrice.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Symbol Symbol = new quickfix.field.Symbol(); if(message.isSet(Symbol)) {try {message.get(Symbol);order.setSymbol(Symbol.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.SymbolSfx SymbolSfx = new quickfix.field.SymbolSfx(); if(message.isSet(SymbolSfx)) {try {message.get(SymbolSfx);order.setSymbolSfx(SymbolSfx.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.Text Text = new quickfix.field.Text(); if(message.isSet(Text)) {try {message.get(Text);order.setText(Text.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.TimeInForce TimeInForce = new quickfix.field.TimeInForce(); if(message.isSet(TimeInForce)) {try {message.get(TimeInForce);order.setTimeInForce(TimeInForce.getValue());} catch (FieldNotFound ex) {}}
-		quickfix.field.TransactTime TransactTime = new quickfix.field.TransactTime(); if(message.isSet(TransactTime)) {try {message.get(TransactTime);order.setTransactTime(TransactTime.getValue());} catch (FieldNotFound ex) {}}
+	public static Order converter(Order order, quickfix.Message message) {
+		
+		quickfix.field.BeginString BeginString = new quickfix.field.BeginString(); if(message.isSetField(BeginString)) {try {message.getField(BeginString);order.setBeginString(BeginString.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.BodyLength BodyLength = new quickfix.field.BodyLength(); if(message.isSetField(BodyLength)) {try {message.getField(BodyLength);order.setBodyLength(BodyLength.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.DeliverToCompID DeliverToCompID = new quickfix.field.DeliverToCompID(); if(message.isSetField(DeliverToCompID)) {try {message.getField(DeliverToCompID);order.setDeliverToCompID(DeliverToCompID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.DeliverToLocationID DeliverToLocationID = new quickfix.field.DeliverToLocationID(); if(message.isSetField(DeliverToLocationID)) {try {message.getField(DeliverToLocationID);order.setDeliverToLocationID(DeliverToLocationID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.DeliverToSubID DeliverToSubID = new quickfix.field.DeliverToSubID(); if(message.isSetField(DeliverToSubID)) {try {message.getField(DeliverToSubID);order.setDeliverToSubID(DeliverToSubID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.LastMsgSeqNumProcessed LastMsgSeqNumProcessed = new quickfix.field.LastMsgSeqNumProcessed(); if(message.isSetField(LastMsgSeqNumProcessed)) {try {message.getField(LastMsgSeqNumProcessed);order.setLastMsgSeqNumProcessed(LastMsgSeqNumProcessed.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MessageEncoding MessageEncoding = new quickfix.field.MessageEncoding(); if(message.isSetField(MessageEncoding)) {try {message.getField(MessageEncoding);order.setMessageEncoding(MessageEncoding.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MsgSeqNum MsgSeqNum = new quickfix.field.MsgSeqNum(); if(message.isSetField(MsgSeqNum)) {try {message.getField(MsgSeqNum);order.setMsgSeqNum(MsgSeqNum.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MsgType MsgType = new quickfix.field.MsgType(); if(message.isSetField(MsgType)) {try {message.getField(MsgType);order.setMsgType(MsgType.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.NoHops NoHops = new quickfix.field.NoHops(); if(message.isSetField(NoHops)) {try {message.getField(NoHops);order.setNoHops(NoHops.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OnBehalfOfCompID OnBehalfOfCompID = new quickfix.field.OnBehalfOfCompID(); if(message.isSetField(OnBehalfOfCompID)) {try {message.getField(OnBehalfOfCompID);order.setOnBehalfOfCompID(OnBehalfOfCompID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OnBehalfOfLocationID OnBehalfOfLocationID = new quickfix.field.OnBehalfOfLocationID(); if(message.isSetField(OnBehalfOfLocationID)) {try {message.getField(OnBehalfOfLocationID);order.setOnBehalfOfLocationID(OnBehalfOfLocationID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OnBehalfOfSubID OnBehalfOfSubID = new quickfix.field.OnBehalfOfSubID(); if(message.isSetField(OnBehalfOfSubID)) {try {message.getField(OnBehalfOfSubID);order.setOnBehalfOfSubID(OnBehalfOfSubID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OrigSendingTime OrigSendingTime = new quickfix.field.OrigSendingTime(); if(message.isSetField(OrigSendingTime)) {try {message.getField(OrigSendingTime);order.setOrigSendingTime(OrigSendingTime.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.PossDupFlag PossDupFlag = new quickfix.field.PossDupFlag(); if(message.isSetField(PossDupFlag)) {try {message.getField(PossDupFlag);order.setPossDupFlag(PossDupFlag.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.PossResend PossResend = new quickfix.field.PossResend(); if(message.isSetField(PossResend)) {try {message.getField(PossResend);order.setPossResend(PossResend.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SecureData SecureData = new quickfix.field.SecureData(); if(message.isSetField(SecureData)) {try {message.getField(SecureData);order.setSecureData(SecureData.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SecureDataLen SecureDataLen = new quickfix.field.SecureDataLen(); if(message.isSetField(SecureDataLen)) {try {message.getField(SecureDataLen);order.setSecureDataLen(SecureDataLen.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SenderCompID SenderCompID = new quickfix.field.SenderCompID(); if(message.isSetField(SenderCompID)) {try {message.getField(SenderCompID);order.setSenderCompID(SenderCompID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SenderLocationID SenderLocationID = new quickfix.field.SenderLocationID(); if(message.isSetField(SenderLocationID)) {try {message.getField(SenderLocationID);order.setSenderLocationID(SenderLocationID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SenderSubID SenderSubID = new quickfix.field.SenderSubID(); if(message.isSetField(SenderSubID)) {try {message.getField(SenderSubID);order.setSenderSubID(SenderSubID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SendingTime SendingTime = new quickfix.field.SendingTime(); if(message.isSetField(SendingTime)) {try {message.getField(SendingTime);order.setSendingTime(SendingTime.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.TargetCompID TargetCompID = new quickfix.field.TargetCompID(); if(message.isSetField(TargetCompID)) {try {message.getField(TargetCompID);order.setTargetCompID(TargetCompID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.TargetLocationID TargetLocationID = new quickfix.field.TargetLocationID(); if(message.isSetField(TargetLocationID)) {try {message.getField(TargetLocationID);order.setTargetLocationID(TargetLocationID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.TargetSubID TargetSubID = new quickfix.field.TargetSubID(); if(message.isSetField(TargetSubID)) {try {message.getField(TargetSubID);order.setTargetSubID(TargetSubID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.XmlData XmlData = new quickfix.field.XmlData(); if(message.isSetField(XmlData)) {try {message.getField(XmlData);order.setXmlData(XmlData.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.XmlDataLen XmlDataLen = new quickfix.field.XmlDataLen(); if(message.isSetField(XmlDataLen)) {try {message.getField(XmlDataLen);order.setXmlDataLen(XmlDataLen.getValue());} catch (FieldNotFound ex) {}}
+		
+		quickfix.field.Account Account = new quickfix.field.Account(); if(message.isSetField(Account)) {try {message.getField(Account);order.setAccount(Account.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.CashOrderQty CashOrderQty = new quickfix.field.CashOrderQty(); if(message.isSetField(CashOrderQty)) {try {message.getField(CashOrderQty);order.setCashOrderQty(CashOrderQty.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.CheckSum CheckSum = new quickfix.field.CheckSum(); if(message.isSetField(CheckSum)) {try {message.getField(CheckSum);order.setCheckSum(CheckSum.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ClOrdID ClOrdID = new quickfix.field.ClOrdID(); if(message.isSetField(ClOrdID)) {try {message.getField(ClOrdID);order.setClOrdID(ClOrdID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ClearingAccount ClearingAccount = new quickfix.field.ClearingAccount(); if(message.isSetField(ClearingAccount)) {try {message.getField(ClearingAccount);order.setClearingAccount(ClearingAccount.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ClearingFirm ClearingFirm = new quickfix.field.ClearingFirm(); if(message.isSetField(ClearingFirm)) {try {message.getField(ClearingFirm);order.setClearingFirm(ClearingFirm.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ClientID ClientID = new quickfix.field.ClientID(); if(message.isSetField(ClientID)) {try {message.getField(ClientID);order.setClientID(ClientID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.CommType CommType = new quickfix.field.CommType(); if(message.isSetField(CommType)) {try {message.getField(CommType);order.setCommType(CommType.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Commission Commission = new quickfix.field.Commission(); if(message.isSetField(Commission)) {try {message.getField(Commission);order.setCommission(Commission.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ComplianceID ComplianceID = new quickfix.field.ComplianceID(); if(message.isSetField(ComplianceID)) {try {message.getField(ComplianceID);order.setComplianceID(ComplianceID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ContractMultiplier ContractMultiplier = new quickfix.field.ContractMultiplier(); if(message.isSetField(ContractMultiplier)) {try {message.getField(ContractMultiplier);order.setContractMultiplier(ContractMultiplier.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.CouponRate CouponRate = new quickfix.field.CouponRate(); if(message.isSetField(CouponRate)) {try {message.getField(CouponRate);order.setCouponRate(CouponRate.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.CoveredOrUncovered CoveredOrUncovered = new quickfix.field.CoveredOrUncovered(); if(message.isSetField(CoveredOrUncovered)) {try {message.getField(CoveredOrUncovered);order.setCoveredOrUncovered(CoveredOrUncovered.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Currency Currency = new quickfix.field.Currency(); if(message.isSetField(Currency)) {try {message.getField(Currency);order.setCurrency(Currency.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.CustomerOrFirm CustomerOrFirm = new quickfix.field.CustomerOrFirm(); if(message.isSetField(CustomerOrFirm)) {try {message.getField(CustomerOrFirm);order.setCustomerOrFirm(CustomerOrFirm.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.DiscretionInst DiscretionInst = new quickfix.field.DiscretionInst(); if(message.isSetField(DiscretionInst)) {try {message.getField(DiscretionInst);order.setDiscretionInst(DiscretionInst.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.DiscretionOffset DiscretionOffset = new quickfix.field.DiscretionOffset(); if(message.isSetField(DiscretionOffset)) {try {message.getField(DiscretionOffset);order.setDiscretionOffset(DiscretionOffset.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EffectiveTime EffectiveTime = new quickfix.field.EffectiveTime(); if(message.isSetField(EffectiveTime)) {try {message.getField(EffectiveTime);order.setEffectiveTime(EffectiveTime.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EncodedIssuer EncodedIssuer = new quickfix.field.EncodedIssuer(); if(message.isSetField(EncodedIssuer)) {try {message.getField(EncodedIssuer);order.setEncodedIssuer(EncodedIssuer.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EncodedIssuerLen EncodedIssuerLen = new quickfix.field.EncodedIssuerLen(); if(message.isSetField(EncodedIssuerLen)) {try {message.getField(EncodedIssuerLen);order.setEncodedIssuerLen(EncodedIssuerLen.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EncodedSecurityDesc EncodedSecurityDesc = new quickfix.field.EncodedSecurityDesc(); if(message.isSetField(EncodedSecurityDesc)) {try {message.getField(EncodedSecurityDesc);order.setEncodedSecurityDesc(EncodedSecurityDesc.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EncodedSecurityDescLen EncodedSecurityDescLen = new quickfix.field.EncodedSecurityDescLen(); if(message.isSetField(EncodedSecurityDescLen)) {try {message.getField(EncodedSecurityDescLen);order.setEncodedSecurityDescLen(EncodedSecurityDescLen.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EncodedText EncodedText = new quickfix.field.EncodedText(); if(message.isSetField(EncodedText)) {try {message.getField(EncodedText);order.setEncodedText(EncodedText.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.EncodedTextLen EncodedTextLen = new quickfix.field.EncodedTextLen(); if(message.isSetField(EncodedTextLen)) {try {message.getField(EncodedTextLen);order.setEncodedTextLen(EncodedTextLen.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ExDestination ExDestination = new quickfix.field.ExDestination(); if(message.isSetField(ExDestination)) {try {message.getField(ExDestination);order.setExDestination(ExDestination.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ExecBroker ExecBroker = new quickfix.field.ExecBroker(); if(message.isSetField(ExecBroker)) {try {message.getField(ExecBroker);order.setExecBroker(ExecBroker.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ExecInst ExecInst = new quickfix.field.ExecInst(); if(message.isSetField(ExecInst)) {try {message.getField(ExecInst);order.setExecInst(ExecInst.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ExpireDate ExpireDate = new quickfix.field.ExpireDate(); if(message.isSetField(ExpireDate)) {try {message.getField(ExpireDate);order.setExpireDate(ExpireDate.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ExpireTime ExpireTime = new quickfix.field.ExpireTime(); if(message.isSetField(ExpireTime)) {try {message.getField(ExpireTime);order.setExpireTime(ExpireTime.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ForexReq ForexReq = new quickfix.field.ForexReq(); if(message.isSetField(ForexReq)) {try {message.getField(ForexReq);order.setForexReq(ForexReq.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.FutSettDate FutSettDate = new quickfix.field.FutSettDate(); if(message.isSetField(FutSettDate)) {try {message.getField(FutSettDate);order.setFutSettDate(FutSettDate.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.FutSettDate2 FutSettDate2 = new quickfix.field.FutSettDate2(); if(message.isSetField(FutSettDate2)) {try {message.getField(FutSettDate2);order.setFutSettDate2(FutSettDate2.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.GTBookingInst GTBookingInst = new quickfix.field.GTBookingInst(); if(message.isSetField(GTBookingInst)) {try {message.getField(GTBookingInst);order.setGTBookingInst(GTBookingInst.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.HandlInst HandlInst = new quickfix.field.HandlInst(); if(message.isSetField(HandlInst)) {try {message.getField(HandlInst);order.setHandlInst(HandlInst.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.IDSource IDSource = new quickfix.field.IDSource(); if(message.isSetField(IDSource)) {try {message.getField(IDSource);order.setIDSource(IDSource.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.IOIID IOIID = new quickfix.field.IOIID(); if(message.isSetField(IOIID)) {try {message.getField(IOIID);order.setIOIID(IOIID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Issuer Issuer = new quickfix.field.Issuer(); if(message.isSetField(Issuer)) {try {message.getField(Issuer);order.setIssuer(Issuer.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.LocateReqd LocateReqd = new quickfix.field.LocateReqd(); if(message.isSetField(LocateReqd)) {try {message.getField(LocateReqd);order.setLocateReqd(LocateReqd.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MaturityDay MaturityDay = new quickfix.field.MaturityDay(); if(message.isSetField(MaturityDay)) {try {message.getField(MaturityDay);order.setMaturityDay(MaturityDay.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MaturityMonthYear MaturityMonthYear = new quickfix.field.MaturityMonthYear(); if(message.isSetField(MaturityMonthYear)) {try {message.getField(MaturityMonthYear);order.setMaturityMonthYear(MaturityMonthYear.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MaxFloor MaxFloor = new quickfix.field.MaxFloor(); if(message.isSetField(MaxFloor)) {try {message.getField(MaxFloor);order.setMaxFloor(MaxFloor.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MaxShow MaxShow = new quickfix.field.MaxShow(); if(message.isSetField(MaxShow)) {try {message.getField(MaxShow);order.setMaxShow(MaxShow.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.MinQty MinQty = new quickfix.field.MinQty(); if(message.isSetField(MinQty)) {try {message.getField(MinQty);order.setMinQty(MinQty.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.NoAllocs NoAllocs = new quickfix.field.NoAllocs(); if(message.isSetField(NoAllocs)) {try {message.getField(NoAllocs);order.setNoAllocs(NoAllocs.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.NoTradingSessions NoTradingSessions = new quickfix.field.NoTradingSessions(); if(message.isSetField(NoTradingSessions)) {try {message.getField(NoTradingSessions);order.setNoTradingSessions(NoTradingSessions.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OpenClose OpenClose = new quickfix.field.OpenClose(); if(message.isSetField(OpenClose)) {try {message.getField(OpenClose);order.setOpenClose(OpenClose.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OptAttribute OptAttribute = new quickfix.field.OptAttribute(); if(message.isSetField(OptAttribute)) {try {message.getField(OptAttribute);order.setOptAttribute(OptAttribute.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OrdType OrdType = new quickfix.field.OrdType(); if(message.isSetField(OrdType)) {try {message.getField(OrdType);order.setOrdType(OrdType.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OrderQty OrderQty = new quickfix.field.OrderQty(); if(message.isSetField(OrderQty)) {try {message.getField(OrderQty);order.setOrderQty(OrderQty.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.OrderQty2 OrderQty2 = new quickfix.field.OrderQty2(); if(message.isSetField(OrderQty2)) {try {message.getField(OrderQty2);order.setOrderQty2(OrderQty2.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.PegDifference PegDifference = new quickfix.field.PegDifference(); if(message.isSetField(PegDifference)) {try {message.getField(PegDifference);order.setPegDifference(PegDifference.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.PrevClosePx PrevClosePx = new quickfix.field.PrevClosePx(); if(message.isSetField(PrevClosePx)) {try {message.getField(PrevClosePx);order.setPrevClosePx(PrevClosePx.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Price Price = new quickfix.field.Price(); if(message.isSetField(Price)) {try {message.getField(Price);order.setPrice(Price.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.ProcessCode ProcessCode = new quickfix.field.ProcessCode(); if(message.isSetField(ProcessCode)) {try {message.getField(ProcessCode);order.setProcessCode(ProcessCode.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.PutOrCall PutOrCall = new quickfix.field.PutOrCall(); if(message.isSetField(PutOrCall)) {try {message.getField(PutOrCall);order.setPutOrCall(PutOrCall.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.QuoteID QuoteID = new quickfix.field.QuoteID(); if(message.isSetField(QuoteID)) {try {message.getField(QuoteID);order.setQuoteID(QuoteID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Rule80A Rule80A = new quickfix.field.Rule80A(); if(message.isSetField(Rule80A)) {try {message.getField(Rule80A);order.setRule80A(Rule80A.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SecurityDesc SecurityDesc = new quickfix.field.SecurityDesc(); if(message.isSetField(SecurityDesc)) {try {message.getField(SecurityDesc);order.setSecurityDesc(SecurityDesc.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SecurityExchange SecurityExchange = new quickfix.field.SecurityExchange(); if(message.isSetField(SecurityExchange)) {try {message.getField(SecurityExchange);order.setSecurityExchange(SecurityExchange.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SecurityID SecurityID = new quickfix.field.SecurityID(); if(message.isSetField(SecurityID)) {try {message.getField(SecurityID);order.setSecurityID(SecurityID.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SecurityType SecurityType = new quickfix.field.SecurityType(); if(message.isSetField(SecurityType)) {try {message.getField(SecurityType);order.setSecurityType(SecurityType.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SettlCurrency SettlCurrency = new quickfix.field.SettlCurrency(); if(message.isSetField(SettlCurrency)) {try {message.getField(SettlCurrency);order.setSettlCurrency(SettlCurrency.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SettlmntTyp SettlmntTyp = new quickfix.field.SettlmntTyp(); if(message.isSetField(SettlmntTyp)) {try {message.getField(SettlmntTyp);order.setSettlmntTyp(SettlmntTyp.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Side Side = new quickfix.field.Side(); if(message.isSetField(Side)) {try {message.getField(Side);order.setSide(Side.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Signature Signature = new quickfix.field.Signature(); if(message.isSetField(Signature)) {try {message.getField(Signature);order.setSignature(Signature.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SignatureLength SignatureLength = new quickfix.field.SignatureLength(); if(message.isSetField(SignatureLength)) {try {message.getField(SignatureLength);order.setSignatureLength(SignatureLength.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SolicitedFlag SolicitedFlag = new quickfix.field.SolicitedFlag(); if(message.isSetField(SolicitedFlag)) {try {message.getField(SolicitedFlag);order.setSolicitedFlag(SolicitedFlag.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.StopPx StopPx = new quickfix.field.StopPx(); if(message.isSetField(StopPx)) {try {message.getField(StopPx);order.setStopPx(StopPx.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.StrikePrice StrikePrice = new quickfix.field.StrikePrice(); if(message.isSetField(StrikePrice)) {try {message.getField(StrikePrice);order.setStrikePrice(StrikePrice.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Symbol Symbol = new quickfix.field.Symbol(); if(message.isSetField(Symbol)) {try {message.getField(Symbol);order.setSymbol(Symbol.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.SymbolSfx SymbolSfx = new quickfix.field.SymbolSfx(); if(message.isSetField(SymbolSfx)) {try {message.getField(SymbolSfx);order.setSymbolSfx(SymbolSfx.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.Text Text = new quickfix.field.Text(); if(message.isSetField(Text)) {try {message.getField(Text);order.setText(Text.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.TimeInForce TimeInForce = new quickfix.field.TimeInForce(); if(message.isSetField(TimeInForce)) {try {message.getField(TimeInForce);order.setTimeInForce(TimeInForce.getValue());} catch (FieldNotFound ex) {}}
+		quickfix.field.TransactTime TransactTime = new quickfix.field.TransactTime(); if(message.isSetField(TransactTime)) {try {message.getField(TransactTime);order.setTransactTime(TransactTime.getValue());} catch (FieldNotFound ex) {}}
+		
+		
 		return order;
 	}
 
@@ -612,6 +659,101 @@ public class OrderConverter {
 		quickfix.field.YieldType YieldType = new quickfix.field.YieldType(); if(message.isSet(YieldType)) {try {message.get(YieldType);order.setYieldType(YieldType.getValue());} catch (FieldNotFound ex) {}}
 
 		return order;
+	}
+	
+	public static Message toMessage(Order order, quickfix.Message message)
+			throws IllegalArgumentException, IllegalAccessException {
+		
+	//message = new quickfix.Message();
+		
+		if (order.getBeginString() != null && !order.getBeginString().isEmpty()){message.setField(new quickfix.field.BeginString(order.getBeginString()));} //for String type
+		if (order.getBodyLength() != 0) {message.setField(new quickfix.field.BodyLength(order.getBodyLength()));} //for int
+		if (order.getDeliverToCompID() != null && !order.getDeliverToCompID().isEmpty()){message.setField(new quickfix.field.DeliverToCompID(order.getDeliverToCompID()));} //for String type
+		if (order.getDeliverToLocationID() != null && !order.getDeliverToLocationID().isEmpty()){message.setField(new quickfix.field.DeliverToLocationID(order.getDeliverToLocationID()));} //for String type
+		if (order.getDeliverToSubID() != null && !order.getDeliverToSubID().isEmpty()){message.setField(new quickfix.field.DeliverToSubID(order.getDeliverToSubID()));} //for String type
+		if (order.getLastMsgSeqNumProcessed() != 0) {message.setField(new quickfix.field.LastMsgSeqNumProcessed(order.getLastMsgSeqNumProcessed()));} //for int
+		if (order.getMessageEncoding() != null && !order.getMessageEncoding().isEmpty()){message.setField(new quickfix.field.MessageEncoding(order.getMessageEncoding()));} //for String type
+		if (order.getMsgSeqNum() != 0) {message.setField(new quickfix.field.MsgSeqNum(order.getMsgSeqNum()));} //for int
+		if (order.getMsgType() != null && !order.getMsgType().isEmpty()){message.setField(new quickfix.field.MsgType(order.getMsgType()));} //for String type
+		if (order.getNoHops() != 0) {message.setField(new quickfix.field.NoHops(order.getNoHops()));} //for int
+		if (order.getOnBehalfOfCompID() != null && !order.getOnBehalfOfCompID().isEmpty()){message.setField(new quickfix.field.OnBehalfOfCompID(order.getOnBehalfOfCompID()));} //for String type
+		if (order.getOnBehalfOfLocationID() != null && !order.getOnBehalfOfLocationID().isEmpty()){message.setField(new quickfix.field.OnBehalfOfLocationID(order.getOnBehalfOfLocationID()));} //for String type
+		if (order.getOnBehalfOfSubID() != null && !order.getOnBehalfOfSubID().isEmpty()){message.setField(new quickfix.field.OnBehalfOfSubID(order.getOnBehalfOfSubID()));} //for String type
+		if (order.getOrigSendingTime() != null) {message.setField(new quickfix.field.OrigSendingTime(order.getOrigSendingTime()));} // for LocalDateTime
+		if (order.getSecureData() != null && !order.getSecureData().isEmpty()){message.setField(new quickfix.field.SecureData(order.getSecureData()));} //for String type
+		if (order.getSecureDataLen() != 0) {message.setField(new quickfix.field.SecureDataLen(order.getSecureDataLen()));} //for int
+		if (order.getSenderCompID() != null && !order.getSenderCompID().isEmpty()){message.setField(new quickfix.field.SenderCompID(order.getSenderCompID()));} //for String type
+		if (order.getSenderLocationID() != null && !order.getSenderLocationID().isEmpty()){message.setField(new quickfix.field.SenderLocationID(order.getSenderLocationID()));} //for String type
+		if (order.getSenderSubID() != null && !order.getSenderSubID().isEmpty()){message.setField(new quickfix.field.SenderSubID(order.getSenderSubID()));} //for String type
+		if (order.getSendingTime() != null) {message.setField(new quickfix.field.SendingTime(order.getSendingTime()));} // for LocalDateTime
+		if (order.getTargetCompID() != null && !order.getTargetCompID().isEmpty()){message.setField(new quickfix.field.TargetCompID(order.getTargetCompID()));} //for String type
+		if (order.getTargetLocationID() != null && !order.getTargetLocationID().isEmpty()){message.setField(new quickfix.field.TargetLocationID(order.getTargetLocationID()));} //for String type
+		if (order.getTargetSubID() != null && !order.getTargetSubID().isEmpty()){message.setField(new quickfix.field.TargetSubID(order.getTargetSubID()));} //for String type
+		if (order.getXmlData() != null && !order.getXmlData().isEmpty()){message.setField(new quickfix.field.XmlData(order.getXmlData()));} //for String type
+		if (order.getXmlDataLen() != 0) {message.setField(new quickfix.field.XmlDataLen(order.getXmlDataLen()));} //for int
+		
+		if (order.getAccount() != null && !order.getAccount().isEmpty()){message.setField(new quickfix.field.Account(order.getAccount()));} //for String type
+		if (order.getCashOrderQty() != 0.0) {message.setField(new quickfix.field.CashOrderQty(order.getCashOrderQty()));} // for double
+		if (order.getCheckSum() != null && !order.getCheckSum().isEmpty()){message.setField(new quickfix.field.CheckSum(order.getCheckSum()));} //for String type
+		if (order.getClOrdID() != null && !order.getClOrdID().isEmpty()){message.setField(new quickfix.field.ClOrdID(order.getClOrdID()));} //for String type
+		if (order.getClearingAccount() != null && !order.getClearingAccount().isEmpty()){message.setField(new quickfix.field.ClearingAccount(order.getClearingAccount()));} //for String type
+		if (order.getClearingFirm() != null && !order.getClearingFirm().isEmpty()){message.setField(new quickfix.field.ClearingFirm(order.getClearingFirm()));} //for String type
+		if (order.getClientID() != null && !order.getClientID().isEmpty()){message.setField(new quickfix.field.ClientID(order.getClientID()));} //for String type
+		if (order.getCommission() != 0.0) {message.setField(new quickfix.field.Commission(order.getCommission()));} // for double
+		if (order.getComplianceID() != null && !order.getComplianceID().isEmpty()){message.setField(new quickfix.field.ComplianceID(order.getComplianceID()));} //for String type
+		if (order.getContractMultiplier() != 0.0) {message.setField(new quickfix.field.ContractMultiplier(order.getContractMultiplier()));} // for double
+		if (order.getCouponRate() != 0.0) {message.setField(new quickfix.field.CouponRate(order.getCouponRate()));} // for double
+		if (order.getCoveredOrUncovered() != 0) {message.setField(new quickfix.field.CoveredOrUncovered(order.getCoveredOrUncovered()));} //for int
+		if (order.getCurrency() != null && !order.getCurrency().isEmpty()){message.setField(new quickfix.field.Currency(order.getCurrency()));} //for String type
+		if (order.getCustomerOrFirm() != 0) {message.setField(new quickfix.field.CustomerOrFirm(order.getCustomerOrFirm()));} //for int
+		if (order.getDiscretionOffset() != 0.0) {message.setField(new quickfix.field.DiscretionOffset(order.getDiscretionOffset()));} // for double
+		if (order.getEffectiveTime() != null) {message.setField(new quickfix.field.EffectiveTime(order.getEffectiveTime()));} // for LocalDateTime
+		if (order.getEncodedIssuer() != null && !order.getEncodedIssuer().isEmpty()){message.setField(new quickfix.field.EncodedIssuer(order.getEncodedIssuer()));} //for String type
+		if (order.getEncodedIssuerLen() != 0) {message.setField(new quickfix.field.EncodedIssuerLen(order.getEncodedIssuerLen()));} //for int
+		if (order.getEncodedSecurityDesc() != null && !order.getEncodedSecurityDesc().isEmpty()){message.setField(new quickfix.field.EncodedSecurityDesc(order.getEncodedSecurityDesc()));} //for String type
+		if (order.getEncodedSecurityDescLen() != 0) {message.setField(new quickfix.field.EncodedSecurityDescLen(order.getEncodedSecurityDescLen()));} //for int
+		if (order.getEncodedText() != null && !order.getEncodedText().isEmpty()){message.setField(new quickfix.field.EncodedText(order.getEncodedText()));} //for String type
+		if (order.getEncodedTextLen() != 0) {message.setField(new quickfix.field.EncodedTextLen(order.getEncodedTextLen()));} //for int
+		if (order.getExDestination() != null && !order.getExDestination().isEmpty()){message.setField(new quickfix.field.ExDestination(order.getExDestination()));} //for String type
+		if (order.getExecBroker() != null && !order.getExecBroker().isEmpty()){message.setField(new quickfix.field.ExecBroker(order.getExecBroker()));} //for String type
+		if (order.getExecInst() != null && !order.getExecInst().isEmpty()){message.setField(new quickfix.field.ExecInst(order.getExecInst()));} //for String type
+		if (order.getExpireDate() != null && !order.getExpireDate().isEmpty()){message.setField(new quickfix.field.ExpireDate(order.getExpireDate()));} //for String type
+		if (order.getExpireTime() != null) {message.setField(new quickfix.field.ExpireTime(order.getExpireTime()));} // for LocalDateTime
+		if (order.getFutSettDate() != null && !order.getFutSettDate().isEmpty()){message.setField(new quickfix.field.FutSettDate(order.getFutSettDate()));} //for String type
+		if (order.getFutSettDate2() != null && !order.getFutSettDate2().isEmpty()){message.setField(new quickfix.field.FutSettDate2(order.getFutSettDate2()));} //for String type
+		if (order.getGTBookingInst() != 0) {message.setField(new quickfix.field.GTBookingInst(order.getGTBookingInst()));} //for int
+		if (order.getIDSource() != null && !order.getIDSource().isEmpty()){message.setField(new quickfix.field.IDSource(order.getIDSource()));} //for String type
+		if (order.getIOIID() != null && !order.getIOIID().isEmpty()){message.setField(new quickfix.field.IOIID(order.getIOIID()));} //for String type
+		if (order.getIssuer() != null && !order.getIssuer().isEmpty()){message.setField(new quickfix.field.Issuer(order.getIssuer()));} //for String type
+		if (order.getMaturityDay() != null && !order.getMaturityDay().isEmpty()){message.setField(new quickfix.field.MaturityDay(order.getMaturityDay()));} //for String type
+		if (order.getMaturityMonthYear() != null && !order.getMaturityMonthYear().isEmpty()){message.setField(new quickfix.field.MaturityMonthYear(order.getMaturityMonthYear()));} //for String type
+		if (order.getMaxFloor() != 0.0) {message.setField(new quickfix.field.MaxFloor(order.getMaxFloor()));} // for double
+		if (order.getMaxShow() != 0.0) {message.setField(new quickfix.field.MaxShow(order.getMaxShow()));} // for double
+		if (order.getMinQty() != 0.0) {message.setField(new quickfix.field.MinQty(order.getMinQty()));} // for double
+		if (order.getNoAllocs() != 0) {message.setField(new quickfix.field.NoAllocs(order.getNoAllocs()));} //for int
+		if (order.getNoTradingSessions() != 0) {message.setField(new quickfix.field.NoTradingSessions(order.getNoTradingSessions()));} //for int
+		if (order.getOrderQty() != 0.0) {message.setField(new quickfix.field.OrderQty(order.getOrderQty()));} // for double
+		if (order.getOrderQty2() != 0.0) {message.setField(new quickfix.field.OrderQty2(order.getOrderQty2()));} // for double
+		if (order.getPegDifference() != 0.0) {message.setField(new quickfix.field.PegDifference(order.getPegDifference()));} // for double
+		if (order.getPrevClosePx() != 0.0) {message.setField(new quickfix.field.PrevClosePx(order.getPrevClosePx()));} // for double
+		if (order.getPrice() != 0.0) {message.setField(new quickfix.field.Price(order.getPrice()));} // for double
+		if (order.getPutOrCall() != 0) {message.setField(new quickfix.field.PutOrCall(order.getPutOrCall()));} //for int
+		if (order.getQuoteID() != null && !order.getQuoteID().isEmpty()){message.setField(new quickfix.field.QuoteID(order.getQuoteID()));} //for String type
+		if (order.getSecurityDesc() != null && !order.getSecurityDesc().isEmpty()){message.setField(new quickfix.field.SecurityDesc(order.getSecurityDesc()));} //for String type
+		if (order.getSecurityExchange() != null && !order.getSecurityExchange().isEmpty()){message.setField(new quickfix.field.SecurityExchange(order.getSecurityExchange()));} //for String type
+		if (order.getSecurityID() != null && !order.getSecurityID().isEmpty()){message.setField(new quickfix.field.SecurityID(order.getSecurityID()));} //for String type
+		if (order.getSecurityType() != null && !order.getSecurityType().isEmpty()){message.setField(new quickfix.field.SecurityType(order.getSecurityType()));} //for String type
+		if (order.getSettlCurrency() != null && !order.getSettlCurrency().isEmpty()){message.setField(new quickfix.field.SettlCurrency(order.getSettlCurrency()));} //for String type
+		if (order.getSignature() != null && !order.getSignature().isEmpty()){message.setField(new quickfix.field.Signature(order.getSignature()));} //for String type
+		if (order.getSignatureLength() != 0) {message.setField(new quickfix.field.SignatureLength(order.getSignatureLength()));} //for int
+		if (order.getStopPx() != 0.0) {message.setField(new quickfix.field.StopPx(order.getStopPx()));} // for double
+		if (order.getStrikePrice() != 0.0) {message.setField(new quickfix.field.StrikePrice(order.getStrikePrice()));} // for double
+		if (order.getSymbol() != null && !order.getSymbol().isEmpty()){message.setField(new quickfix.field.Symbol(order.getSymbol()));} //for String type
+		if (order.getSymbolSfx() != null && !order.getSymbolSfx().isEmpty()){message.setField(new quickfix.field.SymbolSfx(order.getSymbolSfx()));} //for String type
+		if (order.getText() != null && !order.getText().isEmpty()){message.setField(new quickfix.field.Text(order.getText()));} //for String type
+		if (order.getTransactTime() != null) {message.setField(new quickfix.field.TransactTime(order.getTransactTime()));} // for LocalDateTime
+		
+		return message;
 	}
 
 	public static Message toMessage(Order order, quickfix.fix42.NewOrderSingle message)

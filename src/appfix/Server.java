@@ -2,16 +2,12 @@ package appfix;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.CountDownLatch;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import appfix.model.connectivity.SessionApp;
 import quickfix.Acceptor;
 import quickfix.Application;
 import quickfix.ConfigError;
@@ -21,14 +17,12 @@ import quickfix.FieldNotFound;
 import quickfix.FileStoreFactory;
 import quickfix.IncorrectDataFormat;
 import quickfix.IncorrectTagValue;
-import quickfix.InvalidMessage;
 import quickfix.LogFactory;
 import quickfix.Message;
 import quickfix.MessageFactory;
 import quickfix.MessageStoreFactory;
 import quickfix.RejectLogon;
 import quickfix.ScreenLogFactory;
-import quickfix.Session;
 import quickfix.SessionID;
 import quickfix.SessionNotFound;
 import quickfix.SessionSettings;
@@ -144,6 +138,8 @@ public class Server implements Application {
 	
 
 	public String getSessionApp() {
+		
+		System.out.println("New Sesssion choose: "+sessionApp);
 		return sessionApp;
 	}
 

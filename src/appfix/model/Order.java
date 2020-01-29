@@ -2,7 +2,7 @@ package appfix.model;
 
 import java.time.LocalDateTime;
 
-public class Order {
+public class Order extends MessageBean {
 	
 	public static Order order;
 	private String Account;
@@ -30,7 +30,7 @@ public class Order {
 	private char CancellationRights;
 	private char CashMargin;
 	private double CashOrderQty;
-	private String CheckSum;
+	//private String CheckSum;
 	private String ClOrdID;
 	private String ClOrdLinkID;
 	private String ClearingAccount;
@@ -192,8 +192,8 @@ public class Order {
 	private String SettleOnOpenFlag;
 	private char SettlmntTyp;
 	private char Side;
-	private String Signature;
-	private int SignatureLength;
+	//private String Signature;
+	//private int SignatureLength;
 	private boolean SolicitedFlag;
 	private double Spread;
 	private String StartDate;
@@ -451,13 +451,15 @@ public class Order {
 		CashOrderQty = cashOrderQty;
 	}
 
-	public String getCheckSum() {
-		return CheckSum;
-	}
-
-	public void setCheckSum(String checkSum) {
-		CheckSum = checkSum;
-	}
+//	@Override
+//	public String getCheckSum() {
+//		return CheckSum;
+//	}
+//
+//	@Override
+//	public void setCheckSum(String checkSum) {
+//		CheckSum = checkSum;
+//	}
 
 	public String getClOrdID() {
 		return ClOrdID;
@@ -1747,21 +1749,25 @@ public class Order {
 		Side = side;
 	}
 
-	public String getSignature() {
-		return Signature;
-	}
-
-	public void setSignature(String signature) {
-		Signature = signature;
-	}
-
-	public int getSignatureLength() {
-		return SignatureLength;
-	}
-
-	public void setSignatureLength(int signatureLength) {
-		SignatureLength = signatureLength;
-	}
+//	@Override
+//	public String getSignature() {
+//		return Signature;
+//	}
+//
+//	@Override
+//	public void setSignature(String signature) {
+//		Signature = signature;
+//	}
+//
+//	@Override
+//	public int getSignatureLength() {
+//		return SignatureLength;
+//	}
+//
+//	@Override
+//	public void setSignatureLength(int signatureLength) {
+//		SignatureLength = signatureLength;
+//	}
 
 	public boolean isSolicitedFlag() {
 		return SolicitedFlag;

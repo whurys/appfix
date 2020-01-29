@@ -1,0 +1,31 @@
+TAG	FIELD NAME	FIXML	REQ'D	COMMENTS
+8	BeginString		Y	FIX.4.4 (Always unencrypted, must be first field in message)
+9	BodyLength		Y	(Always unencrypted, must be second field in message)
+35	MsgType		Y	(Always unencrypted, must be third field in message)
+49	SenderCompID	@SndID	Y	(Always unencrypted)
+56	TargetCompID	@TID	Y	(Always unencrypted)
+115	OnBehalfOfCompID	@OBID	N	Trading partner company ID used when sending messages via a third party (Can be embedded within encrypted data section.)
+128	DeliverToCompID	@D2ID	N	Trading partner company ID used when sending messages via a third party (Can be embedded within encrypted data section.)
+90	SecureDataLen		C	Required to identify length of encrypted section of message. (Always unencrypted)
+91	SecureData		C	Required when message body is encrypted. Always immediately follows SecureDataLen (90) field.
+34	MsgSeqNum	@SeqNum	Y	(Can be embedded within encrypted data section.)
+50	SenderSubID	@SSub	N	(Can be embedded within encrypted data section.)
+142	SenderLocationID	@SLoc	N	Sender's LocationID (i.e. geographic location and/or desk) (Can be embedded within encrypted data section.)
+57	TargetSubID	@TSub	N	"ADMIN" reserved for administrative messages not intended for a specific user. (Can be embedded within encrypted data section.)
+143	TargetLocationID	@TLoc	N	Trading partner LocationID (i.e. geographic location and/or desk) (Can be embedded within encrypted data section.)
+116	OnBehalfOfSubID	@OBSub	N	Trading partner SubID used when delivering messages via a third party. (Can be embedded within encrypted data section.)
+144	OnBehalfOfLocationID	@OBLoc	N	Trading partner LocationID (i.e. geographic location and/or desk) used when delivering messages via a third party. (Can be embedded within encrypted data section.)
+129	DeliverToSubID	@D2Sub	N	Trading partner SubID used when delivering messages via a third party. (Can be embedded within encrypted data section.)
+145	DeliverToLocationID	@D2Loc	N	Trading partner LocationID (i.e. geographic location and/or desk) used when delivering messages via a third party. (Can be embedded within encrypted data section.)
+43	PossDupFlag	@PosDup	N	Always required for retransmitted messages, whether prompted by the sending system or as the result of a resend request. (Can be embedded within encrypted data section.)
+97	PossResend	@PosRsnd	N	Required when message may be duplicate of another message sent under a different sequence number. (Can be embedded within encrypted data section.)
+52	SendingTime	@SndgTm	Y	(Can be embedded within encrypted data section.)
+122	OrigSendingTime	@OrigSndTm	N	Required for message resent as a result of a Resend Request (2) . If data is not available set to same value as SendingTime (52) (Can be embedded within encrypted data section.)
+212	XmlDataLen		C	Required when specifying XmlData (213) to identify the length of a XmlData message block. (Can be embedded within encrypted data section.)
+213	XmlData		C	Can contain a XML formatted message block (e.g. FIXML). Always immediately follows XmlDataLen (212) field. (Can be embedded within encrypted data section.) See Volume 1: FIXML Support of FIX Specification
+347	MessageEncoding	@Encdng	N	Type of message encoding (non-ASCII characters) used in a message's "Encoded" fields. Required if any "Encoding" fields are used.
+369	LastMsgSeqNumProcessed		N	The last MsgSeqNum (34) value received and processed. Can be specified on every message sent. Useful for detecting a backlog with a counterparty.
+627	NoHops	Hop	N	Number of repeating groups of historical "hop" information. Only applicable if OnBehalfOfCompID (115) is used, however, its use is optional. Note that some market regulations or counterparties may require tracking of message hops.
+=>	628	HopCompID	@ID	C	Third party firm which delivered a specific message either from the firm which originated the message or from another third party (if multiple "hops" are performed). It is recommended that this value be the SenderCompID (49) of the third party.
+=>	629	HopSendingTime	@Snt	N	Time that HopCompID (628) sent the message. It is recommended that this value be the SendingTime (52) of the message sent by the third party.
+=>	630	HopRefID	@Ref	N	Reference identifier assigned by HopCompID (628) associated with the message sent. It is recommended that this value be the MsgSeqNum (34) of the message sent by the third party.

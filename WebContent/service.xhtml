@@ -26,32 +26,50 @@
 
 <h:body>
 
-	<h:form>
+	<h:form id="formID">
 
 		<p:messages>
 			<p:autoUpdate />
 		</p:messages>
 
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+		<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
 			<p:outputLabel value="Line Handler:" />
-			<p:selectOneMenu value="#{serverView.sessionApp}"
-				style="width:125px">
+			<p:selectOneMenu value="#{serverView.sessionApp}" style="width:125px">
 				<f:selectItem itemLabel="Select a lilne hnadler" itemValue="" />
-				 <f:selectItems value="#{serverView.mapSessionApp}"  />
+				<f:selectItems value="#{serverView.mapSessionApp}" />
 			</p:selectOneMenu>
-		</h:panelGrid>	
+			
+			<p:commandButton value="Submit" update="display,formID"
+			oncomplete="PF('dlg').show()" icon="pi pi-check" />
+		</h:panelGrid>
 
 
-			<p:panel header="Line Handler">
+		<p:panel header="Line Handler">
 
-				<p:commandButton action="#{serverView.start}" value="Start"
-					style="color:green;" />
-				<p:commandButton action="#{serverView.stop}" value="Stop"
-					style="color:red;" />
-				<p:commandButton action="#{serverView.stopForce}" value="Stop Force"
-					style="color:red;" />
+			<p:commandButton action="#{serverView.start}" value="Start"
+				style="color:green;" />
+			<p:commandButton action="#{serverView.stop}" value="Stop"
+				style="color:red;" />
+			<p:commandButton action="#{serverView.stopForce}" value="Stop Force"
+				style="color:red;" />
 
-			</p:panel>
+		</p:panel>
+
+
+		
+
+		<p:dialog header="Values" modal="true" showEffect="bounce"
+			widgetVar="dlg" resizable="false">
+			<p:panelGrid columns="2" id="display" columnClasses="label,value">
+				<h:outputText value="New session:" />
+				<h:outputText value="#{serverView.sessionApp}" />
+
+
+			</p:panelGrid>
+		</p:dialog>
+
+
+
 	</h:form>
 
 

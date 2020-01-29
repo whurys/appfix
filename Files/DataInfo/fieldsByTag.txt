@@ -1,0 +1,2736 @@
+NAME	DESCRIPTION
+(1) Account	
+Account mnemonic as agreed between buy and sell sides, e.g. broker and institution or investor/intermediary and fund manager.
+
+(2) AdvId	
+Unique identifier of Advertisement (7) message.
+
+(3) AdvRefID	
+Reference identifier used with CANCEL and REPLACE transaction types.
+
+(4) AdvSide	
+Broker's side of advertised trade
+
+(5) AdvTransType	
+Identifies Advertisement (7) message transaction type
+
+(6) AvgPx	
+Calculated average price of all fills on this order.
+
+(7) BeginSeqNo	
+Message sequence number of first message in range to be resent
+
+(8) BeginString	
+Identifies beginning of new message and protocol version. ALWAYS FIRST FIELD IN MESSAGE. (Always unencrypted)
+
+(9) BodyLength	
+Message length, in bytes, is verified by counting the number of characters in the message following the BodyLength (9) field up to, and including, the delimiter immediately preceding the CheckSum (10) field. ALWAYS SECOND FIELD IN MESSAGE. (Always unencrypted) For example, for message 8=FIX 4.4^9=5^35=0^10=10^, the BodyLength is 5 for 35=0^
+
+(10) CheckSum	
+Three byte, simple checksum (see Volume 2: "Checksum Calculation" of FIX Specification for description). ALWAYS LAST FIELD IN MESSAGE; i.e. serves, with the trailing <SOH>, as the end-of-message delimiter. Always defined as three characters. (Always unencrypted)
+
+(11) ClOrdID	
+Unique identifier for Order as assigned by the buy-side (institution, broker, intermediary etc.) (identified by SenderCompID (49) or OnBehalfOfCompID (115) as appropriate). Uniqueness must be guaranteed within a single trading day. Firms, particularly those which electronically submit multi-day orders, trade globally or throughout market close periods, should ensure uniqueness across days, for example by embedding a date within the ClOrdID (11) field.
+
+(12) Commission	
+Commission. Note if CommType (13) is percentage, Commission of 5% should be represented as .05.
+
+(13) CommType	
+Commission type
+
+(14) CumQty	
+Total quantity (e.g. number of shares) filled.
+
+(15) Currency	
+Identifies currency used for price. Absence of this field is interpreted as the default for the security. It is recommended that systems provide the currency value whenever possible.
+
+(16) EndSeqNo	
+Message sequence number of last message in range to be resent. If request is for a single message BeginSeqNo (7) = EndSeqNo (16) . If request is for all messages subsequent to a particular message, EndSeqNo (16) = "0" (representing infinity).
+
+(17) ExecID	
+Unique identifier of Execution Report (8) message as assigned by sell-side (broker, exchange, ECN) (will be 0 (zero) for ExecType (150) =I (Order Status)).
+
+(18) ExecInst	
+Instructions for order handling on exchange trading floor. If more than one instruction is applicable to an order, this field can contain multiple instructions separated by space.
+
+(19) ExecRefID	
+Reference identifier used with Trade Cancel and Trade Correct execution types.
+
+(21) HandlInst	
+Instructions for order handling on Broker trading floor
+
+(22) SecurityIDSource	
+Identifies class or source of the SecurityID (48) value. Required if SecurityID (48) is specified.
+
+(23) IOIid	
+Unique identifier of Indication of Interest (6) message.
+
+(25) IOIQltyInd	
+Relative quality of indication
+
+(26) IOIRefID	
+Reference identifier used with CANCEL and REPLACE, transaction types.
+
+(27) IOIQty	
+Quantity (e.g. number of shares) in numeric form or relative size.
+
+(28) IOITransType	
+Identifies Indication of Interest (6) message transaction type
+
+(29) LastCapacity	
+Broker capacity in order execution
+
+(30) LastMkt	
+Market of execution for last fill, or an indication of the market where an order was routed
+
+(31) LastPx	
+Price of this (last) fill.
+
+(32) LastQty	
+Quantity (e.g. shares) bought/sold on this (last) fill.
+
+(33) LinesOfText	
+Identifies number of lines of text body
+
+(34) MsgSeqNum	
+Integer message sequence number.
+
+(35) MsgType	
+Defines message type. ALWAYS THIRD FIELD IN MESSAGE. (Always unencrypted)
+
+(36) NewSeqNo	
+New sequence number
+
+(37) OrderID	
+Unique identifier for Order as assigned by sell-side (broker, exchange, ECN). Uniqueness must be guaranteed within a single trading day. Firms which accept multi-day orders should consider embedding a date within the OrderID (37) field to assure uniqueness across days.
+
+(38) OrderQty	
+Quantity ordered. This represents the number of shares for equities or par, face or nominal value for FI instruments.
+
+(39) OrdStatus	
+Identifies current status of order.
+
+(40) OrdType	
+Order type.
+
+(41) OrigClOrdID	
+ClOrdID (11) of the previous order (NOT the initial order of the day) as assigned by the institution, used to identify the previous order in cancel and cancel/replace requests.
+
+(42) OrigTime	
+Time of message origination (always expressed in UTC (Universal Time Coordinated, also known as "GMT"))
+
+(43) PossDupFlag	
+Indicates possible retransmission of message with this sequence number
+
+(44) Price	
+Price per unit of quantity (e.g. per share)
+
+(45) RefSeqNum	
+Reference message sequence number
+
+(48) SecurityID	
+Security identifier value of SecurityIDSource (22) type (e.g. CUSIP, SEDOL, ISIN, etc). Requires SecurityIDSource (22) .
+
+(49) SenderCompID	
+Assigned value used to identify firm sending message.
+
+(50) SenderSubID	
+Assigned value used to identify specific message originator (desk, trader, etc.)
+
+(52) SendingTime	
+Time of message transmission (always expressed in UTC (Universal Time Coordinated, also known as "GMT")
+
+(53) Quantity	
+Overall/total quantity (e.g. number of shares)
+
+(54) Side	
+Side of order
+
+(55) Symbol	
+Ticker symbol. Common, "human understood" representation of the security. SecurityID (48) value can be specified if no symbol exists (e.g. non-exchange traded Collective Investment Vehicles).
+
+(56) TargetCompID	
+Assigned value used to identify receiving firm.
+
+(57) TargetSubID	
+Assigned value used to identify specific individual or unit intended to receive message. "ADMIN" reserved for administrative messages not intended for a specific user.
+
+(58) Text	
+Free format text string
+
+(59) TimeInForce	
+Specifies how long the order remains in effect. Absence of this field is interpreted as DAY. NOTE not applicable to CIV Orders.
+
+(60) TransactTime	
+Time of execution/order creation (expressed in UTC - Universal Time Coordinated, also known as "GMT")
+
+(61) Urgency	
+Urgency flag
+
+(62) ValidUntilTime	
+Indicates expiration time of indication message (always expressed in UTC - Universal Time Coordinated, also known as "GMT")
+
+(63) SettlType	
+Indicates order settlement period. If present, SettlDate (64) overrides this field. If both SettlType (63) and SettlDate (64) are omitted, the default for SettlType (63) is 0 (Regular).
+
+(64) SettlDate	
+Specific date of trade settlement (SettlementDate) in YYYYMMDD format.
+
+(65) SymbolSfx	
+Additional information about the security (e.g. preferred, warrants, etc.). Note also see SecurityType (167) .
+
+(66) ListID	
+Unique identifier for list as assigned by institution, used to associate multiple individual orders. Uniqueness must be guaranteed within a single trading day. Firms which generate multi-day orders should consider embedding a date within the ListID (66) field to assure uniqueness across days.
+
+(67) ListSeqNo	
+Sequence of individual order within list (i.e. ListSeqNo (67) of TotNoOrders (68) , 2 of 25, 3 of 25, . . . )
+
+(68) TotNoOrders	
+Total number of list order entries across all messages. Should be the sum of all NoOrders (73) in each message that has repeating list order entries related to the same ListID (66) . Used to support fragmentation.
+
+(69) ListExecInst	
+Free format text message containing list handling and execution instructions.
+
+(70) AllocID	
+Unique identifier for Allocation Instruction (J) message.
+
+(71) AllocTransType	
+Identifies allocation transaction type
+
+(72) RefAllocID	
+Reference identifier to be used with AllocTransType (71) = Replace or Cancel
+
+(73) NoOrders	
+Indicates number of orders to be combined for average pricing and allocation.
+
+(74) AvgPxPrecision	
+Indicates number of decimal places to be used for average pricing. Absence of this field indicates that default precision arranged by the broker/institution is to be used.
+
+(75) TradeDate	
+Indicates date of trade referenced in this message in YYYYMMDD format. Absence of this field indicates current day (expressed in local time at place of trade).
+
+(77) PositionEffect	
+Indicates whether the resulting position after a trade should be an opening position or closing position. Used for omnibus accounting - where accounts are held on a gross basis instead of being netted together.
+
+(78) NoAllocs	
+Number of repeating AllocAccount (79) / AllocPrice (366) entries.
+
+(79) AllocAccount	
+Sub-account mnemonic
+
+(80) AllocQty	
+Quantity to be allocated to specific sub-account
+
+(81) ProcessCode	
+Processing code for sub-account. Absence of this field in AllocAccount (79) / AllocPrice (366) / AllocQty (80) / ProcessCode (81) instance indicates regular trade.
+
+(82) NoRpts	
+Total number of reports within series.
+
+(83) RptSeq	
+Sequence number of message within report series.
+
+(84) CxlQty	
+Total quantity canceled for this order.
+
+(85) NoDlvyInst	
+Number of delivery instruction fields to in repeating group.
+
+(87) AllocStatus	
+Identifies status of allocation.
+
+(88) AllocRejCode	
+Identifies reason for rejection.
+
+(89) Signature	
+Electronic signature
+
+(90) SecureDataLen	
+Length of encrypted message
+
+(91) SecureData	
+Actual encrypted data stream
+
+(93) SignatureLength	
+Number of bytes in signature field.
+
+(94) EmailType	
+Email message type.
+
+(95) RawDataLength	
+Number of bytes in raw data field.
+
+(96) RawData	
+Unformatted raw data, can include bitmaps, word processor documents, etc.
+
+(97) PossResend	
+Indicates that message may contain information that has been sent under another sequence number.
+
+(98) EncryptMethod	
+Method of encryption.
+
+(99) StopPx	
+Price per unit of quantity (e.g. per share)
+
+(100) ExDestination	
+Execution destination as defined by institution when order is entered.
+
+(102) CxlRejReason	
+Code to identify reason for cancel rejection.
+
+(103) OrdRejReason	
+Code to identify reason for order rejection.
+
+(104) IOIQualifier	
+Code to qualify Indication of Interest (6) use.
+
+(106) Issuer	
+Name of security issuer (e.g. International Business Machines, GNMA).
+
+(107) SecurityDesc	
+Security description.
+
+(108) HeartBtInt	
+Heartbeat interval (seconds)
+
+(110) MinQty	
+Minimum quantity of an order to be executed.
+
+(111) MaxFloor	
+Maximum quantity (e.g. number of shares) within an order to be shown on the exchange floor at any given time.
+
+(112) TestReqID	
+Identifier included in Test Request (1) message to be returned in resulting Heartbeat (0)
+
+(113) ReportToExch	
+Identifies party of trade responsible for exchange reporting.
+
+(114) LocateReqd	
+Indicates whether the broker is to locate the stock in conjunction with a short sell order.
+
+(115) OnBehalfOfCompID	
+Assigned value used to identify firm originating message if the message was delivered by a third party i.e. the third party firm identifier would be delivered in the SenderCompID (49) field and the firm originating the message in this field.
+
+(116) OnBehalfOfSubID	
+Assigned value used to identify specific message originator (i.e. trader) if the message was delivered by a third party
+
+(117) QuoteID	
+Unique identifier for quote
+
+(118) NetMoney	
+Total amount due as the result of the transaction (e.g. for Buy order - principal + commission + fees) reported in currency of execution.
+
+(119) SettlCurrAmt	
+Total amount due expressed in settlement currency (includes the effect of the forex transaction)
+
+(120) SettlCurrency	
+Currency code of settlement denomination.
+
+(121) ForexReq	
+Indicates request for forex accommodation trade to be executed along with security transaction.
+
+(122) OrigSendingTime	
+Original time of message transmission (always expressed in UTC (Universal Time Coordinated, also known as "GMT") when transmitting orders as the result of a resend request.
+
+(123) GapFillFlag	
+Indicates that the Sequence Reset (4) message is replacing administrative or application messages which will not be resent.
+
+(124) NoExecs	
+No of execution repeating group entries to follow.
+
+(126) ExpireTime	
+Time/Date of order expiration (always expressed in UTC - Universal Time Coordinated, also known as "GMT")
+
+(127) DKReason	
+Reason for execution rejection.
+
+(128) DeliverToCompID	
+Assigned value used to identify the firm targeted to receive the message if the message is delivered by a third party i.e. the third party firm identifier would be delivered in the TargetCompID (56) field and the ultimate receiver firm ID in this field.
+
+(129) DeliverToSubID	
+Assigned value used to identify specific message recipient (i.e. trader) if the message is delivered by a third party
+
+(130) IOINaturalFlag	
+Indicates that Indication of Interest (6) is the result of an existing agency order or a facilitation position resulting from an agency order, not from principal trading or order solicitation activity.
+
+(131) QuoteReqID	
+Unique identifier for Quote Request (R)
+
+(132) BidPx	
+Bid price/rate
+
+(133) OfferPx	
+Offer price/rate
+
+(134) BidSize	
+Quantity of bid
+
+(135) OfferSize	
+Quantity of offer
+
+(136) NoMiscFees	
+Number of repeating groups of miscellaneous fees
+
+(137) MiscFeeAmt	
+Miscellaneous fee value
+
+(138) MiscFeeCurr	
+Currency of miscellaneous fee
+
+(139) MiscFeeType	
+Indicates type of miscellaneous fee.
+
+(140) PrevClosePx	
+Previous closing price of security.
+
+(141) ResetSeqNumFlag	
+Indicates that the both sides of the FIX session should reset sequence numbers.
+
+(142) SenderLocationID	
+Assigned value used to identify specific message originator's location (i.e. geographic location and/or desk, trader)
+
+(143) TargetLocationID	
+Assigned value used to identify specific message destination's location (i.e. geographic location and/or desk, trader)
+
+(144) OnBehalfOfLocationID	
+Assigned value used to identify specific message originator's location (i.e. geographic location and/or desk, trader) if the message was delivered by a third party
+
+(145) DeliverToLocationID	
+Assigned value used to identify specific message recipient's location (i.e. geographic location and/or desk, trader) if the message was delivered by a third party
+
+(146) NoRelatedSym	
+Specifies the number of repeating symbols specified.
+
+(147) Subject	
+The subject of an Email (C) message
+
+(148) Headline	
+The headline of a News (B) message
+
+(149) URLLink	
+A URI (Uniform Resource Identifier) or URL (Uniform Resource Locator) link to additional information (i.e. http://en.wikipedia.org/wiki/Uniform_Resource_Locator ). See " Appendix 6-B FIX Fields Based Upon Other Standards " of FIX.
+
+(150) ExecType	
+Describes the specific Execution Report (8) (i.e. Pending Cancel) while OrdStatus (39) will always identify the current order status (i.e. Partially Filled)
+
+(151) LeavesQty	
+Quantity open for further execution. If the OrdStatus (39) is Canceled, DoneForTheDay, Expired, Calculated, or Rejected (in which case the order is no longer active) then LeavesQty (151) could be 0, otherwise LeavesQty (151) = OrderQty (38) - CumQty (14) .
+
+(152) CashOrderQty	
+Specifies the approximate order quantity desired in total monetary units vs. as tradeable units (e.g. number of shares). The broker or fund manager (for CIV orders) would be responsible for converting and calculating a tradeable unit (e.g. share) quantity ( OrderQty (38) ) based upon this amount to be used for the actual order and subsequent messages.
+
+(153) AllocAvgPx	
+AvgPx (6) for a specific AllocAccount (79) .
+
+(154) AllocNetMoney	
+NetMoney (118) for a specific AllocAccount (79)
+
+(155) SettlCurrFxRate	
+Foreign exchange rate used to compute SettlCurrAmt (119) from Currency (15) to SettlCurrency (120)
+
+(156) SettlCurrFxRateCalc	
+Specifies whether or not SettlCurrFxRate (155) should be multiplied or divided.
+
+(157) NumDaysInterest	
+Number of Days of Interest for convertible bonds and fixed income. Note value may be negative.
+
+(158) AccruedInterestRate	
+The amount the buyer compensates the seller for the portion of the next coupon interest payment the seller has earned but will not receive from the issuer because the issuer will send the next coupon payment to the buyer. Accrued Interest Rate is the annualized Accrued Interest amount divided by the purchase price of the bond.
+
+(159) AccruedInterestAmt	
+Amount of Accrued Interest for convertible bonds and fixed income
+
+(160) SettlInstMode	
+Indicates mode used for Settlement Instructions (T) message.
+
+(161) AllocText	
+Free format text related to a specific AllocAccount (79) .
+
+(162) SettlInstID	
+Unique identifier for Settlement Instruction.
+
+(163) SettlInstTransType	
+Settlement Instructions (T) message transaction type
+
+(164) EmailThreadID	
+Unique identifier for an email thread (new and chain of replies)
+
+(165) SettlInstSource	
+Indicates source of Settlement Instructions
+
+(167) SecurityType	
+Indicates type of security. See also the Product (460) and CFICode (461) fields. It is recommended that CFICode (461) be used instead of SecurityType (167) for non-Fixed Income instruments.
+
+(168) EffectiveTime	
+Time the details within the message should take effect (always expressed in UTC (Universal Time Coordinated), also known as "GMT")
+
+(169) StandInstDbType	
+Identifies the Standing Instruction database used
+
+(170) StandInstDbName	
+Name of the Standing Instruction database represented with StandInstDbType (169) (i.e. the Global Custodian's name).
+
+(171) StandInstDbID	
+Unique identifier used on the Standing Instructions database for the Standing Instructions to be referenced.
+
+(172) SettlDeliveryType	
+Identifies type of settlement
+
+(188) BidSpotRate	
+Bid F/X spot rate.
+
+(189) BidForwardPoints	
+Bid F/X forward points added to spot rate. May be a negative value.
+
+(190) OfferSpotRate	
+Offer F/X spot rate.
+
+(191) OfferForwardPoints	
+Offer F/X forward points added to spot rate. May be a negative value.
+
+(192) OrderQty2	
+OrderQty (38) of the future part of a F/X swap order.
+
+(193) SettDate2	
+SettlDate (64) of the future part of a F/X swap order.
+
+(194) LastSpotRate	
+F/X spot rate.
+
+(195) LastForwardPoints	
+F/X forward points added to LastSpotRate (194) . May be a negative value.
+
+(196) AllocLinkID	
+Can be used to link two different Allocation Instruction (J) messages (each with unique AllocID (70) ) together, i.e. for F/X "Netting" or "Swaps". Should be unique.
+
+(197) AllocLinkType	
+Identifies the type of Allocation Instruction (J) linkage when AllocLinkID (196) is used.
+
+(198) SecondaryOrderID	
+Assigned by the party which accepts the order. Can be used to provide the OrderID (37) used by an exchange or executing system.
+
+(199) NoIOIQualifiers	
+Number of repeating groups of IOIQualifiers.
+
+(200) MaturityMonthYear	
+Can be used with standardized derivatives vs. the MaturityDate (541) field. Month and Year of the maturity (used for standardized futures and options).
+
+(202) StrikePrice	
+Strike Price for an Option.
+
+(203) CoveredOrUncovered	
+Used for derivative products, such as options
+
+(206) OptAttribute	
+Can be used for SecurityType (167) =OPT to identify a particular security. Valid values vary by SecurityExchange: For Exchanges: DTB (Frankfurt), HKSE (Hong Kong), and SOFFEX (Zurich) 0-9 = single digit "version" number assigned by exchange following capital adjustments (0=current, 1=prior, 2=prior to 1, etc).
+
+(207) SecurityExchange	
+Market used to help identify a security.
+
+(208) NotifyBrokerOfCredit	
+Indicates whether or not details should be communicated to BrokerOfCredit (i.e. step-in broker).
+
+(209) AllocHandlInst	
+Indicates how the receiver (i.e. third party) of Allocation Instruction (J) message should handle/process the account details.
+
+(210) MaxShow	
+Maximum quantity (e.g. number of shares) within an order to be shown to other customers (i.e. sent via an Indication of Interest (6) ).
+
+(211) PegOffsetValue	
+Amount (signed) added to the peg for a pegged order in the context of the PegOffsetType (836)
+
+(212) XmlDataLen	
+Length of the XmlData (213) data block.
+
+(213) XmlData	
+Actual XML data stream (e.g. FIXML). See appropriate XML reference (e.g. FIXML). Note: may contain embedded SOH characters.
+
+(214) SettlInstRefID	
+Reference identifier for the SettlInstID (162) with Cancel and Replace SettlInstTransType (163) transaction types.
+
+(215) NoRoutingIDs	
+Number of repeating groups of RoutingID (217) and RoutingType (216) values.
+
+(216) RoutingType	
+Indicates the type of RoutingID (217) specified.
+
+(217) RoutingID	
+Assigned value used to identify a specific routing destination.
+
+(218) Spread	
+For Fixed Income. Either Swap Spread or Spread to Benchmark depending upon the order type.
+
+(220) BenchmarkCurveCurrency	
+Identifies currency used for benchmark curve.
+
+(221) BenchmarkCurveName	
+Name of benchmark curve.
+
+(222) BenchmarkCurvePoint	
+Point on benchmark curve. Free form values: e.g. "1Y", "7Y", "INTERPOLATED".
+
+(223) CouponRate	
+The rate of interest that, when multiplied by the principal, par value, or face value of a bond, provides the currency amount of the periodic interest payment. The coupon is always cited, along with maturity, in any quotation of a bond's price.
+
+(224) CouponPaymentDate	
+Date interest is to be paid. Used in identifying Corporate Bond issues.
+
+(225) IssueDate	
+The date on which a bond or stock offering is issued. It may or may not be the same as the effective date ("Dated Date") or the date on which interest begins to accrue ("Interest Accrual Date")
+
+(226) RepurchaseTerm	
+Number of business days before repurchase of a repo.
+
+(227) RepurchaseRate	
+Percent of par at which a Repo will be repaid. Represented as a percent, e.g. .9525 represents 95-1/4 percent of par.
+
+(228) Factor	
+For Fixed Income: Amorization Factor for deriving Current face from Original face for ABS or MBS securities, note the fraction may be greater than, equal to or less than 1. In TIPS securities this is the Inflation index.
+
+(229) TradeOriginationDate	
+Used with Fixed Income for Muncipal New Issue Market. Agreement in principal between counter-parties prior to actual trade date.
+
+(230) ExDate	
+The date when a distribution of interest is deducted from a securities assets or set aside for payment to bondholders. On the ex-date, the securities price drops by the amount of the distribution (plus or minus any market activity).
+
+(231) ContractMultiplier	
+Specifies the ratio or multiply factor to convert from "nominal" units (e.g. contracts) to total units (e.g. shares) (e.g. 1.0, 100, 1000, etc). Applicable For Fixed Income, Convertible Bonds, Derivatives, etc.
+
+(232) NoStipulations	
+Number of stipulation entries
+
+(233) StipulationType	
+For Fixed Income. Type of Stipulation or Prepayment Speeds.
+
+(234) StipulationValue	
+For Fixed Income. Value of stipulation.
+
+(235) YieldType	
+Type of yield.
+
+(236) Yield	
+Yield percentage.
+
+(237) TotalTakedown	
+The price at which the securities are distributed to the different members of an underwriting group for the primary market in Municipals, total gross underwriter's spread.
+
+(238) Concession	
+Provides the reduction in price for the secondary market in Muncipals.
+
+(239) RepoCollateralSecurityType	
+Identifies the collateral used in the transaction.
+
+(240) RedemptionDate	
+Return of investor's principal in a security. Bond redemption can occur before maturity date.
+
+(241) UnderlyingCouponPaymentDate	
+Underlying security's CouponPaymentDate. See CouponPaymentDate (224) field for description
+
+(242) UnderlyingIssueDate	
+Underlying security's IssueDate. See IssueDate (225) field for description
+
+(243) UnderlyingRepoCollateralSecurityType	
+Underlying security's RepoCollateralSecurityType. See RepoCollateralSecurityType (239) field for description
+
+(244) UnderlyingRepurchaseTerm	
+Underlying security's RepurchaseTerm. See RepurchaseTerm (226) field for description
+
+(245) UnderlyingRepurchaseRate	
+Underlying security's RepurchaseRate. See RepurchaseRate (227) field for description
+
+(246) UnderlyingFactor	
+Underlying security's Factor. See Factor (228) field for description
+
+(247) UnderlyingRedemptionDate	
+Underlying security's RedemptionDate. See RedemptionDate (240) field for description
+
+(248) LegCouponPaymentDate	
+Multileg instrument's individual leg security's CouponPaymentDate. See CouponPaymentDate (224) field for description
+
+(249) LegIssueDate	
+Multileg instrument's individual leg security's IssueDate. See IssueDate (225) field for description
+
+(250) LegRepoCollateralSecurityType	
+Multileg instrument's individual leg security's RepoCollateralSecurityType. See RepoCollateralSecurityType (239) field for description
+
+(251) LegRepurchaseTerm	
+Multileg instrument's individual leg security's RepurchaseTerm. See RepurchaseTerm (226) field for description
+
+(252) LegRepurchaseRate	
+Multileg instrument's individual leg security's RepurchaseRate. See RepurchaseRate (227) field for description
+
+(253) LegFactor	
+Multileg instrument's individual leg security's Factor. See Factor (228) field for description
+
+(254) LegRedemptionDate	
+Multileg instrument's individual leg security's RedemptionDate. See RedemptionDate (240) field for description
+
+(255) CreditRating	
+An evaluation of a company's ability to repay obligations or its likelihood of not defaulting. These evaluation are provided by Credit Rating Agencies, i.e. S&P, Moody's.
+
+(256) UnderlyingCreditRating	
+Underlying security's CreditRating. See CreditRating (255) field for description
+
+(257) LegCreditRating	
+Multileg instrument's individual leg security's CreditRating. See CreditRating (255) field for description
+
+(258) TradedFlatSwitch	
+Driver and part of trade in the event that the Security Master file was wrong at the point of entry
+
+(259) BasisFeatureDate	
+BasisFeatureDate (259) allows requesting firms within fixed income the ability to request an alternative yield-to-worst, -maturity, -extended or other call. This flows through the confirm process.
+
+(260) BasisFeaturePrice	
+Price for BasisFeatureDate. See BasisFeatureDate (259)
+
+(262) MDReqID	
+Unique identifier for Market Data Request (V)
+
+(263) SubscriptionRequestType	
+Subscription Request Type
+
+(264) MarketDepth	
+Depth of market for Book Snapshot
+
+(265) MDUpdateType	
+Specifies the type of Market Data update.
+
+(266) AggregatedBook	
+Specifies whether or not book entries should be aggregated. Broker option if not specified.
+
+(267) NoMDEntryTypes	
+Number of MDEntryType (269) fields requested.
+
+(268) NoMDEntries	
+Number of entries in Market Data message.
+
+(269) MDEntryType	
+Type Market Data entry.
+
+(270) MDEntryPx	
+Price of the Market Data Entry.
+
+(271) MDEntrySize	
+Quantity or volume represented by the Market Data Entry.
+
+(272) MDEntryDate	
+Date of Market Data Entry.
+
+(273) MDEntryTime	
+Time of Market Data Entry.
+
+(274) TickDirection	
+Direction of the "tick".
+
+(275) MDMkt	
+Market posting quote / trade.
+
+(276) QuoteCondition	
+Space-delimited list of conditions describing a quote.
+
+(277) TradeCondition	
+Space-delimited list of conditions describing a trade
+
+(278) MDEntryID	
+Unique Market Data Entry identifier.
+
+(279) MDUpdateAction	
+Type of Market Data update action.
+
+(280) MDEntryRefID	
+Refers to a previous MDEntryID (278) .
+
+(281) MDReqRejReason	
+Reason for the rejection of a Market Data Request (V) .
+
+(282) MDEntryOriginator	
+Originator of a Market Data Entry
+
+(283) LocationID	
+Identification of a Market Maker's location
+
+(284) DeskID	
+Identification of a Market Maker's desk
+
+(285) DeleteReason	
+Reason for deletion.
+
+(286) OpenCloseSettlFlag	
+Flag that identifies a market data entry.
+
+(287) SellerDays	
+Specifies the number of days that may elapse before delivery of the security
+
+(288) MDEntryBuyer	
+Buying party in a trade
+
+(289) MDEntrySeller	
+Selling party in a trade
+
+(290) MDEntryPositionNo	
+Display position of a bid or offer, numbered from most competitive to least competitive, per market side, beginning with 1.
+
+(291) FinancialStatus	
+Identifies a firm's financial status.
+
+(292) CorporateAction	
+Identifies the type of Corporate Action.
+
+(293) DefBidSize	
+Default Bid Size.
+
+(294) DefOfferSize	
+Default Offer Size.
+
+(295) NoQuoteEntries	
+The number of quote entries for a QuoteSet.
+
+(296) NoQuoteSets	
+The number of sets of quotes in the message.
+
+(297) QuoteStatus	
+Identifies the status of the quote acknowledgement.
+
+(298) QuoteCancelType	
+Identifies the type of quote cancel.
+
+(299) QuoteEntryID	
+Uniquely identifies the quote as part of a QuoteSet.
+
+(300) QuoteRejectReason	
+Reason quote was rejected.
+
+(301) QuoteResponseLevel	
+Level of Response requested from receiver of quote messages.
+
+(302) QuoteSetID	
+Unique id for the QuoteSet.
+
+(303) QuoteRequestType	
+Indicates the type of Quote Request (R) being generated
+
+(304) TotNoQuoteEntries	
+Total number of quotes for the QuoteSet across all messages. Should be the sum of all NoQuoteEntries (295) in each message that has repeating quotes that are part of the same QuoteSet.
+
+(305) UnderlyingSecurityIDSource	
+Underlying security's SecurityIDSource. See SecurityIDSource (22) field for description
+
+(306) UnderlyingIssuer	
+Underlying security's Issuer. See Issuer (106) field for description
+
+(307) UnderlyingSecurityDesc	
+Underlying security's SecurityDesc. See SecurityDesc (107) field for description
+
+(308) UnderlyingSecurityExchange	
+Underlying security's SecurityExchange (207) . Can be used to identify the underlying security.
+
+(309) UnderlyingSecurityID	
+Underlying security's SecurityID. See SecurityID (48) field for description
+
+(310) UnderlyingSecurityType	
+Underlying security's SecurityType (167) .
+
+(311) UnderlyingSymbol	
+Underlying security's Symbol. See Symbol (55) field for description
+
+(312) UnderlyingSymbolSfx	
+Underlying security's SymbolSfx. See SymbolSfx (65) field for description
+
+(313) UnderlyingMaturityMonthYear	
+Underlying security's MaturityMonthYear. Can be used with standardized derivatives vs. the UnderlyingMaturityDate (542) field. See MaturityMonthYear (200) field for description
+
+(316) UnderlyingStrikePrice	
+Underlying security's StrikePrice. See StrikePrice (202) field for description
+
+(317) UnderlyingOptAttribute	
+Underlying security's OptAttribute. See OptAttribute (206) field for description
+
+(318) UnderlyingCurrency	
+Underlying security's Currency. See Currency (15) field for description
+
+(320) SecurityReqID	
+Unique ID of a Security Definition Request (c) .
+
+(321) SecurityRequestType	
+Type of Security Definition Request (c) .
+
+(322) SecurityResponseID	
+Unique ID of a Security Definition (d) message.
+
+(323) SecurityResponseType	
+Type of Security Definition (d) message response.
+
+(324) SecurityStatusReqID	
+Unique ID of a Security Status Request (e) message.
+
+(325) UnsolicitedIndicator	
+Indicates whether or not message is being sent as a result of a subscription request or not.
+
+(326) SecurityTradingStatus	
+Identifies the trading status applicable to the transaction.
+
+(327) HaltReason	
+Denotes the reason for the Opening Delay or Trading Halt.
+
+(328) InViewOfCommon	
+Indicates whether or not the halt was due to Common Stock trading being halted.
+
+(329) DueToRelated	
+Indicates whether or not the halt was due to the Related Security being halted.
+
+(330) BuyVolume	
+Quantity bought.
+
+(331) SellVolume	
+Quantity sold.
+
+(332) HighPx	
+Represents an indication of the high end of the price range for a security prior to the open or reopen
+
+(333) LowPx	
+Represents an indication of the low end of the price range for a security prior to the open or reopen
+
+(334) Adjustment	
+Identifies the type of adjustment.
+
+(335) TradSesReqID	
+Unique ID of a Trading Session Status (h) message.
+
+(336) TradingSessionID	
+Identifier for Trading Session
+
+(337) ContraTrader	
+Identifies the trader (e.g. "badge number") of the ContraBroker (375) .
+
+(338) TradSesMethod	
+Method of trading
+
+(339) TradSesMode	
+Trading Session Mode
+
+(340) TradSesStatus	
+State of the trading session.
+
+(341) TradSesStartTime	
+Starting time of the trading session
+
+(342) TradSesOpenTime	
+Time of the opening of the trading session
+
+(343) TradSesPreCloseTime	
+Time of the pre-closed of the trading session
+
+(344) TradSesCloseTime	
+Closing time of the trading session
+
+(345) TradSesEndTime	
+End time of the trading session
+
+(346) NumberOfOrders	
+Number of orders in the market.
+
+(347) MessageEncoding	
+Type of message encoding (non-ASCII (non-English) characters) used in a message's "Encoded" fields.
+
+(348) EncodedIssuerLen	
+Byte length of encoded (non-ASCII characters) EncodedIssuer (349) field.
+
+(349) EncodedIssuer	
+Encoded (non-ASCII characters) representation of the Issuer (106) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the Issuer (106) field.
+
+(350) EncodedSecurityDescLen	
+Byte length of encoded (non-ASCII characters) EncodedSecurityDesc (351) field.
+
+(351) EncodedSecurityDesc	
+Encoded (non-ASCII characters) representation of the SecurityDesc (107) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the SecurityDesc (107) field.
+
+(352) EncodedListExecInstLen	
+Byte length of encoded (non-ASCII characters) EncodedListExecInst (353) field.
+
+(353) EncodedListExecInst	
+Encoded (non-ASCII characters) representation of the ListExecInst (69) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the ListExecInst (69) field.
+
+(354) EncodedTextLen	
+Byte length of encoded (non-ASCII characters) EncodedText (355) field.
+
+(355) EncodedText	
+Encoded (non-ASCII characters) representation of the Text (58) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the Text (58) field.
+
+(356) EncodedSubjectLen	
+Byte length of encoded (non-ASCII characters) EncodedSubject (357) field.
+
+(357) EncodedSubject	
+Encoded (non-ASCII characters) representation of the Subject (147) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the Subject (147) field.
+
+(358) EncodedHeadlineLen	
+Byte length of encoded (non-ASCII characters) EncodedHeadline (359) field.
+
+(359) EncodedHeadline	
+Encoded (non-ASCII characters) representation of the Headline (148) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the Headline (148) field.
+
+(360) EncodedAllocTextLen	
+Byte length of encoded (non-ASCII characters) EncodedAllocText (361) field.
+
+(361) EncodedAllocText	
+Encoded (non-ASCII characters) representation of the AllocText (161) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the AllocText (161) field.
+
+(362) EncodedUnderlyingIssuerLen	
+Byte length of encoded (non-ASCII characters) EncodedUnderlyingIssuer (363) field.
+
+(363) EncodedUnderlyingIssuer	
+Encoded (non-ASCII characters) representation of the UnderlyingIssuer (306) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the UnderlyingIssuer (306) field.
+
+(364) EncodedUnderlyingSecurityDescLen	
+Byte length of encoded (non-ASCII characters) EncodedUnderlyingSecurityDesc (365) field.
+
+(365) EncodedUnderlyingSecurityDesc	
+Encoded (non-ASCII characters) representation of the UnderlyingSecurityDesc (307) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the UnderlyingSecurityDesc (307) field.
+
+(366) AllocPrice	
+Executed price for an AllocAccount (79) entry used when using "executed price" vs. "average price" allocations (e.g. Japan).
+
+(367) QuoteSetValidUntilTime	
+Indicates expiration time of this particular QuoteSet (always expressed in UTC (Universal Time Coordinated, also known as "GMT")
+
+(368) QuoteEntryRejectReason	
+Reason Quote Entry was rejected:
+
+(369) LastMsgSeqNumProcessed	
+The last MsgSeqNum (34) value received by the FIX engine and processed by downstream application, such as trading engine or order routing system. Can be specified on every message sent. Useful for detecting a backlog with a counterparty.
+
+(371) RefTagID	
+The tag number of the FIX field being referenced.
+
+(372) RefMsgType	
+The MsgType (35) of the FIX message being referenced.
+
+(373) SessionRejectReason	
+Code to identify reason for a session-level Reject (3) message.
+
+(374) BidRequestTransType	
+Identifies the Bid Request (k) message type.
+
+(375) ContraBroker	
+Identifies contra broker. Standard NASD market-maker mnemonic is preferred.
+
+(376) ComplianceID	
+ID used to represent this transaction for compliance purposes (e.g. OATS reporting).
+
+(377) SolicitedFlag	
+Indicates whether or not the order was solicited.
+
+(378) ExecRestatementReason	
+Code to identify reason for an Execution Report (8) message sent with ExecType (150) =Restated or used when communicating an unsolicited cancel.
+
+(379) BusinessRejectRefID	
+The value of the business-level "ID" field on the message being referenced.
+
+(380) BusinessRejectReason	
+Code to identify reason for a Business Message Reject (j) message.
+
+(381) GrossTradeAmt	
+Total amount traded (e.g. CumQty (14) * AvgPx (6) ) expressed in units of currency.
+
+(382) NoContraBrokers	
+The number of ContraBroker (375) entries.
+
+(383) MaxMessageSize	
+Maximum number of bytes supported for a single message.
+
+(384) NoMsgTypes	
+Number of MsgType (35) in repeating group.
+
+(385) MsgDirection	
+Specifies the direction of the messsage.
+
+(386) NoTradingSessions	
+Number of TradingSessionID (336) in repeating group.
+
+(387) TotalVolumeTraded	
+Total volume (quantity) traded.
+
+(388) DiscretionInst	
+Code to identify the price a DiscretionOffsetValue (389) is related to and should be mathematically added to.
+
+(389) DiscretionOffsetValue	
+Amount (signed) added to the "related to" price specified via DiscretionInst (388) , in the context of DiscretionOffsetType (842)
+
+(390) BidID	
+Unique identifier for Bid Response (l) as assigned by sell-side (broker, exchange, ECN). Uniqueness must be guaranteed within a single trading day.
+
+(391) ClientBidID	
+Unique identifier for a Bid Request (k) as assigned by institution. Uniqueness must be guaranteed within a single trading day.
+
+(392) ListName	
+Descriptive name for list order.
+
+(393) TotNoRelatedSym	
+Total number of securities.
+
+(394) BidType	
+Code to identify the type of Bid Request (k) .
+
+(395) NumTickets	
+Total number of tickets.
+
+(396) SideValue1	
+Amounts in currency
+
+(397) SideValue2	
+Amounts in currency
+
+(398) NoBidDescriptors	
+Number of BidDescriptor (400) entries.
+
+(399) BidDescriptorType	
+Code to identify the type of BidDescriptor (400) .
+
+(400) BidDescriptor	
+BidDescriptor (400) value. Usage depends upon BidDescriptorType (399) .
+
+(401) SideValueInd	
+Code to identify which "SideValue" the value refers to. SideValue1 and SideValue2 are used as opposed to Buy or Sell so that the basket can be quoted either way as Buy or Sell.
+
+(402) LiquidityPctLow	
+Liquidity indicator or lower limit if TotNoRelatedSym (393) > 1. Represented as a percentage.
+
+(403) LiquidityPctHigh	
+Upper liquidity indicator if TotNoRelatedSym (393) > 1. Represented as a percentage.
+
+(404) LiquidityValue	
+Value between LiquidityPctLow (402) and LiquidityPctHigh (403) in Currency (15)
+
+(405) EFPTrackingError	
+Eg Used in EFP trades 12% (EFP - Exchange for Physical ). Represented as a percentage.
+
+(406) FairValue	
+Used in EFP trades
+
+(407) OutsideIndexPct	
+Used in EFP trades. Represented as a percentage.
+
+(408) ValueOfFutures	
+Used in EFP trades
+
+(409) LiquidityIndType	
+Code to identify the type of liquidity indicator.
+
+(410) WtAverageLiquidity	
+Overall weighted average liquidity expressed as a % of average daily volume. Represented as a percentage.
+
+(411) ExchangeForPhysical	
+Indicates whether or not to exchange for phsyical.
+
+(412) OutMainCntryUIndex	
+Value of stocks in Currency (15)
+
+(413) CrossPercent	
+Percentage of program that crosses in Currency (15) . Represented as a percentage.
+
+(414) ProgRptReqs	
+Code to identify the desired frequency of progress reports.
+
+(415) ProgPeriodInterval	
+Time in minutes between each List Status (N) report sent by SellSide. Zero means don't send status.
+
+(416) IncTaxInd	
+Code to represent whether value is net (inclusive of tax) or gross.
+
+(417) NumBidders	
+Indicates the total number of bidders on the list
+
+(418) BidTradeType	
+Code to represent the type of trade.
+
+(419) BasisPxType	
+Code to represent the basis price type.
+
+(420) NoBidComponents	
+Indicates the number of list entries.
+
+(421) Country	
+ISO Country Code in field
+
+(422) TotNoStrikes	
+Total number of strike price entries across all messages. Should be the sum of all NoStrikes (428) in each message that has repeating strike price entries related to the same ListID (66) . Used to support fragmentation.
+
+(423) PriceType	
+Code to represent the price type.
+
+(424) DayOrderQty	
+For GT orders, the OrderQty (38) less all shares (adjusted for stock splits) that traded on previous days. DayOrderQty (424) = OrderQty (38) - ( CumQty (14) - DayCumQty (425) )
+
+(425) DayCumQty	
+Quantity on a GT order that has traded today.
+
+(426) DayAvgPx	
+The average price for quantity on a GT order that has traded today.
+
+(427) GTBookingInst	
+Code to identify whether to book out executions on a part-filled GT order on the day of execution or to accumulate.
+
+(428) NoStrikes	
+Number of list strike price entries.
+
+(429) ListStatusType	
+Code to represent the status type.
+
+(430) NetGrossInd	
+Code to represent whether value is net (inclusive of tax) or gross.
+
+(431) ListOrderStatus	
+Code to represent the status of a list order.
+
+(432) ExpireDate	
+Date of order expiration (last day the order can trade), always expressed in terms of the local market date. The time at which the order expires is determined by the local market's business practices
+
+(433) ListExecInstType	
+Identifies the type of ListExecInst (69) .
+
+(434) CxlRejResponseTo	
+Identifies the type of request that a Order Cancel Reject (9) is in response to.
+
+(435) UnderlyingCouponRate	
+Underlying security's CouponRate. See CouponRate (223) field for description
+
+(436) UnderlyingContractMultiplier	
+Underlying security's ContractMultiplier. See ContractMultiplier (231) field for description
+
+(437) ContraTradeQty	
+Quantity traded with the ContraBroker (375) .
+
+(438) ContraTradeTime	
+Identifes the time of the trade with the ContraBroker (375) . (always expressed in UTC (Universal Time Coordinated, also known as "GMT")
+
+(441) LiquidityNumSecurities	
+Number of Securites between LiquidityPctLow (402) and LiquidityPctHigh (403) in Currency (15) .
+
+(442) MultiLegReportingType	
+Used to indicate what an Execution Report (8) represents (e.g. used with multi-leg securiteis, such as option strategies, spreads, etc.).
+
+(443) StrikeTime	
+The time at which current market prices are used to determine the value of a basket.
+
+(444) ListStatusText	
+Free format text string related to List Status (N) .
+
+(445) EncodedListStatusTextLen	
+Byte length of encoded (non-ASCII characters) EncodedListStatusText (446) field.
+
+(446) EncodedListStatusText	
+Encoded (non-ASCII characters) representation of the ListStatusText (444) field in the encoded format specified via the MessageEncoding (347) field. If used, the ASCII (English) representation should also be specified in the ListStatusText (444) field.
+
+(447) PartyIDSource	
+Identifies class or source of the PartyID (448) value. Required if PartyID (448) is specified. Note: applicable values depend upon PartyRole (452) specified.
+
+(448) PartyID	
+Party identifier/code. See PartyIDSource (447) and PartyRole (452) .
+
+(451) NetChgPrevDay	
+Net change from previous day's closing price vs. last traded price.
+
+(452) PartyRole	
+Identifies the type or role of the PartyID (448) specified.
+
+(453) NoPartyIDs	
+Number of PartyID (448) , PartyIDSource (447) , and PartyRole (452) entries
+
+(454) NoSecurityAltID	
+Number of SecurityAltID (455) entries.
+
+(455) SecurityAltID	
+Alternate Security identifier value for this security of SecurityAltIDSource (456) type (e.g. CUSIP, SEDOL, ISIN, etc). Requires SecurityAltIDSource (456) .
+
+(456) SecurityAltIDSource	
+Identifies class or source of the SecurityAltID (455) value. Required if SecurityAltID (455) is specified.
+
+(457) NoUnderlyingSecurityAltID	
+Number of UnderlyingSecurityAltID (458) entries.
+
+(458) UnderlyingSecurityAltID	
+Alternate Security identifier value for this underlying security of UnderlyingSecurityAltIDSource (459) type (e.g. CUSIP, SEDOL, ISIN, etc). Requires UnderlyingSecurityAltIDSource (459) .
+
+(459) UnderlyingSecurityAltIDSource	
+Identifies class or source of the UnderlyingSecurityAltID (458) value. Required if UnderlyingSecurityAltID (458) is specified.
+
+(460) Product	
+Indicates the type of product the security is associated with. See also the CFICode (461) and SecurityType (167) fields.
+
+(461) CFICode	
+Indicates the type of security using ISO 10962 standard, Classification of Financial Instruments (CFI code) values. ISO 10962 is maintained by ANNA (Association of National Numbering Agencies) acting as Registration Authority. See also the Product (460) and SecurityType (167) fields. It is recommended that CFICode (461) be used instead of SecurityType (167) for non-Fixed Income instruments.
+
+(462) UnderlyingProduct	
+Underlying security's Product.
+
+(463) UnderlyingCFICode	
+Underlying security's CFICode.
+
+(464) TestMessageIndicator	
+Indicates whether or not this FIX Session is a "test" vs. "production" connection. Useful for preventing "accidents".
+
+(465) QuantityType	
+Designates the type of quantities (e.g. OrderQty (38) ) specified. Used for MBS and TIPS Fixed Income security types.
+
+(466) BookingRefID	
+Common reference passed to a post-trade booking process (e.g. industry matching utility).
+
+(467) IndividualAllocID	
+Unique identifier for a specific NoAllocs (78) repeating group instance (e.g. for an AllocAccount (79) ).
+
+(468) RoundingDirection	
+Specifies which direction to round For CIV - indicates whether or not the quantity of shares/units is to be rounded and in which direction where CashOrderQty (152) or (for CIV only) OrderPercent (516) are specified on an order.
+
+(469) RoundingModulus	
+For CIV - a float value indicating the value to which rounding is required.
+
+(470) CountryOfIssue	
+ISO Country code of instrument issue (e.g. the country portion typically used in ISIN). Can be used in conjunction with non-ISIN SecurityID (48) (e.g. CUSIP for Municipal Bonds without ISIN) to provide uniqueness.
+
+(471) StateOrProvinceOfIssue	
+A two-character state or province abbreviation.
+
+(472) LocaleOfIssue	
+Identifies the locale. For Municipal Security Issuers other than state or province. Refer to http://www.atmos.albany.edu/cgi/stagrep-cgi
+
+(473) NoRegistDtls	
+The number of registration details on a Registration Instructions (o) message
+
+(474) MailingDtls	
+Set of Correspondence address details, possibly including phone, fax, etc.
+
+(475) InvestorCountryOfResidence	
+The ISO 3166 Country code (2 character) identifying which country the beneficial investor is resident for tax purposes.
+
+(476) PaymentRef	
+"Settlement Payment Reference" - A free format Payment reference to assist with reconciliation, e.g. a Client and/or Order ID number.
+
+(477) DistribPaymentMethod	
+A code identifying the payment method for a (fractional) distribution.
+
+(478) CashDistribCurr	
+Specifies currency to be use for Cash Distributions - see " Appendix 6-A; Valid Currency Codes ".
+
+(479) CommCurrency	
+Specifies currency to be use for Commission (12) if the Commission currency is different from the Deal Currency - see Appendix 6-A: "Valid Currency Codes" of FIX Specification.
+
+(480) CancellationRights	
+For CIV - A one character code identifying whether Cancellation rights/Cooling off period applies.
+
+(481) MoneyLaunderingStatus	
+A one character code identifying Money laundering status.
+
+(482) MailingInst	
+Free format text to specify mailing instruction requirements, e.g. "no third party mailings".
+
+(483) TransBkdTime	
+For CIV A date and time stamp to indicate the time a CIV order was booked by the fund manager.
+
+(484) ExecPriceType	
+For CIV - Identifies how the execution price LastPx (31) was calculated from the fund unit/share price(s) calculated at the fund valuation point.
+
+(485) ExecPriceAdjustment	
+For CIV the amount or percentage by which the fund unit/share price was adjusted, as indicated by ExecPriceType (484)
+
+(486) DateOfBirth	
+The date of birth applicable to the individual, e.g. required to open some types of tax-exempt account.
+
+(487) TradeReportTransType	
+Identifies Trade Capture Report (AE) message transaction type
+
+(488) CardHolderName	
+The name of the payment card holder as specified on the card being used for payment.
+
+(489) CardNumber	
+The number of the payment card as specified on the card being used for payment.
+
+(490) CardExpDate	
+The expiry date of the payment card as specified on the card being used for payment.
+
+(491) CardIssNum	
+The issue number of the payment card as specified on the card being used for payment. This is only applicable to certain types of card.
+
+(492) PaymentMethod	
+A code identifying the Settlement payment method.
+
+(493) RegistAcctType	
+For CIV - a fund manager-defined code identifying which of the fund manager's account types is required.
+
+(494) Designation	
+Free format text defining the designation to be associated with a holding on the register. Used to identify assets of a specific underlying investor using a common registration, e.g. a broker's nominee or street name.
+
+(495) TaxAdvantageType	
+For CIV - a code identifying the type of tax exempt account in which purchased shares/units are to be held.
+
+(496) RegistRejReasonText	
+Text indicating reason(s) why a Registration Instructions (o) has been rejected.
+
+(497) FundRenewWaiv	
+A one character code identifying whether the Fund based renewal commission is to be waived.
+
+(498) CashDistribAgentName	
+Name of local agent bank if for cash distributions
+
+(499) CashDistribAgentCode	
+BIC (Bank Identification Code--Swift managed) code of agent bank for cash distributions
+
+(500) CashDistribAgentAcctNumber	
+Account number at agent bank for distributions.
+
+(501) CashDistribPayRef	
+Free format Payment reference to assist with reconciliation of distributions.
+
+(502) CashDistribAgentAcctName	
+Name of account at agent bank for distributions.
+
+(503) CardStartDate	
+The start date of the card as specified on the card being used for payment.
+
+(504) PaymentDate	
+The date written on a cheque or date payment should be submitted to the relevant clearing system.
+
+(505) PaymentRemitterID	
+Identifies sender of a payment, e.g. the payment remitter or a customer reference number.
+
+(506) RegistStatus	
+Registration status as returned by the broker or (for CIV) the fund manager
+
+(507) RegistRejReasonCode	
+Reason(s) why Registration Instructions (o) has been rejected.
+
+(508) RegistRefID	
+Reference identifier for the RegistID (513) with Cancel and Replace RegistTransType (514) transaction types.
+
+(509) RegistDtls	
+Set of Registration name and address details, possibly including phone, fax etc.
+
+(510) NoDistribInsts	
+The number of Distribution Instructions on a Registration Instructions (o) message
+
+(511) RegistEmail	
+Email address relating to Registration name and address details
+
+(512) DistribPercentage	
+The amount of each distribution to go to this beneficiary, expressed as a percentage
+
+(513) RegistID	
+Unique identifier of the registration details as assigned by institution or intermediary.
+
+(514) RegistTransType	
+Identifies Registration Instructions (o) transaction type
+
+(515) ExecValuationPoint	
+For CIV - a date and time stamp to indicate the fund valuation point with respect to which a order was priced by the fund manager.
+
+(516) OrderPercent	
+For CIV specifies the approximate order quantity desired. For a CIV Sale it specifies percentage of investor's total holding to be sold. For a CIV switch/exchange it specifies percentage of investor's cash realised from sales to be re-invested. The executing broker, intermediary or fund manager is responsible for converting and calculating OrderQty (38) in shares/units for subsequent messages.
+
+(517) OwnershipType	
+The relationship between Registration parties.
+
+(518) NoContAmts	
+The number of Contract Amount details on an Execution Report (8) message
+
+(519) ContAmtType	
+Type of ContAmtValue (520) .
+
+(520) ContAmtValue	
+Value of Contract Amount, e.g. a financial amount or percentage as indicated by ContAmtType (519) .
+
+(521) ContAmtCurr	
+Specifies currency for the Contract amount if different from the Deal Currency - see " Appendix 6-A; Valid Currency Codes ".
+
+(522) OwnerType	
+Identifies the type of owner.
+
+(523) PartySubID	
+Sub-identifier (e.g. Clearing Account for PartyRole (452) =Clearing Firm, Locate ID # for PartyRole (452) =Locate/Lending Firm, etc). Not required when using PartyID (448) , PartyIDSource (447) , and PartyRole (452) .
+
+(524) NestedPartyID	
+PartyID (448) value within a nested repeating group.
+
+(525) NestedPartyIDSource	
+PartyIDSource (447) value within a nested repeating group.
+
+(526) SecondaryClOrdID	
+Assigned by the party which originates the order. Can be used to provide the ClOrdID (11) used by an exchange or executing system.
+
+(527) SecondaryExecID	
+Assigned by the party which accepts the order. Can be used to provide the ExecID (17) used by an exchange or executing system.
+
+(528) OrderCapacity	
+Designates the capacity of the firm placing the order.
+
+(529) OrderRestrictions	
+Restrictions associated with an order. If more than one restriction is applicable to an order, this field can contain multiple instructions separated by space.
+
+(530) MassCancelRequestType	
+Specifies scope of Order Mass Cancel Request (q) .
+
+(531) MassCancelResponse	
+Specifies the action taken by counterparty order handling system as a result of the Order Mass Cancel Request (q)
+
+(532) MassCancelRejectReason	
+Reason Order Mass Cancel Request (q) was rejected
+
+(533) TotalAffectedOrders	
+Total number of orders affected by Order Mass Cancel Request (q) .
+
+(534) NoAffectedOrders	
+Number of affected orders in the repeating group of order ids.
+
+(535) AffectedOrderID	
+OrderID (37) of an order affected by a Order Mass Cancel Request (q) .
+
+(536) AffectedSecondaryOrderID	
+SecondaryOrderID (198) of an order affected by a Order Mass Cancel Request (q) .
+
+(537) QuoteType	
+Identifies the type of quote.
+
+(538) NestedPartyRole	
+PartyRole (452) value within a nested repeating group.
+
+(539) NoNestedPartyIDs	
+Number of NestedPartyID (524) , NestedPartyIDSource (525) , and NestedPartyRole (538) entries
+
+(540) TotalAccruedInterestAmt	
+Total Amount of Accrued Interest for convertible bonds and fixed income
+
+(541) MaturityDate	
+Date of maturity.
+
+(542) UnderlyingMaturityDate	
+Underlying security's maturity date. See MaturityDate (541) field for description
+
+(543) InstrRegistry	
+The location at which records of ownership are maintained for this instrument, and at which ownership changes must be recorded.
+
+(544) CashMargin	
+Identifies whether an order is a margin order or a non-margin order. This is primarily used when sending orders to Japanese exchanges to indicate sell margin or buy to cover. The same tag could be assigned also by buy-side to indicate the intent to sell or buy margin and the sell-side to accept or reject (base on some validation criteria) the margin request.
+
+(545) NestedPartySubID	
+PartySubID (523) value within a nested repeating group. Same values as PartySubID (523)
+
+(546) Scope	
+Defines the scope of a data element.
+
+(547) MDImplicitDelete	
+Defines how a server handles distribution of a truncated book. Defaults to broker option.
+
+(548) CrossID	
+Identifier for a cross order. Must be unique during a given trading day. Recommend that firms use the order date as part of the CrossID (548) for Good Till Cancel (GTC) orders.
+
+(549) CrossType	
+Type of cross being submitted to a market
+
+(550) CrossPrioritization	
+Indicates if one side or the other of a cross order should be prioritized.
+
+(551) OrigCrossID	
+CrossID (548) of the previous cross order (NOT the initial cross order of the day) as assigned by the institution, used to identify the previous cross order in Cross Order Cancel Request (u) and Cross Order Cancel/Replace Request (t) .
+
+(552) NoSides	
+Number of Side (54) repeating group instances.
+
+(553) Username	
+Userid or username.
+
+(554) Password	
+Password or passphrase.
+
+(555) NoLegs	
+Number of InstrumentLeg repeating group instances.
+
+(556) LegCurrency	
+Currency associated with a particular Leg's quantity
+
+(557) TotNoSecurityTypes	
+Indicates total number of security types in the event that multiple Security Types (w) messages are used to return results
+
+(558) NoSecurityTypes	
+Number of Security Type repeating group instances.
+
+(559) SecurityListRequestType	
+Identifies the type/criteria of Security List Request (x)
+
+(560) SecurityRequestResult	
+The results returned to a Security Type Request (v) message
+
+(561) RoundLot	
+The trading lot size of a security
+
+(562) MinTradeVol	
+The minimum trading volume for a security
+
+(563) MultiLegRptTypeReq	
+Indicates the method of execution reporting requested by issuer of the order.
+
+(564) LegPositionEffect	
+PositionEffect for leg of a multileg
+
+(565) LegCoveredOrUncovered	
+CoveredOrUncovered for leg of a multileg
+
+(566) LegPrice	
+Price for leg of a multileg
+
+(567) TradSesStatusRejReason	
+Indicates the reason a Trading Session Status Request (g) was rejected.
+
+(568) TradeRequestID	
+Trade Capture Report Request (AD) ID
+
+(569) TradeRequestType	
+Type of Trade Capture Report (AE) .
+
+(570) PreviouslyReported	
+Indicates if the trade capture report was previously reported to the counterparty
+
+(571) TradeReportID	
+Unique identifier of Trade Capture Report (AE)
+
+(572) TradeReportRefID	
+Reference identifier used with CANCEL and REPLACE transaction types.
+
+(573) MatchStatus	
+The status of this trade with respect to matching or comparison.
+
+(574) MatchType	
+The point in the matching process at which this trade was matched.
+
+(575) OddLot	
+This trade is to be treated as an odd lot. If this field is not specified, the default will be "N"
+
+(576) NoClearingInstructions	
+Number of clearing instructions
+
+(577) ClearingInstruction	
+Eligibility of this trade for clearing and central counterparty processing.
+
+(578) TradeInputSource	
+Type of input device or system from which the trade was entered.
+
+(579) TradeInputDevice	
+Specific device number, terminal number or station where trade was entered
+
+(580) NoDates	
+Number of Date fields provided in date range
+
+(581) AccountType	
+Type of account associated with an order
+
+(582) CustOrderCapacity	
+Capacity of customer placing the order.
+
+(583) ClOrdLinkID	
+Permits order originators to tie together groups of orders in which trades resulting from orders are associated for a specific purpose, for example the calculation of average execution price for a customer or to associate lists submitted to a broker as waves of a larger program trade.
+
+(584) MassStatusReqID	
+Value assigned by issuer of Order Mass Status Request (AF) to uniquely identify the request
+
+(585) MassStatusReqType	
+Order Mass Status Request (AF) Type
+
+(586) OrigOrdModTime	
+The most recent (or current) modification TransactTime (60) reported on an Execution Report (8) for the order.
+
+(587) LegSettlType	
+Refer to values for SettlType (63)
+
+(588) LegSettlDate	
+Refer to description for SettlDate (64)
+
+(589) DayBookingInst	
+Indicates whether or not automatic booking can occur.
+
+(590) BookingUnit	
+Indicates what constitutes a bookable unit.
+
+(591) PreallocMethod	
+Indicates the method of preallocation.
+
+(592) UnderlyingCountryOfIssue	
+Underlying security's CountryOfIssue. See CountryOfIssue (470) field for description
+
+(593) UnderlyingStateOrProvinceOfIssue	
+Underlying security's StateOrProvinceOfIssue. See StateOrProvinceOfIssue (471) field for description
+
+(594) UnderlyingLocaleOfIssue	
+Underlying security's LocaleOfIssue. See LocaleOfIssue (472) field for description
+
+(595) UnderlyingInstrRegistry	
+Underlying security's InstrRegistry. See InstrRegistry (543) field for description
+
+(596) LegCountryOfIssue	
+Multileg instrument's individual leg security's CountryOfIssue. See CountryOfIssue (470) field for description
+
+(597) LegStateOrProvinceOfIssue	
+Multileg instrument's individual leg security's StateOrProvinceOfIssue. See StateOrProvinceOfIssue (471) field for description
+
+(598) LegLocaleOfIssue	
+Multileg instrument's individual leg security's LocaleOfIssue. See LocaleOfIssue (472) field for description
+
+(599) LegInstrRegistry	
+Multileg instrument's individual leg security's InstrRegistry. See InstrRegistry (543) field for description
+
+(600) LegSymbol	
+Multileg instrument's individual security's Symbol. See Symbol (55) field for description
+
+(601) LegSymbolSfx	
+Multileg instrument's individual security's SymbolSfx. See SymbolSfx (65) field for description
+
+(602) LegSecurityID	
+Multileg instrument's individual security's SecurityID. See SecurityID (48) field for description
+
+(603) LegSecurityIDSource	
+Multileg instrument's individual security's SecurityIDSource. See SecurityIDSource (22) field for description
+
+(604) NoLegSecurityAltID	
+Multileg instrument's individual security's NoSecurityAltID. See NoSecurityAltID (454) field for description
+
+(605) LegSecurityAltID	
+Multileg instrument's individual security's SecurityAltID. See SecurityAltID (455) field for description
+
+(606) LegSecurityAltIDSource	
+Multileg instrument's individual security's SecurityAltIDSource. See SecurityAltIDSource (456) field for description
+
+(607) LegProduct	
+Multileg instrument's individual security's Product. See Product (460) field for description
+
+(608) LegCFICode	
+Multileg instrument's individual security's CFICode. See CFICode (461) field for description
+
+(609) LegSecurityType	
+Multileg instrument's individual security's SecurityType. See SecurityType (167) field for description
+
+(610) LegMaturityMonthYear	
+Multileg instrument's individual security's MaturityMonthYear. See MaturityMonthYear (200) field for description
+
+(611) LegMaturityDate	
+Multileg instrument's individual security's MaturityDate. See MaturityDate (541) field for description
+
+(612) LegStrikePrice	
+Multileg instrument's individual security's StrikePrice. See StrikePrice (202) field for description
+
+(613) LegOptAttribute	
+Multileg instrument's individual security's OptAttribute. See OptAttribute (206) field for description
+
+(614) LegContractMultiplier	
+Multileg instrument's individual security's ContractMultiplier. See ContractMultiplier (231) field for description
+
+(615) LegCouponRate	
+Multileg instrument's individual security's CouponRate. See CouponRate (223) field for description
+
+(616) LegSecurityExchange	
+Multileg instrument's individual security's SecurityExchange. See SecurityExchange (207) field for description
+
+(617) LegIssuer	
+Multileg instrument's individual security's Issuer. See Issuer (106) field for description
+
+(618) EncodedLegIssuerLen	
+Multileg instrument's individual security's EncodedIssuerLen. See EncodedIssuerLen (348) field for description
+
+(619) EncodedLegIssuer	
+Multileg instrument's individual security's EncodedIssuer. See EncodedIssuer (349) field for description
+
+(620) LegSecurityDesc	
+Multileg instrument's individual security's SecurityDesc. See SecurityDesc (107) field for description
+
+(621) EncodedLegSecurityDescLen	
+Multileg instrument's individual security's EncodedSecurityDescLen. See EncodedSecurityDescLen (350) field for description
+
+(622) EncodedLegSecurityDesc	
+Multileg instrument's individual security's EncodedSecurityDesc. See EncodedSecurityDesc (351) field for description
+
+(623) LegRatioQty	
+The ratio of quantity for this individual leg relative to the entire multileg security.
+
+(624) LegSide	
+The side of this individual leg (multileg security). See Side (54) field for description and values
+
+(625) TradingSessionSubID	
+Optional market assigned sub identifier for a trading session. Usage is determined by market or counterparties.
+
+(626) AllocType	
+Describes the specific type or purpose of an Allocation Instruction (J) message (i.e. "Buyside Calculated")
+
+(627) NoHops	
+Number of HopCompID (628) entries in repeating group.
+
+(628) HopCompID	
+Assigned value used to identify the third party firm which delivered a specific message either from the firm which originated the message or from another third party (if multiple "hops" are performed). It is recommended that this value be the SenderCompID (49) of the third party.
+
+(629) HopSendingTime	
+Time that HopCompID (628) sent the message. It is recommended that this value be the SendingTime (52) of the message sent by the third party.
+
+(630) HopRefID	
+Reference identifier assigned by HopCompID (628) associated with the message sent. It is recommended that this value be the MsgSeqNum (34) of the message sent by the third party.
+
+(631) MidPx	
+Mid price/rate
+
+(632) BidYield	
+Bid yield
+
+(633) MidYield	
+Mid yield
+
+(634) OfferYield	
+Offer yield
+
+(635) ClearingFeeIndicator	
+Indicates type of fee being assessed of the customer for trade executions at an exchange. Applicable for futures markets only at this time.
+
+(636) WorkingIndicator	
+Indicates if the order is currently being worked. Applicable only for OrdStatus (39) = "New". For open outcry markets this indicates that the order is being worked in the crowd. For electronic markets it indicates that the order has transitioned from a contingent order to a market order.
+
+(637) LegLastPx	
+Execution price assigned to a leg of a multileg instrument. See LastPx (31) field for description and values
+
+(638) PriorityIndicator	
+Indicates if a Cancel/Replace has caused an order to lose book priority.
+
+(639) PriceImprovement	
+Amount of price improvement.
+
+(640) Price2	
+Price of the future part of a F/X swap order.
+
+(641) LastForwardPoints2	
+F/X forward points of the future part of a F/X swap order added to LastSpotRate (194) . May be a negative value.
+
+(642) BidForwardPoints2	
+Bid F/X forward points of the future portion of a F/X swap quote added to spot rate. May be a negative value.
+
+(643) OfferForwardPoints2	
+Offer F/X forward points of the future portion of a F/X swap quote added to spot rate. May be a negative value.
+
+(644) RFQReqID	
+RFQ Request ID - used to identify an RFQ Request (AH) .
+
+(645) MktBidPx	
+Used to indicate the best bid in a market
+
+(646) MktOfferPx	
+Used to indicate the best offer in a market
+
+(647) MinBidSize	
+Used to indicate a minimum quantity for a bid. If this field is used the BidSize (134) field is interpreted as the maximum bid size
+
+(648) MinOfferSize	
+Used to indicate a minimum quantity for an offer. If this field is used the OfferSize (135) field is interpreted as the maximum offer size.
+
+(649) QuoteStatusReqID	
+Unique identifier for Quote Status Request (a) .
+
+(650) LegalConfirm	
+Indicates that this message is to serve as the final and legal confirmation.
+
+(651) UnderlyingLastPx	
+The calculated or traded price for the underlying instrument that corresponds to a derivative. Used for transactions that include the cash instrument and the derivative.
+
+(652) UnderlyingLastQty	
+The calculated or traded quantity for the underlying instrument that corresponds to a derivative. Used for transactions that include the cash instrument and the derivative.
+
+(654) LegRefID	
+Unique indicator for a specific leg.
+
+(655) ContraLegRefID	
+Unique indicator for a specific leg for the ContraBroker (375) .
+
+(656) SettlCurrBidFxRate	
+Foreign exchange rate used to compute the bid SettlCurrAmt (119) from Currency (15) to SettlCurrency (120)
+
+(657) SettlCurrOfferFxRate	
+Foreign exchange rate used to compute the offer SettlCurrAmt (119) from Currency (15) to SettlCurrency (120)
+
+(658) QuoteRequestRejectReason	
+Reason Quote was rejected.
+
+(659) SideComplianceID	
+ID within repeating group of sides which is used to represent this transaction for compliance purposes (e.g. OATS reporting).
+
+(660) AcctIDSource	
+Used to identify the source of the Account (1) code. This is especially useful if the account is a new account that the Respondent may not have setup yet in their system.
+
+(661) AllocAcctIDSource	
+Used to identify the source of the AllocAccount code.
+
+(662) BenchmarkPrice	
+Specifies the price of the benchmark.
+
+(663) BenchmarkPriceType	
+Identifies type of BenchmarkPrice.
+
+(664) ConfirmID	
+Message reference for Confirmation (AK)
+
+(665) ConfirmStatus	
+Identifies the status of the Confirmation (AK) .
+
+(666) ConfirmTransType	
+Identifies the Confirmation (AK) transaction type.
+
+(667) ContractSettlMonth	
+Specifies when the contract (i.e. MBS/TBA) will settle.
+
+(668) DeliveryForm	
+Identifies the form of delivery.
+
+(669) LastParPx	
+Last price expressed in percent-of-par. Conditionally required for Fixed Income trades when LastPx (31) is expressed in Yield, Spread, Discount or any other type.
+
+(670) NoLegAllocs	
+Number of Allocations for the leg
+
+(671) LegAllocAccount	
+Allocation Account for the leg
+
+(672) LegIndividualAllocID	
+Reference for the individual allocation ticket
+
+(673) LegAllocQty	
+Leg allocation quantity.
+
+(674) LegAllocAcctIDSource	
+The source of the LegAllocAccount
+
+(675) LegSettlCurrency	
+Identifies settlement currency for the Leg.
+
+(676) LegBenchmarkCurveCurrency	
+LegBenchmarkPrice currency
+
+(677) LegBenchmarkCurveName	
+Name of the Leg Benchmark Curve.
+
+(678) LegBenchmarkCurvePoint	
+Identifies the point on the Leg Benchmark Curve.
+
+(679) LegBenchmarkPrice	
+Used to identify the price of the benchmark security.
+
+(680) LegBenchmarkPriceType	
+The price type of the LegBenchmarkPrice.
+
+(681) LegBidPx	
+Bid price of this leg.
+
+(682) LegIOIQty	
+Leg-specific IOI quantity.
+
+(683) NoLegStipulations	
+Number of leg stipulation entries.
+
+(684) LegOfferPx	
+Offer price of this leg.
+
+(685) LegOrderQty	
+Quantity ordered of this leg.
+
+(686) LegPriceType	
+The price type of the LegBidPx (681) and/or LegOfferPx (684) .
+
+(687) LegQty	
+Quantity of this leg, e.g. in Quote dialog.
+
+(688) LegStipulationType	
+For Fixed Income, type of Stipulation for this leg.
+
+(689) LegStipulationValue	
+For Fixed Income, value of stipulation.
+
+(690) LegSwapType	
+For Fixed Income, used instead of LegQty (687) or LegOrderQty (685) to requests the respondent to calculate the quantity based on the quantity on the opposite side of the swap.
+
+(691) Pool	
+For Fixed Income, identifies MBS / ABS pool.
+
+(692) QuotePriceType	
+Code to represent price type requested in Quote.
+
+(693) QuoteRespID	
+Message reference for Quote Response (AJ) .
+
+(694) QuoteRespType	
+Identifies the type of Quote Response (AJ) .
+
+(695) QuoteQualifier	
+Code to qualify Quote use
+
+(696) YieldRedemptionDate	
+Date to which the yield has been calculated (i.e. maturity, par call or current call, pre-refunded date).
+
+(697) RedemptionPrice	
+Price to which the yield has been calculated.
+
+(698) RedemptionPriceType	
+The price type of the RedemptionPrice (697)
+
+(699) BenchmarkSecurityID	
+The identifier of the benchmark security, e.g. Treasury against Corporate bond.
+
+(700) ReversalIndicator	
+Indicates a trade that reverses a previous trade.
+
+(701) YieldCalcDate	
+Include as needed to clarify yield irregularities associated with date, e.g. when it falls on a non-business day.
+
+(702) NoPositions	
+Number of position entries.
+
+(703) PosType	
+Used to identify the type of quantity that is being returned.
+
+(704) LongQty	
+Long Quantity
+
+(705) ShortQty	
+Short Quantity
+
+(706) PosQtyStatus	
+Status of this position.
+
+(707) PosAmtType	
+Type of Position amount.
+
+(708) PosAmt	
+Position amount.
+
+(709) PosTransType	
+Identifies the type of position transaction.
+
+(710) PosReqID	
+Unique identifier for the position maintenance request as assigned by the submitter.
+
+(711) NoUnderlyings	
+Number of underlying legs that make up the security.
+
+(712) PosMaintAction	
+Maintenance Action to be performed.
+
+(713) OrigPosReqRefID	
+Reference to the PosReqID (710) of a previous maintenance request that is being replaced or canceled.
+
+(714) PosMaintRptRefID	
+Reference to a PosMaintRptID (721) from a previous Position Maintenance Report (AM) that is being replaced or canceled.
+
+(715) ClearingBusinessDate	
+The "Clearing Business Date" referred to by this maintenance request.
+
+(716) SettlSessID	
+Identifies a specific settlement session.
+
+(717) SettlSessSubID	
+SubID value associated with SettlSessID (716) .
+
+(718) AdjustmentType	
+Type of adjustment to be applied, used for PCS & PAJ.
+
+(719) ContraryInstructionIndicator	
+Required to be set to true (Y) when a Position Maintenance Request (AL) is being performed contrary to current money position.
+
+(720) PriorSpreadIndicator	
+Indicates if requesting a rollover of prior day's spread submissions.
+
+(721) PosMaintRptID	
+Unique identifier for this Position Report (AP)
+
+(722) PosMaintStatus	
+Status of Position Maintenance Request (AL) .
+
+(723) PosMaintResult	
+Result of Position Maintenance Request (AL) .
+
+(724) PosReqType	
+Unique identifier for the Position Maintenance Request (AL) as assigned by the submitter
+
+(725) ResponseTransportType	
+Identifies how the response to the request should be transmitted.
+
+(726) ResponseDestination	
+URI (Uniform Resource Identifier) for details) or other pre-arranged value. Used in conjunction with ResponseTransportType (725) value of Out-of-Band to identify the out-of-band destination.
+
+(727) TotalNumPosReports	
+Total number of Position Reports being returned.
+
+(728) PosReqResult	
+Result of Request for Positions (AN) .
+
+(729) PosReqStatus	
+Status of Request for Positions (AN)
+
+(730) SettlPrice	
+Settlement price.
+
+(731) SettlPriceType	
+Type of settlement price.
+
+(732) UnderlyingSettlPrice	
+Underlying security's SettlPrice. See SettlPrice (730) field for description
+
+(733) UnderlyingSettlPriceType	
+Underlying security's SettlPriceType.
+
+(734) PriorSettlPrice	
+Previous settlement price.
+
+(735) NoQuoteQualifiers	
+Number of repeating groups of QuoteQualifiers.
+
+(736) AllocSettlCurrency	
+Currency code of settlement denomination for a specific AllocAccount (79) .
+
+(737) AllocSettlCurrAmt	
+Total amount due expressed in settlement currency (includes the effect of the forex transaction) for a specific AllocAccount (79) .
+
+(738) InterestAtMaturity	
+Amount of interest (i.e. lump-sum) at maturity.
+
+(739) LegDatedDate	
+The effective date of a new securities issue determined by its underwriters. Often but not always the same as the Issue Date and the Interest Accrual Date
+
+(740) LegPool	
+For Fixed Income, identifies MBS / ABS pool for a specific leg of a multi-leg instrument.
+
+(741) AllocInterestAtMaturity	
+Amount of interest (i.e. lump-sum) at maturity at the account-level.
+
+(742) AllocAccruedInterestAmt	
+Amount of Accrued Interest for convertible bonds and fixed income at the allocation-level.
+
+(743) DeliveryDate	
+Date of delivery.
+
+(744) AssignmentMethod	
+Method under which assignment was conducted.
+
+(745) AssignmentUnit	
+Quantity Increment used in performing assignment.
+
+(746) OpenInterest	
+Open interest that was eligible for assignment.
+
+(747) ExerciseMethod	
+Exercise Method used to in performing assignment.
+
+(748) TotalNumTradeReports	
+Total number of trade reports returned.
+
+(749) TradeRequestResult	
+Result of Trade Request
+
+(750) TradeRequestStatus	
+Status of Trade Request.
+
+(751) TradeReportRejectReason	
+Reason Trade Capture Request was rejected.
+
+(752) SideMultiLegReportingType	
+Used to indicate if the side being reported on Trade Capture Report (AE) represents a leg of a multileg instrument or a single security.
+
+(753) NoPosAmt	
+Number of position amount entries.
+
+(754) AutoAcceptIndicator	
+Identifies whether or not an allocation has been automatically accepted on behalf of the Carry Firm by the Clearing House.
+
+(755) AllocReportID	
+Unique identifier for Allocation Report (AS) message.
+
+(756) NoNested2PartyIDs	
+Number of Nested2PartyID (757) , Nested2PartyIDSource (758) , and Nested2PartyRole (759) entries
+
+(757) Nested2PartyID	
+PartyID value within a "second instance" Nested repeating group.
+
+(758) Nested2PartyIDSource	
+PartyIDSource value within a "second instance" Nested repeating group.
+
+(759) Nested2PartyRole	
+PartyRole value within a "second instance" Nested repeating group.
+
+(760) Nested2PartySubID	
+PartySubID value within a "second instance" Nested repeating group.
+
+(761) BenchmarkSecurityIDSource	
+Identifies class or source of the BenchmarkSecurityID (699) value. Required if BenchmarkSecurityID (699) is specified.
+
+(762) SecuritySubType	
+Sub-type qualification/identification of the SecurityType (167) (e.g. for SecurityType (167) ="REPO").
+
+(763) UnderlyingSecuritySubType	
+Underlying security's SecuritySubType.
+
+(764) LegSecuritySubType	
+SecuritySubType of the leg instrument.
+
+(765) AllowableOneSidednessPct	
+The maximum percentage that execution of one side of a program trade can exceed execution of the other.
+
+(766) AllowableOneSidednessValue	
+The maximum amount that execution of one side of a program trade can exceed execution of the other.
+
+(767) AllowableOneSidednessCurr	
+The currency that AllowableOneSidednessValue (766) is expressed in if AllowableOneSidednessValue (766) is used.
+
+(768) NoTrdRegTimestamps	
+Number of TrdRegTimestamp (769) entries
+
+(769) TrdRegTimestamp	
+Traded / Regulatory timestamp value. Use to store time information required by government regulators or self regulatory organizations (such as an exchange or clearing house).
+
+(770) TrdRegTimestampType	
+Traded / Regulatory timestamp type.
+
+(771) TrdRegTimestampOrigin	
+Text which identifies the "origin" (i.e. system which was used to generate the time stamp) for the Traded / Regulatory timestamp value.
+
+(772) ConfirmRefID	
+Reference identifier to be used with ConfirmTransType (666) =Replace or Cancel
+
+(773) ConfirmType	
+Identifies the type of Confirmation (AK) message being sent.
+
+(774) ConfirmRejReason	
+Identifies the reason for rejecting a Confirmation (AK) .
+
+(775) BookingType	
+Method for booking out this order. Used when notifying a broker that an order to be settled by that broker is to be booked out as an OTC derivative (e.g. CFD or similar).
+
+(776) IndividualAllocRejCode	
+Identified reason for rejecting an individual AllocAccount (79) detail.
+
+(777) SettlInstMsgID	
+Unique identifier for Settlement Instructions (T) message.
+
+(778) NoSettlInst	
+Number of settlement instructions within repeating group.
+
+(779) LastUpdateTime	
+Timestamp of last update to data item (or creation if no updates made since creation).
+
+(780) AllocSettlInstType	
+Used to indicate whether settlement instructions are provided on an Allocation Instruction (J) message, and if not, how they are to be derived.
+
+(781) NoSettlPartyIDs	
+Number of SettlPartyID (782) , SettlPartyIDSource (783) , and SettlPartyRole (784) entries
+
+(782) SettlPartyID	
+PartyID value within a settlement parties component. Nested repeating group.
+
+(783) SettlPartyIDSource	
+PartyIDSource value within a settlement parties component.
+
+(784) SettlPartyRole	
+PartyRole value within a settlement parties component.
+
+(785) SettlPartySubID	
+PartySubID value within a settlement parties component.
+
+(786) SettlPartySubIDType	
+Type of SettlPartySubID value.
+
+(787) DlvyInstType	
+Used to indicate whether a delivery instruction is used for securities or cash settlement.
+
+(788) TerminationType	
+Type of financing termination.
+
+(789) NextExpectedMsgSeqNum	
+Next expected MsgSeqNum (34) value to be received.
+
+(790) OrdStatusReqID	
+Can be used to uniquely identify a specific Order Status Request (H) message.
+
+(791) SettlInstReqID	
+Unique ID of Settlement Instruction Request (AV) message
+
+(792) SettlInstReqRejCode	
+Identifies reason for rejection (of a Settlement Instruction Request (AV) message).
+
+(793) SecondaryAllocID	
+Secondary allocation identifier. Unlike the AllocID (70) , this can be shared across a number of allocation instruction (J) or allocation report (AS) messages, thereby making it possible to pass an identifier for an original allocation (J) message on multiple messages (e.g. from one party to a second to a third, across cancel and replace messages etc.).
+
+(794) AllocReportType	
+Describes the specific type or purpose of an Allocation Report (AS) message
+
+(795) AllocReportRefID	
+Reference identifier to be used with AllocTransType (71) =Replace or Cancel
+
+(796) AllocCancReplaceReason	
+Reason for cancelling or replacing an Allocation Instruction (J) or Allocation Report (AS) message
+
+(797) CopyMsgIndicator	
+Indicates whether or not this message is a drop copy of another message.
+
+(798) AllocAccountType	
+Type of account associated with a confirmation or other trade-level message
+
+(799) OrderAvgPx	
+Average price for a specific order
+
+(800) OrderBookingQty	
+Quantity of the order that is being booked out as part of an Allocation Instruction (J) or Allocation Report (AS) message
+
+(801) NoSettlPartySubIDs	
+Number of SettlPartySubID (785) and SettlPartySubIDType (786) entries
+
+(802) NoPartySubIDs	
+Number of PartySubID (523) and PartySubIDType (803) entries
+
+(803) PartySubIDType	
+Type of PartySubID (523) value
+
+(804) NoNestedPartySubIDs	
+Number of NestedPartySubID (545) and NestedPartySubIDType (805) entries
+
+(805) NestedPartySubIDType	
+Type of NestedPartySubID (545) value.
+
+(806) NoNested2PartySubIDs	
+Number of Nested2PartySubID (760) and Nested2PartySubIDType (807) entries. Second instance of NestedParties .
+
+(807) Nested2PartySubIDType	
+Type of Nested2PartySubID (760) value. Second instance of NestedParties .
+
+(808) AllocIntermedReqType	
+Response to allocation to be communicated to a counterparty through an intermediary, i.e. clearing house. Used in conjunction with AllocType (626) = "Request to Intermediary" and AllocReportType (794) = "Request to Intermediary"
+
+(810) UnderlyingPx	
+Underlying price associate with a derivative instrument.
+
+(811) PriceDelta	
+Delta calculated from theoretical price
+
+(812) ApplQueueMax	
+Used to specify the maximum number of application messages that can be queued before a corrective action needs to take place to resolve the queuing issue.
+
+(813) ApplQueueDepth	
+Current number of application messages that were queued at the time that the message was created by the counterparty.
+
+(814) ApplQueueResolution	
+Resolution taken when ApplQueueDepth (813) exceeds ApplQueueMax (812) or system specified maximum queue size.
+
+(815) ApplQueueAction	
+Action to take to resolve an application message queue (backlog).
+
+(816) NoAltMDSource	
+Number of alternative market data sources
+
+(817) AltMDSourceID	
+Session layer source for market data
+
+(818) SecondaryTradeReportID	
+Secondary trade report identifier - can be used to associate an additional identifier with a trade.
+
+(819) AvgPxIndicator	
+Average Pricing Indicator
+
+(820) TradeLinkID	
+Used to link a group of trades together. Useful for linking a group of trades together for average price calculations.
+
+(821) OrderInputDevice	
+Specific device number, terminal number or station where order was entered
+
+(822) UnderlyingTradingSessionID	
+Trading Session in which the underlying instrument trades
+
+(823) UnderlyingTradingSessionSubID	
+Trading Session sub identifier in which the underlying instrument trades
+
+(824) TradeLegRefID	
+Reference to the leg of a multileg instrument to which this trade refers
+
+(825) ExchangeRule	
+Used to report any exchange rules that apply to this trade.
+
+(826) TradeAllocIndicator	
+Identifies how the trade is to be allocated
+
+(827) ExpirationCycle	
+Part of trading cycle when an instrument expires. Field is applicable for derivatives.
+
+(828) TrdType	
+Type of Trade
+
+(829) TrdSubType	
+Further qualification to the trade type
+
+(830) TransferReason	
+Reason trade is being transferred
+
+(832) TotNumAssignmentReports	
+Total Number of Assignment Reports being returned to a firm
+
+(833) AsgnRptID	
+Unique identifier for the Assignment Report (AW)
+
+(834) ThresholdAmount	
+Amount that a position has to be in the money before it is exercised.
+
+(835) PegMoveType	
+Describes whether peg is static or floats
+
+(836) PegOffsetType	
+Type of Peg Offset value
+
+(837) PegLimitType	
+Type of Peg Limit
+
+(838) PegRoundDirection	
+If the calculated peg price is not a valid tick price, specifies whether to round the price to be more or less aggressive
+
+(839) PeggedPrice	
+The price the order is currently pegged at
+
+(840) PegScope	
+The scope of the peg
+
+(841) DiscretionMoveType	
+Describes whether discretionay price is static or floats
+
+(842) DiscretionOffsetType	
+Type of Discretion Offset value
+
+(843) DiscretionLimitType	
+Type of Discretion Limit
+
+(844) DiscretionRoundDirection	
+If the calculated discretionary price is not a valid tick price, specifies whether to round the price to be more or less aggressive
+
+(845) DiscretionPrice	
+The current discretionary price of the order
+
+(846) DiscretionScope	
+The scope of the discretion
+
+(847) TargetStrategy	
+The target strategy of the order
+
+(848) TargetStrategyParameters	
+Field to allow further specification of the TargetStrategy (847) - usage to be agreed between counterparties
+
+(849) ParticipationRate	
+For a TargetStrategy (847) =Participate order specifies the target particpation rate. For other order types this is a volume limit (i.e. do not be more than this percent of the market volume)
+
+(850) TargetStrategyPerformance	
+For communication of the performance of the order versus the target strategy
+
+(851) LastLiquidityInd	
+Indicator to identify whether this fill was a result of a liquidity provider providing or liquidity taker taking the liquidity. Applicable only for OrdStatus (39) of Partial or Filled.
+
+(852) PublishTrdIndicator	
+Indicates if a trade should be reported via a market reporting service.
+
+(853) ShortSaleReason	
+Reason for short sale.
+
+(854) QtyType	
+Type of quantity specified in a quantity field
+
+(855) SecondaryTrdType	
+Additional TrdType (828) assigned to a trade by trade match system.
+
+(856) TradeReportType	
+Type of Trade Report
+
+(857) AllocNoOrdersType	
+Indicates how the orders being booked and allocated by an Allocation Instruction (J) or Allocation Report (AS) message are identified, i.e. by explicit definition in the NoOrders (73) group or not.
+
+(858) SharedCommission	
+Commission to be shared with a third party, e.g. as part of a directed brokerage commission sharing arrangement.
+
+(859) ConfirmReqID	
+Unique identifier for a Confirmation Request message
+
+(860) AvgParPx	
+Used to express average price as percent of par (used where AvgPx (6) field is expressed in some other way)
+
+(861) ReportedPx	
+Reported price (used to differentiate from AvgPx (6) on a confirmation of a marked-up or marked-down principal trade)
+
+(862) NoCapacities	
+Number of repeating OrderCapacity entries.
+
+(863) OrderCapacityQty	
+Quantity executed under a specific OrderCapacity (e.g. quantity executed as agent, quantity executed as principal)
+
+(864) NoEvents	
+Number of repeating EventType (865) entries.
+
+(865) EventType	
+Code to represent the type of event
+
+(866) EventDate	
+Date of event
+
+(867) EventPx	
+Predetermined price of issue at event, if applicable
+
+(868) EventText	
+Comments related to the event.
+
+(869) PctAtRisk	
+Percent at risk due to lowest possible call.
+
+(870) NoInstrAttrib	
+Number of repeating InstrAttribType (871) entries.
+
+(871) InstrAttribType	
+Code to represent the type of instrument attribute
+
+(872) InstrAttribValue	
+Attribute value appropriate to the InstrAttribType (871) field.
+
+(873) DatedDate	
+The effective date of a new securities issue determined by its underwriters. Often but not always the same as the IssueDate (225) and the InterestAccrualDate (874)
+
+(874) InterestAccrualDate	
+The start date used for calculating accrued interest on debt instruments which are being sold between interest payment dates. Often but not always the same as the IssueDate (225) and the DatedDate (873)
+
+(875) CPProgram	
+The program under which a commercial paper is issued
+
+(876) CPRegType	
+The registration type of a commercial paper issuance
+
+(877) UnderlyingCPProgram	
+The program under which the underlying commercial paper is issued
+
+(878) UnderlyingCPRegType	
+The registration type of the underlying commercial paper issuance
+
+(879) UnderlyingQty	
+Unit amount of the underlying security (par, shares, currency, etc.)
+
+(880) TrdMatchID	
+Identifier assigned to a trade by a matching system.
+
+(881) SecondaryTradeReportRefID	
+Used to refer to a previous SecondaryTradeReportRefID (881) when amending the transaction (cancel, replace, release, or reversal).
+
+(882) UnderlyingDirtyPrice	
+Price (percent-of-par or per unit) of the underlying security or basket. "Dirty" means it includes accrued interest
+
+(883) UnderlyingEndPrice	
+Price (percent-of-par or per unit) of the underlying security or basket at the end of the agreement.
+
+(884) UnderlyingStartValue	
+Currency value attributed to this collateral at the start of the agreement
+
+(885) UnderlyingCurrentValue	
+Currency value currently attributed to this collateral
+
+(886) UnderlyingEndValue	
+Currency value attributed to this collateral at the end of the agreement
+
+(887) NoUnderlyingStips	
+Number of underlying stipulation entries
+
+(888) UnderlyingStipType	
+Type of stipulation.
+
+(889) UnderlyingStipValue	
+Value of stipulation.
+
+(890) MaturityNetMoney	
+Net Money at maturity if Zero Coupon and maturity value is different from par value
+
+(891) MiscFeeBasis	
+Defines the unit for a miscellaneous fee.
+
+(892) TotNoAllocs	
+Total number of NoAlloc entries across all messages. Should be the sum of all NoAllocs (78) in each message that has repeating NoAlloc entries related to the same AllocID (70) or AllocReportID (755) . Used to support fragmentation.
+
+(893) LastFragment	
+Indicates whether this message is the last in a sequence of messages for those messages that support fragmentation, such as Allocation Instruction (J) , Mass Quote (i) , Security List (y) , Derivative Security List (AA)
+
+(894) CollReqID	
+Collateral Request (AX) Identifier
+
+(895) CollAsgnReason	
+Reason for Collateral Assignment (AY)
+
+(896) CollInquiryQualifier	
+Collateral inquiry qualifiers
+
+(897) NoTrades	
+Number of trades in repeating group.
+
+(898) MarginRatio	
+The fraction of the cash consideration that must be collateralized, expressed as a percent. A MarginRatio (898) of 102% indicates that the value of the collateral (after deducting for "haircut") must exceed the cash consideration by 2%.
+
+(899) MarginExcess	
+Excess margin amount (deficit if value is negative)
+
+(900) TotalNetValue	
+TotalNetValue (900) is determined as follows:
+
+(901) CashOutstanding	
+Starting consideration less repayments
+
+(902) CollAsgnID	
+Collateral Assignment (AY) Identifier
+
+(903) CollAsgnTransType	
+Collateral Assignment (AY) Transaction Type
+
+(904) CollRespID	
+Collateral Response (AZ) Identifier
+
+(905) CollAsgnRespType	
+Collateral Assignment (AY) Response Type
+
+(906) CollAsgnRejectReason	
+Collateral Assignment (AY) Reject Reason
+
+(907) CollAsgnRefID	
+Collateral Assignment (AY) Identifier to which a transaction refers
+
+(908) CollRptID	
+Collateral Report (BA) Identifier
+
+(909) CollInquiryID	
+Collateral Inquiry (BB) Identifier
+
+(910) CollStatus	
+Collateral Status
+
+(911) TotNumReports	
+Total number or reports returned in response to a request
+
+(912) LastRptRequested	
+Indicates whether this message is that last report message in response to a request, such as Order Mass Status Request (AF) .
+
+(913) AgreementDesc	
+The full name of the base standard agreement, annexes and amendments in place between the principals applicable to a financing transaction.
+
+(914) AgreementID	
+A common reference to the applicable standing agreement between the counterparties to a financing transaction.
+
+(915) AgreementDate	
+A reference to the date the underlying agreement specified by AgreementID (914) and AgreementDesc (913) was executed.
+
+(916) StartDate	
+Start date of a financing deal, i.e. the date the buyer pays the seller cash and takes control of the collateral
+
+(917) EndDate	
+End date of a financing deal, i.e. the date the seller reimburses the buyer and takes back control of the collateral
+
+(918) AgreementCurrency	
+Contractual currency forming the basis of a financing agreement and associated transactions. Usually, but not always, the same as the trade currency.
+
+(919) DeliveryType	
+Identifies type of settlement
+
+(920) EndAccruedInterestAmt	
+Accrued Interest Amount applicable to a financing transaction on the End Date.
+
+(921) StartCash	
+Starting dirty cash consideration of a financing deal, i.e. paid to the seller on the Start Date.
+
+(922) EndCash	
+Ending dirty cash consideration of a financing deal. i.e. reimbursed to the buyer on the End Date.
+
+(923) UserRequestID	
+Unique identifier for a User Request (BE) .
+
+(924) UserRequestType	
+Indicates the action required by a User Request (BE) message
+
+(925) NewPassword	
+New Password or passphrase
+
+(926) UserStatus	
+Indicates the status of a user
+
+(927) UserStatusText	
+A text description associated with a user status.
+
+(928) StatusValue	
+Indicates the status of a network connection
+
+(929) StatusText	
+A text description associated with a network status.
+
+(930) RefCompID	
+Assigned value used to identify a firm.
+
+(931) RefSubID	
+Assigned value used to identify specific elements within a firm.
+
+(932) NetworkResponseID	
+Unique identifier for a network response.
+
+(933) NetworkRequestID	
+Unique identifier for a network resquest.
+
+(934) LastNetworkResponseID	
+Identifier of the previous Network (Counterparty System) Status Response (BD) message sent to a counterparty, used to allow incremental updates.
+
+(935) NetworkRequestType	
+Indicates the type and level of details required for a Network (Counterparty System) Status Request (BC) message
+
+(936) NoCompIDs	
+Number of CompID entries in a repeating group.
+
+(937) NetworkStatusResponseType	
+Indicates the type of Network (Counterparty System) Status Response (BD) message.
+
+(938) NoCollInquiryQualifier	
+Number of CollInquiryQualifier entries in a repeating group.
+
+(939) TrdRptStatus	
+Trade Report Status
+
+(940) AffirmStatus	
+Identifies the status of the Confirmation Ack (AU) .
+
+(941) UnderlyingStrikeCurrency	
+Currency in which the strike price of an underlying instrument is denominated
+
+(942) LegStrikeCurrency	
+Currency in which the strike price of a instrument leg of a multileg instrument is denominated
+
+(943) TimeBracket	
+A code that represents a time interval in which a fill or trade occurred.
+
+(944) CollAction	
+Action proposed for an Underlying Instrument instance.
+
+(945) CollInquiryStatus	
+Status of Collateral Inquiry (BB)
+
+(946) CollInquiryResult	
+Result returned in response to Collateral Inquiry (BB)
+
+(947) StrikeCurrency	
+Currency in which the StrikePrice (202) is denominated.
+
+(948) NoNested3PartyIDs	
+Number of Nested3PartyID (949) , Nested3PartyIDSource (950) , and Nested3PartyRole (951) entries
+
+(949) Nested3PartyID	
+PartyID value within a "third instance" Nested repeating group.
+
+(950) Nested3PartyIDSource	
+PartyIDSource value within a "third instance" Nested repeating group.
+
+(951) Nested3PartyRole	
+PartyRole value within a "third instance" Nested repeating group.
+
+(952) NoNested3PartySubIDs	
+Number of Nested3PartySubID (953) entries
+
+(953) Nested3PartySubID	
+PartySubID value within a "third instance" Nested repeating group.
+
+(954) Nested3PartySubIDType	
+PartySubIDType value within a "third instance" Nested repeating group.
+
+(955) LegContractSettlMonth	
+Specifies when the contract (i.e. MBS/TBA) will settle.
+
+(956) LegInterestAccrualDate	
+The start date used for calculating accrued interest on debt instruments which are being sold between interest payment dates. Often but not always the same as the IssueDate (225) and the DatedDate (873)

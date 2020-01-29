@@ -1,0 +1,4 @@
+TAG	FIELD NAME	FIXML	REQ'D	COMMENTS
+93	SignatureLength		C	Required when trailer contains signature. Note: Not to be included within SecureData (91) field
+89	Signature		C	Note: Not to be included within SecureData (91) field
+10	CheckSum		Y	(Always unencrypted, always last field in message)
