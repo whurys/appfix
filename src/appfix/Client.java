@@ -8,10 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-
-import org.primefaces.PrimeFaces;
 
 import appfix.model.ExecutionReportBean;
 import appfix.tools.Inspector;
@@ -39,7 +36,7 @@ import quickfix.SocketInitiator;
 import quickfix.UnsupportedMessageType;
 
 @ManagedBean(name = "clientApp")
-@RequestScoped
+@SessionScoped
 public class Client implements Application {
 
 	private static volatile SessionID sessionID;
@@ -124,8 +121,7 @@ public class Client implements Application {
 
 		Application application = new Client();
 		MessageStoreFactory messageStoreFactory = new FileStoreFactory(settings);
-		// LogFactory logFactory = new ScreenLogFactory(true, true, true);
-		LogFactory logFactory = new ScreenLogFactory(false, false, false);
+		LogFactory logFactory = new ScreenLogFactory(true, true, true);
 		MessageFactory messageFactory = new DefaultMessageFactory();
 
 		initiator = new SocketInitiator(application, messageStoreFactory, settings, logFactory, messageFactory);
