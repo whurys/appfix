@@ -13,7 +13,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-class XmlMessage {
+/**
+ * Create message object form the XML string, or in another words, reverse toXML() method from QuickFixJ
+ * 
+ * @author wlopes
+ *
+ */
+
+public class XmlMessage {
 	private final String xml;
 	private final String delimiter;
 
@@ -23,6 +30,7 @@ class XmlMessage {
 	}
 
 	public String toFixMessage() throws IOException, SAXException, ParserConfigurationException {
+		
 		final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 				.parse(new ByteArrayInputStream(xml.getBytes()));
 
