@@ -13,6 +13,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import quickfix.ConfigError;
+import quickfix.DataDictionary;
+import quickfix.Message;
+import quickfix.fix44.NewOrderSingle;
+
 /**
  * Create message object form the XML string, or in another words, reverse toXML() method from QuickFixJ
  * 
@@ -23,6 +28,42 @@ import org.xml.sax.SAXException;
 public class XmlMessage {
 	private final String xml;
 	private final String delimiter;
+	
+	
+	
+	public static void main(String []args) {
+		
+	  try {
+		final DataDictionary dd = new DataDictionary("FIX44.xml");
+		for(int i=0; i<dd.getOrderedFields().length;i++) {
+			System.out.println(dd.getFieldName(i));
+		}
+		
+	} catch (ConfigError e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+//		
+//		Message nos = new Message();
+//		
+//		System.out.println(nos);
+//		
+//		
+//		System.out.println(nos.toXML());
+//		
+//		
+//		
+//		XmlMessage xm = new XmlMessage(nos.toXML(), "|");
+//		
+//		try {
+//			System.out.println(xm.toFixMessage());
+//		} catch (IOException | SAXException | ParserConfigurationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+	}
 
 	XmlMessage(final String xml, final String delimiter) {
 		this.xml = xml;
