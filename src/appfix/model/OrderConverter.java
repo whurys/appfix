@@ -34,8 +34,8 @@ public class OrderConverter {
 		System.out.println("ClOrdID = "+ order.getClOrdID());
 		System.out.println("CheckSum = "+ order.getCheckSum());
 		
-		
-		Message m = toMessage(order, (Message) fixMessage);
+		quickfix.Message  msg = new quickfix.Message();
+		Message m = toMessage(order);
 		
 		System.out.println(m);
 		
@@ -49,7 +49,7 @@ public class OrderConverter {
 		System.out.println(gson.toJson(order, Order.class));
 	}
 
-	public static Order converter(Order order, quickfix.Message message) {
+	public static Order converter(Order order, quickfix.fix42.NewOrderSingle message) {
 		
 		quickfix.field.BeginString BeginString = new quickfix.field.BeginString(); if(message.isSetField(BeginString)) {try {message.getField(BeginString);order.setBeginString(BeginString.getValue());} catch (FieldNotFound ex) {}}
 		quickfix.field.BodyLength BodyLength = new quickfix.field.BodyLength(); if(message.isSetField(BodyLength)) {try {message.getField(BodyLength);order.setBodyLength(BodyLength.getValue());} catch (FieldNotFound ex) {}}
@@ -661,10 +661,10 @@ public class OrderConverter {
 		return order;
 	}
 	
-	public static Message toMessage(Order order, quickfix.Message message)
+	public static Message toMessage(Order order)
 			throws IllegalArgumentException, IllegalAccessException {
 		
-	//message = new quickfix.Message();
+		quickfix.Message message = new quickfix.Message();
 		
 		if (order.getBeginString() != null && !order.getBeginString().isEmpty()){message.setField(new quickfix.field.BeginString(order.getBeginString()));} //for String type
 		if (order.getBodyLength() != 0) {message.setField(new quickfix.field.BodyLength(order.getBodyLength()));} //for int

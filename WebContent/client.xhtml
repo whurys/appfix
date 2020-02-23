@@ -26,21 +26,92 @@
 <h:body>
 
 	<h:form>
+
 		<p:panel header="Client Side">
-	
-			<p:outputLabel value="Execution Type: " />
-	        <p:selectOneMenu id="execType" value="#{clientView.execution.execType}">
-	            <f:selectItem itemLabel="Select One" itemValue="" />
-	            <f:selectItems value="#{clientView.mapExecType.entrySet()}" var="entry" itemValue="#{entry.value}" itemLabel="#{entry.key}"/>
-	        </p:selectOneMenu>
-			
+
+			<p:commandButton value="New Order" update="display" action="#{messageView.createNewOrder}"
+				oncomplete="PF('dlg').show()" icon="pi pi-check" />
 
 		</p:panel>
 
+		<p:dialog header="New Order" modal="true" showEffect="bounce"
+			widgetVar="dlg" resizable="false">
+			<p:panelGrid columns="2" id="display" columnClasses="label,value">
+
+				<h:outputText value="Protocol:" />
+				<p:selectOneMenu value="#{messageView.newOrderSingleBean.beginString}"
+					style="width:125px">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItem itemLabel="FIX 4.2" itemValue="FIX.2" />
+					<f:selectItem itemLabel="FIX 4.3" itemValue="FIX.3" />
+					<f:selectItem itemLabel="FIX 4.4" itemValue="FIX.4" />
+				</p:selectOneMenu>
+				
+				<h:outputText value="Message Type:" />
+				<p:selectOneMenu value="#{messageView.newOrderSingleBean.msgType}" style="width:125px">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItem itemLabel="New Order Single" itemValue="D" />
+					<f:selectItem itemLabel="New Order List" itemValue="E" />
+					<f:selectItem itemLabel="Order Cancel" itemValue="F" />
+					<f:selectItem itemLabel="Execution Report" itemValue="8" />
+				</p:selectOneMenu>
+
+				<h:outputText value="ClOrdID:" />
+				<h:inputText value="#{messageView.newOrderSingleBean.clOrdID}" />
+
+				<h:outputText value="Price:" />
+				<h:inputText value="#{messageView.newOrderSingleBean.price}" />
+
+				<h:outputText value="Quantity:" />
+				<h:inputText value="#{messageView.newOrderSingleBean.orderQty}" />
+
+				<h:outputText value="Symbol" />
+				<h:inputText value="#{messageView.newOrderSingleBean.symbol}" />
+
+				<h:outputText value="Side" />
+				<h:inputText value="#{messageView.newOrderSingleBean.side}" />
+
+				<h:outputText value="SecurityID:" />
+				<h:inputText value="#{messageView.newOrderSingleBean.securityID}" />
+
+				<h:outputText value="Account:" />
+				<h:inputText value="#{messageView.newOrderSingleBean.account}" />
+
+				<h:outputText value="Order Type:" />
+				<h:inputText value="#{messageView.newOrderSingleBean.ordType}" />
+
+			</p:panelGrid>
+
+			<p:commandButton value="Submit" update="orderCenter" action="#{messageView.submitNewOrder}"
+				oncomplete="PF('dlg').hide()" icon="pi pi-check" />
+
+		</p:dialog>
+
+		<p:dataTable id="orderCenter" var="order"
+			value="#{messageView.listOrder}">
+			<p:column headerText="ClOrdID">
+				<h:outputText value="#{order.clOrdID}" />
+			</p:column>
+
+			<p:column headerText="Symbol">
+				<h:outputText value="#{order.symbol}" />
+			</p:column>
+
+			<p:column headerText="Price">
+				<h:outputText value="#{order.price}" />
+			</p:column>
+
+			<p:column headerText="Quantity">
+				<h:outputText value="#{order.orderQty}" />
+			</p:column>
+
+			<p:column headerText="Side:">
+				<h:outputText value="#{order.side}" />
+			</p:column>
+		</p:dataTable>
+
 
 	</h:form>
-
-
 
 
 </h:body>

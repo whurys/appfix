@@ -37,6 +37,7 @@ public class MessageBean extends Model {
 	private String CheckSum;
 	private String Signature;
 	private int SignatureLength;
+	
 	public String getBeginString() {
 		return BeginString;
 	}
