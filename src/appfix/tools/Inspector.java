@@ -8,9 +8,6 @@ public class Inspector {
 	
 	private static final String FIELD = "quickfix.field.";
 	
-	
-
-	
 	public static  Map<String,String> getFieldsAndValues(String className){
 		
 		Map<String,String> mapFieldAndValue = new TreeMap<>();

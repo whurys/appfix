@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<title>Client</title>
+
+	<style type="text/css">
+#boxLogin {
+	background-color: #ededed;
+	text-align: center;
+	border: 1px solid #fafafa;
+}
+
+#emptyBox {
+	height: 50px
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+		<h:form id="form">
+
+
+		
+		<br />
+
+
+		
+		<p:dataTable id="tableId" var="msg" value="#{viewMessage.listMessage}" >
+			<p:column headerText="Message">
+				<h:outputText value="#{msg}" />
+			</p:column>
+
+		</p:dataTable>
+
+
+	</h:form>
+
+
+
+
+
+
+</h:body>
+</html>

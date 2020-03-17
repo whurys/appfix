@@ -43,7 +43,7 @@ public class OrderFactory {
 		fixOrder.set(new Side(Side.BUY));
 		fixOrder.set(new OrderQty(new BigDecimal("100.0").longValue()));
 		fixOrder.set(new OrdType(OrdType.LIMIT));
-		fixOrder.set(new ClOrdID("123456"));
+		fixOrder.set(new ClOrdID("ID-"));
 
 		return fixOrder;
 	}

@@ -20,6 +20,12 @@
 #emptyBox {
 	height: 50px
 }
+
+.old {
+        background-color: #fca752 !important;
+        background-image: none !important;
+        color: #000000 !important;
+    }
 </style>
 
 </h:head>
@@ -38,9 +44,12 @@
 				<f:selectItem itemLabel="Select a lilne hnadler" itemValue="" />
 				<f:selectItems value="#{serverView.mapSessionApp}" />
 			</p:selectOneMenu>
+<<<<<<< HEAD
 			
 			<p:commandButton value="Submit" update="display,formID"
 			oncomplete="PF('dlg').show()" icon="pi pi-check" />
+=======
+>>>>>>> branch 'master' of https://github.com/wendellopesfarias/appfix.git
 		</h:panelGrid>
 
 
@@ -56,6 +65,7 @@
 		</p:panel>
 
 
+<<<<<<< HEAD
 		
 
 		<p:dialog header="Values" modal="true" showEffect="bounce"
@@ -67,6 +77,16 @@
 
 			</p:panelGrid>
 		</p:dialog>
+=======
+	
+
+		<p:dataTable id="msgTable" var="msg" value="#{serverView.listMsg}" >
+			<p:column headerText="Message">
+				<h:outputText value="#{msg.toString}" />
+			</p:column>
+
+		</p:dataTable>
+>>>>>>> branch 'master' of https://github.com/wendellopesfarias/appfix.git
 
 
 

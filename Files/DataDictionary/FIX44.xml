@@ -1,4 +1,5 @@
 <fix major="4" minor="4">
+  
   <header>
     <field name="BeginString" required="Y"/>
     <field name="BodyLength" required="Y"/>
@@ -32,15 +33,18 @@
       <field name="HopRefID" required="N"/>
     </group>
   </header>
+  
   <trailer>
     <field name="SignatureLength" required="N"/>
     <field name="Signature" required="N"/>
     <field name="CheckSum" required="Y"/>
   </trailer>
+  
   <messages>
     <message name="Heartbeat" msgtype="0" msgcat="admin">
       <field name="TestReqID" required="N"/>
     </message>
+    
     <message name="Logon" msgtype="A" msgcat="admin">
       <field name="EncryptMethod" required="Y"/>
       <field name="HeartBtInt" required="Y"/>
@@ -57,13 +61,16 @@
       <field name="Username" required="N"/>
       <field name="Password" required="N"/>
     </message>
+    
     <message name="TestRequest" msgtype="1" msgcat="admin">
       <field name="TestReqID" required="Y"/>
     </message>
+    
     <message name="ResendRequest" msgtype="2" msgcat="admin">
       <field name="BeginSeqNo" required="Y"/>
       <field name="EndSeqNo" required="Y"/>
     </message>
+    
     <message name="Reject" msgtype="3" msgcat="admin">
       <field name="RefSeqNum" required="Y"/>
       <field name="RefTagID" required="N"/>
@@ -73,15 +80,18 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="SequenceReset" msgtype="4" msgcat="admin">
       <field name="GapFillFlag" required="N"/>
       <field name="NewSeqNo" required="Y"/>
     </message>
+    
     <message name="Logout" msgtype="5" msgcat="admin">
       <field name="Text" required="N"/>
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="BusinessMessageReject" msgtype="j" msgcat="app">
       <field name="RefSeqNum" required="N"/>
       <field name="RefMsgType" required="Y"/>
@@ -91,6 +101,7 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="UserRequest" msgtype="BE" msgcat="app">
       <field name="UserRequestID" required="Y"/>
       <field name="UserRequestType" required="Y"/>
@@ -100,12 +111,14 @@
       <field name="RawDataLength" required="N"/>
       <field name="RawData" required="N"/>
     </message>
+    
     <message name="UserResponse" msgtype="BF" msgcat="app">
       <field name="UserRequestID" required="Y"/>
       <field name="Username" required="Y"/>
       <field name="UserStatus" required="N"/>
       <field name="UserStatusText" required="N"/>
     </message>
+    
     <message name="Advertisement" msgtype="7" msgcat="app">
       <field name="AdvId" required="Y"/>
       <field name="AdvTransType" required="Y"/>
@@ -132,6 +145,7 @@
       <field name="TradingSessionID" required="N"/>
       <field name="TradingSessionSubID" required="N"/>
     </message>
+    
     <message name="IndicationOfInterest" msgtype="6" msgcat="app">
       <field name="IOIID" required="Y"/>
       <field name="IOITransType" required="Y"/>
@@ -172,6 +186,7 @@
       <component name="SpreadOrBenchmarkCurveData" required="N"/>
       <component name="YieldData" required="N"/>
     </message>
+    
     <message name="News" msgtype="B" msgcat="app">
       <field name="OrigTime" required="N"/>
       <field name="Urgency" required="N"/>
@@ -200,6 +215,7 @@
       <field name="RawDataLength" required="N"/>
       <field name="RawData" required="N"/>
     </message>
+    
     <message name="Email" msgtype="C" msgcat="app">
       <field name="EmailThreadID" required="Y"/>
       <field name="EmailType" required="Y"/>
@@ -230,6 +246,7 @@
       <field name="RawDataLength" required="N"/>
       <field name="RawData" required="N"/>
     </message>
+    
     <message name="QuoteRequest" msgtype="R" msgcat="app">
       <field name="QuoteReqID" required="Y"/>
       <field name="RFQReqID" required="N"/>
@@ -288,6 +305,7 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="QuoteResponse" msgtype="AJ" msgcat="app">
       <field name="QuoteRespID" required="Y"/>
       <field name="QuoteID" required="N"/>
@@ -367,6 +385,7 @@
       <component name="SpreadOrBenchmarkCurveData" required="N"/>
       <component name="YieldData" required="N"/>
     </message>
+    
     <message name="QuoteRequestReject" msgtype="AG" msgcat="app">
       <field name="QuoteReqID" required="Y"/>
       <field name="RFQReqID" required="N"/>
@@ -423,6 +442,7 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="RFQRequest" msgtype="AH" msgcat="app">
       <field name="RFQReqID" required="Y"/>
       <group name="NoRelatedSym" required="Y">
@@ -441,6 +461,7 @@
       </group>
       <field name="SubscriptionRequestType" required="N"/>
     </message>
+    
     <message name="Quote" msgtype="S" msgcat="app">
       <field name="QuoteReqID" required="N"/>
       <field name="QuoteID" required="Y"/>
@@ -518,6 +539,7 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="QuoteCancel" msgtype="Z" msgcat="app">
       <field name="QuoteReqID" required="N"/>
       <field name="QuoteID" required="Y"/>
@@ -540,6 +562,7 @@
         </group>
       </group>
     </message>
+    
     <message name="QuoteStatusRequest" msgtype="a" msgcat="app">
       <field name="QuoteStatusReqID" required="N"/>
       <field name="QuoteID" required="N"/>
@@ -559,6 +582,7 @@
       <field name="TradingSessionSubID" required="N"/>
       <field name="SubscriptionRequestType" required="N"/>
     </message>
+    
     <message name="QuoteStatusReport" msgtype="AI" msgcat="app">
       <field name="QuoteStatusReqID" required="N"/>
       <field name="QuoteReqID" required="N"/>
@@ -634,6 +658,7 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+    
     <message name="MassQuote" msgtype="i" msgcat="app">
       <field name="QuoteReqID" required="N"/>
       <field name="QuoteID" required="Y"/>
@@ -683,6 +708,7 @@
         </group>
       </group>
     </message>
+  
   <message name="MassQuoteAcknowledgement" msgtype="b" msgcat="app">
     <field name="QuoteReqID" required="N"/>
     <field name="QuoteID" required="N"/>
@@ -735,6 +761,7 @@
       </group>
     </group>
   </message>
+  
   <message name="MarketDataRequest" msgtype="V" msgcat="app">
     <field name="MDReqID" required="Y"/>
     <field name="SubscriptionRequestType" required="Y"/>
@@ -763,6 +790,7 @@
     <field name="ApplQueueAction" required="N"/>
     <field name="ApplQueueMax" required="N"/>
   </message>
+  
   <message name="MarketDataSnapshotFullRefresh" msgtype="W" msgcat="app">
     <field name="MDReqID" required="N"/>
     <component name="Instrument" required="Y"/>
@@ -813,6 +841,7 @@
     <field name="ApplQueueDepth" required="N"/>
     <field name="ApplQueueResolution" required="N"/>
   </message>
+  
   <message name="MarketDataIncrementalRefresh" msgtype="X" msgcat="app">
     <field name="MDReqID" required="N"/>
     <group name="NoMDEntries" required="Y">
@@ -867,6 +896,7 @@
     <field name="ApplQueueDepth" required="N"/>
     <field name="ApplQueueResolution" required="N"/>
   </message>
+ 
   <message name="MarketDataRequestReject" msgtype="Y" msgcat="app">
     <field name="MDReqID" required="Y"/>
     <field name="MDReqRejReason" required="N"/>
@@ -877,6 +907,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+  
   <message name="SecurityDefinitionRequest" msgtype="c" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityRequestType" required="Y"/>
@@ -897,6 +928,7 @@
     <field name="ExpirationCycle" required="N"/>
     <field name="SubscriptionRequestType" required="N"/>
   </message>
+  
   <message name="SecurityDefinition" msgtype="d" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityResponseID" required="Y"/>
@@ -919,6 +951,7 @@
     <field name="RoundLot" required="N"/>
     <field name="MinTradeVol" required="N"/>
   </message>
+ 
   <message name="SecurityTypeRequest" msgtype="v" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="Text" required="N"/>
@@ -930,6 +963,7 @@
     <field name="SecurityType" required="N"/>
     <field name="SecuritySubType" required="N"/>
   </message>
+ 
   <message name="SecurityTypes" msgtype="w" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityResponseID" required="Y"/>
@@ -949,6 +983,7 @@
     <field name="TradingSessionSubID" required="N"/>
     <field name="SubscriptionRequestType" required="N"/>
   </message>
+  
   <message name="SecurityListRequest" msgtype="x" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityListRequestType" required="Y"/>
@@ -969,6 +1004,7 @@
     <field name="TradingSessionSubID" required="N"/>
     <field name="SubscriptionRequestType" required="N"/>
   </message>
+ 
   <message name="SecurityList" msgtype="y" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityResponseID" required="Y"/>
@@ -1003,6 +1039,7 @@
       <field name="EncodedText" required="N"/>
     </group>
   </message>
+ 
   <message name="DerivativeSecurityListRequest" msgtype="z" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityListRequestType" required="Y"/>
@@ -1016,6 +1053,7 @@
     <field name="TradingSessionSubID" required="N"/>
     <field name="SubscriptionRequestType" required="N"/>
   </message>
+  
   <message name="DerivativeSecurityList" msgtype="AA" msgcat="app">
     <field name="SecurityReqID" required="Y"/>
     <field name="SecurityResponseID" required="Y"/>
@@ -1038,6 +1076,7 @@
       <field name="EncodedText" required="N"/>
     </group>
   </message>
+ 
   <message name="SecurityStatusRequest" msgtype="e" msgcat="app">
     <field name="SecurityStatusReqID" required="Y"/>
     <component name="Instrument" required="Y"/>
@@ -1053,6 +1092,7 @@
     <field name="TradingSessionID" required="N"/>
     <field name="TradingSessionSubID" required="N"/>
   </message>
+ 
   <message name="SecurityStatus" msgtype="f" msgcat="app">
     <field name="SecurityStatusReqID" required="N"/>
     <component name="Instrument" required="Y"/>
@@ -1084,6 +1124,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+  
   <message name="TradingSessionStatusRequest" msgtype="g" msgcat="app">
     <field name="TradSesReqID" required="Y"/>
     <field name="TradingSessionID" required="N"/>
@@ -1092,6 +1133,7 @@
     <field name="TradSesMode" required="N"/>
     <field name="SubscriptionRequestType" required="Y"/>
   </message>
+ 
   <message name="TradingSessionStatus" msgtype="h" msgcat="app">
     <field name="TradSesReqID" required="N"/>
     <field name="TradingSessionID" required="Y"/>
@@ -1111,6 +1153,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+ 
   <message name="NewOrderSingle" msgtype="D" msgcat="app">
     <field name="ClOrdID" required="Y"/>
     <field name="SecondaryClOrdID" required="N"/>
@@ -1201,6 +1244,7 @@
     <field name="RegistID" required="N"/>
     <field name="Designation" required="N"/>
   </message>
+  
   <message name="ExecutionReport" msgtype="8" msgcat="app">
     <field name="OrderID" required="Y"/>
     <field name="SecondaryOrderID" required="N"/>
@@ -1371,6 +1415,7 @@
       <field name="MiscFeeBasis" required="N"/>
     </group>
   </message>
+ 
   <message name="DontKnowTrade" msgtype="Q" msgcat="app">
     <field name="OrderID" required="Y"/>
     <field name="SecondaryOrderID" required="N"/>
@@ -1391,6 +1436,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+  
   <message name="OrderCancelReplaceRequest" msgtype="G" msgcat="app">
     <field name="OrderID" required="N"/>
     <component name="Parties" required="N"/>
@@ -1480,6 +1526,7 @@
     <field name="RegistID" required="N"/>
     <field name="Designation" required="N"/>
   </message>
+ 
   <message name="OrderCancelRequest" msgtype="F" msgcat="app">
     <field name="OrigClOrdID" required="Y"/>
     <field name="OrderID" required="N"/>
@@ -1505,6 +1552,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+  
   <message name="OrderCancelReject" msgtype="9" msgcat="app">
     <field name="OrderID" required="Y"/>
     <field name="SecondaryOrderID" required="N"/>
@@ -1528,6 +1576,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+ 
   <message name="OrderStatusRequest" msgtype="H" msgcat="app">
     <field name="OrderID" required="N"/>
     <field name="ClOrdID" required="Y"/>
@@ -1544,6 +1593,7 @@
     </group>
     <field name="Side" required="Y"/>
   </message>
+
   <message name="OrderMassCancelRequest" msgtype="q" msgcat="app">
     <field name="ClOrdID" required="Y"/>
     <field name="SecondaryClOrdID" required="N"/>
@@ -1558,6 +1608,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+
   <message name="OrderMassCancelReport" msgtype="r" msgcat="app">
     <field name="ClOrdID" required="N"/>
     <field name="SecondaryClOrdID" required="N"/>
@@ -1582,6 +1633,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+
   <message name="OrderMassStatusRequest" msgtype="AF" msgcat="app">
     <field name="MassStatusReqID" required="Y"/>
     <field name="MassStatusReqType" required="Y"/>
@@ -1594,6 +1646,7 @@
     <component name="UnderlyingInstrument" required="N"/>
     <field name="Side" required="N"/>
   </message>
+ 
   <message name="NewOrderCross" msgtype="s" msgcat="app">
     <field name="CrossID" required="Y"/>
     <field name="CrossType" required="Y"/>
@@ -1689,6 +1742,7 @@
     <field name="RegistID" required="N"/>
     <field name="Designation" required="N"/>
   </message>
+
   <message name="CrossOrderCancelReplaceRequest" msgtype="t" msgcat="app">
     <field name="OrderID" required="N"/>
     <field name="CrossID" required="Y"/>
@@ -1788,6 +1842,7 @@
     <field name="RegistID" required="N"/>
     <field name="Designation" required="N"/>
   </message>
+
   <message name="CrossOrderCancelRequest" msgtype="u" msgcat="app">
     <field name="OrderID" required="N"/>
     <field name="CrossID" required="Y"/>
@@ -1819,6 +1874,7 @@
     </group>
     <field name="TransactTime" required="Y"/>
   </message>
+ 
   <message name="NewOrderMultileg" msgtype="AB" msgcat="app">
     <field name="ClOrdID" required="Y"/>
     <field name="SecondaryClOrdID" required="N"/>
@@ -1924,6 +1980,7 @@
     <field name="Designation" required="N"/>
     <field name="MultiLegRptTypeReq" required="N"/>
   </message>
+ 
   <message name="MultilegOrderCancelReplaceRequest" msgtype="AC" msgcat="app">
     <field name="OrderID" required="N"/>
     <field name="OrigClOrdID" required="Y"/>
@@ -2032,6 +2089,7 @@
     <field name="Designation" required="N"/>
     <field name="MultiLegRptTypeReq" required="N"/>
   </message>
+
   <message name="BidRequest" msgtype="k" msgcat="app">
     <field name="BidID" required="N"/>
     <field name="ClientBidID" required="Y"/>
@@ -2085,6 +2143,7 @@
     <field name="EncodedTextLen" required="N"/>
     <field name="EncodedText" required="N"/>
   </message>
+ 
   <message name="BidResponse" msgtype="l" msgcat="app">
     <field name="BidID" required="N"/>
     <field name="ClientBidID" required="N"/>
@@ -2106,6 +2165,7 @@
       <field name="EncodedText" required="N"/>
     </group>
   </message>
+
   <message name="NewOrderList" msgtype="E" msgcat="app">
     <field name="ListID" required="Y"/>
     <field name="BidID" required="N"/>
@@ -2215,6 +2275,7 @@
       <field name="Designation" required="N"/>
     </group>
   </message>
+
   <message name="ListStrikePrice" msgtype="m" msgcat="app">
     <field name="ListID" required="Y"/>
     <field name="TotNoStrikes" required="Y"/>
@@ -2235,6 +2296,7 @@
       <field name="EncodedText" required="N"/>
     </group>
   </message>
+ 
   <message name="ListStatus" msgtype="N" msgcat="app">
     <field name="ListID" required="Y"/>
     <field name="ListStatusType" required="Y"/>
@@ -3612,6 +3674,7 @@
       <field name="StatusText" required="N" />
     </group>
   </message>
+  
   <message name="CollateralInquiryAck" msgtype="BG" msgcat="app">
     <field name="CollInquiryID" required="Y"/>
     <field name="CollInquiryStatus" required="Y"/>
@@ -3658,6 +3721,7 @@
     <field name="EncodedText" required="N"/>
   </message>
   </messages>
+  
   <components>
     <component name="Instrument">
       <field name="Symbol" required="Y"/>
@@ -3992,6 +4056,7 @@
       <field name="MarginRatio" required="N"/>
     </component>
   </components>
+  
   <fields>
     <field number="1" name="Account" type="STRING"/>
     <field number="2" name="AdvId" type="STRING"/>
@@ -6811,4 +6876,5 @@
     <field number="955" name="LegContractSettlMonth" type="MONTHYEAR"/>
     <field number="956" name="LegInterestAccrualDate" type="LOCALMKTDATE"/>
   </fields>
+
 </fix>

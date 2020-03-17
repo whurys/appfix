@@ -1,10 +1,10 @@
 package appfix;
 
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
@@ -35,7 +35,7 @@ import quickfix.SessionSettings;
 import quickfix.SocketInitiator;
 import quickfix.UnsupportedMessageType;
 
-@ManagedBean(name = "clientView")
+@ManagedBean(name = "clientApp")
 @SessionScoped
 public class Client implements Application {
 
@@ -43,17 +43,24 @@ public class Client implements Application {
 
 	private String msg;
 	private ExecutionReportBean execution;
-	private Map<String,String> mapExecType;
-	private Map<String,String> mapOrdStatus;
-	private Map<String,String> mapSide;
-	
+	private Map<String, String> mapExecType;
+	private Map<String, String> mapOrdStatus;
+	private Map<String, String> mapSide;
+
+	private Initiator initiator;
+	private static List<String> listMsg;
+	private static List<Message> listMessage;
+
 	public Client() {
 		execution = new ExecutionReportBean();
-		
+
 		mapExecType = Inspector.getFieldsAndValues("ExecType");
 		mapOrdStatus = Inspector.getFieldsAndValues("OrdStatus");
 		mapSide = Inspector.getFieldsAndValues("Side");
 		
+		listMsg = new ArrayList<>();
+		listMessage = new ArrayList<>();
+
 	}
 
 	@Override
@@ -75,40 +82,49 @@ public class Client implements Application {
 
 	@Override
 	public void toAdmin(Message message, SessionID sessionID) {
-		System.out.println("ToAdmin");
+		System.out.println("To Admin: " + message.toString());
+		listMsg.add(message.toString());
+		System.out.println(listMsg.size());
+		listMessage.add(message);
+
 	}
 
 	@Override
 	public void fromAdmin(Message message, SessionID sessionID)
 			throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, RejectLogon {
-		System.out.println("FromAdmin");
+		System.out.println("From Admin: " + message.toString());
+		listMsg.add(message.toString());
+		System.out.println(listMsg.size());
+		listMessage.add(message);
 	}
 
 	@Override
 	public void toApp(Message message, SessionID sessionID) throws DoNotSend {
-		System.out.println("ToApp: " + message);
+		System.out.println("To App: " + message);
+		listMessage.add(message);
 	}
 
 	@Override
 	public void fromApp(Message message, SessionID sessionID)
 			throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, UnsupportedMessageType {
-		System.out.println("FromApp");
+		System.out.println("From App");
+		listMessage.add(message);
 	}
 
 	public void start()
 			throws ConfigError, FileNotFoundException, InterruptedException, InvalidMessage, SessionNotFound {
-		
+
 		System.out.println("Start Client.... ");
 
-		SessionSettings settings = new SessionSettings(new FileInputStream("C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\initiator.properties"));
+		SessionSettings settings = new SessionSettings(new FileInputStream(
+				"C:\\Users\\wlopes\\eclipse-workspace\\appfix\\Files\\Config\\initiator\\initiator.properties"));
 
 		Application application = new Client();
 		MessageStoreFactory messageStoreFactory = new FileStoreFactory(settings);
 		LogFactory logFactory = new ScreenLogFactory(true, true, true);
 		MessageFactory messageFactory = new DefaultMessageFactory();
 
-		Initiator initiator = new SocketInitiator(application, messageStoreFactory, settings, logFactory,
-				messageFactory);
+		initiator = new SocketInitiator(application, messageStoreFactory, settings, logFactory, messageFactory);
 		initiator.start();
 
 		System.out.println("Finished Start Client.... ");
@@ -116,12 +132,12 @@ public class Client implements Application {
 	}
 
 	public void send() throws UnsupportedEncodingException {
-		
+
 		String s = new String(this.msg.toString());
 
 		Message message = null;
 		try {
-			
+
 			message = new Message(s);
 
 		} catch (InvalidMessage e) {
@@ -129,7 +145,7 @@ public class Client implements Application {
 		}
 
 		try {
-		
+
 			if (Session.sendToTarget(message, sessionID)) {
 				System.out.println("Mensagem SENT!");
 			} else {
@@ -139,6 +155,20 @@ public class Client implements Application {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void stop() {
+		initiator.stop();
+		System.out.println("Acceptor was stopped!");
+	}
+
+	/**
+	 * Stops all sessions, optionally waiting for logout completion.This method must
+	 * not be called by several threads concurrently.Parameters:force don't wait for
+	 * logout before disconnect.
+	 */
+	public void stopForce() {
+		initiator.stop(true);
 	}
 
 	public String getMsg() {
@@ -168,4 +198,14 @@ public class Client implements Application {
 	public Map<String, String> getMapSide() {
 		return mapSide;
 	}
+
+	public static List<String> getListMsg() {
+		return listMsg;
+	}
+
+	public static List<Message> getListMessage() {
+		return listMessage;
+	}
+
+
 }
