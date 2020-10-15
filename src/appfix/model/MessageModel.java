@@ -2,8 +2,7 @@ package appfix.model;
 
 import java.time.LocalDateTime;
 
-public class MessageBean extends Model {
-	
+public class MessageModel {
 	
 	//Standard Message Header Fields
 	private String BeginString;

@@ -4,7 +4,7 @@
 
   <!-- By default go to secured welcome page -->
 	<welcome-file-list>
-		<welcome-file>service.xhtml</welcome-file>
+		<welcome-file>dashboard.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<!-- Staring JSF -->

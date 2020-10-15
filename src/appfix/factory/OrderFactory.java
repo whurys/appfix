@@ -1,4 +1,4 @@
-package appfix.model;
+package appfix.factory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
