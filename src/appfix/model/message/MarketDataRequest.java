@@ -3,6 +3,7 @@ package appfix.model.message;
 import java.util.List;
 
 public class MarketDataRequest {
+	
 	private boolean AggregatedBook;
 	private int ApplQueueAction;
 	private int ApplQueueMax;

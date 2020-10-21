@@ -4,12 +4,15 @@ import quickfix.FieldMap;
 import quickfix.Field;
 import quickfix.FieldNotFound;
 import quickfix.Group;
+import quickfix.field.MDEntryType;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MarketDataRequestConverter {
-	public static MarketDataRequest fromMessageToModel(FieldMap fieldMap) throws FieldNotFound {
+
+	public static MarketDataRequest fromMessage(FieldMap fieldMap) throws FieldNotFound {
 		MarketDataRequest marketDataRequest = new MarketDataRequest();
 		Iterator<Field<?>> fieldIterator = fieldMap.iterator();
 		while (fieldIterator.hasNext()) {
@@ -717,4 +720,217 @@ public class MarketDataRequestConverter {
 		marketDataRequest.setListNoMDEntryTypes(listNoMDEntryTypes);
 		return marketDataRequest;
 	}
+
+	public static quickfix.fix44.MarketDataRequest fromModel(appfix.model.message.MarketDataRequest marketDataRequest) {
+		quickfix.fix44.MarketDataRequest message = new quickfix.fix44.MarketDataRequest();
+		if (marketDataRequest.getApplQueueAction() != 0) {
+			message.set(new quickfix.field.ApplQueueAction(marketDataRequest.getApplQueueAction()));
+		} // for int
+		if (marketDataRequest.getApplQueueMax() != 0) {
+			message.set(new quickfix.field.ApplQueueMax(marketDataRequest.getApplQueueMax()));
+		} // for int
+		if (marketDataRequest.getCheckSum() != null && !marketDataRequest.getCheckSum().isEmpty()) {
+			message.set(new quickfix.field.CheckSum(marketDataRequest.getCheckSum()));
+		} // for String type
+		if (marketDataRequest.getMDReqID() != null && !marketDataRequest.getMDReqID().isEmpty()) {
+			message.set(new quickfix.field.MDReqID(marketDataRequest.getMDReqID()));
+		} // for String type
+		if (marketDataRequest.getMDUpdateType() != 0) {
+			message.set(new quickfix.field.MDUpdateType(marketDataRequest.getMDUpdateType()));
+		} // for int
+		if (marketDataRequest.getMarketDepth() != 0) {
+			message.set(new quickfix.field.MarketDepth(marketDataRequest.getMarketDepth()));
+		} // for int
+		if (marketDataRequest.getNoMDEntryTypes() != 0) {
+			message.set(new quickfix.field.NoMDEntryTypes(marketDataRequest.getNoMDEntryTypes()));
+		} // for int
+		if (marketDataRequest.getNoRelatedSym() != 0) {
+			message.set(new quickfix.field.NoRelatedSym(marketDataRequest.getNoRelatedSym()));
+		} // for int
+		if (marketDataRequest.getNoTradingSessions() != 0) {
+			message.set(new quickfix.field.NoTradingSessions(marketDataRequest.getNoTradingSessions()));
+		} // for int
+		if (marketDataRequest.getOpenCloseSettlFlag() != null && !marketDataRequest.getOpenCloseSettlFlag().isEmpty()) {
+			message.set(new quickfix.field.OpenCloseSettlFlag(marketDataRequest.getOpenCloseSettlFlag()));
+		} // for String type
+		if (marketDataRequest.getScope() != null && !marketDataRequest.getScope().isEmpty()) {
+			message.set(new quickfix.field.Scope(marketDataRequest.getScope()));
+		} // for String type
+		if (marketDataRequest.getSignature() != null && !marketDataRequest.getSignature().isEmpty()) {
+			message.set(new quickfix.field.Signature(marketDataRequest.getSignature()));
+		} // for String type
+		if (marketDataRequest.getSignatureLength() != 0) {
+			message.set(new quickfix.field.SignatureLength(marketDataRequest.getSignatureLength()));
+		} // for int
+		List<appfix.model.message.MarketDataRequest.NoTradingSessions> listNoTradingSessions = marketDataRequest
+				.getListNoTradingSessions();
+		for (appfix.model.message.MarketDataRequest.NoTradingSessions noTradingSessions : listNoTradingSessions) {
+			quickfix.fix44.MarketDataRequest.NoTradingSessions groupNoTradingSessions = new quickfix.fix44.MarketDataRequest.NoTradingSessions();
+			if (noTradingSessions.getTradingSessionID() != null && !noTradingSessions.getTradingSessionID().isEmpty()) {
+				groupNoTradingSessions
+						.set(new quickfix.field.TradingSessionID(noTradingSessions.getTradingSessionID()));
+			} // for String type
+			if (noTradingSessions.getTradingSessionSubID() != null
+					&& !noTradingSessions.getTradingSessionSubID().isEmpty()) {
+				groupNoTradingSessions
+						.set(new quickfix.field.TradingSessionSubID(noTradingSessions.getTradingSessionSubID()));
+			} // for String type
+			message.addGroup(groupNoTradingSessions);
+		}
+		List<appfix.model.message.MarketDataRequest.NoRelatedSym> listNoRelatedSym = marketDataRequest
+				.getListNoRelatedSym();
+		for (appfix.model.message.MarketDataRequest.NoRelatedSym noRelatedSym : listNoRelatedSym) {
+			quickfix.fix44.MarketDataRequest.NoRelatedSym groupNoRelatedSym = new quickfix.fix44.MarketDataRequest.NoRelatedSym();
+			if (noRelatedSym.getCFICode() != null && !noRelatedSym.getCFICode().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.CFICode(noRelatedSym.getCFICode()));
+			} // for String type
+			if (noRelatedSym.getCPProgram() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.CPProgram(noRelatedSym.getCPProgram()));
+			} // for int
+			if (noRelatedSym.getCPRegType() != null && !noRelatedSym.getCPRegType().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.CPRegType(noRelatedSym.getCPRegType()));
+			} // for String type
+			if (noRelatedSym.getContractMultiplier() != 0.0) {
+				groupNoRelatedSym.set(new quickfix.field.ContractMultiplier(noRelatedSym.getContractMultiplier()));
+			} // for double
+			if (noRelatedSym.getContractSettlMonth() != null && !noRelatedSym.getContractSettlMonth().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.ContractSettlMonth(noRelatedSym.getContractSettlMonth()));
+			} // for String type
+			if (noRelatedSym.getCountryOfIssue() != null && !noRelatedSym.getCountryOfIssue().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.CountryOfIssue(noRelatedSym.getCountryOfIssue()));
+			} // for String type
+			if (noRelatedSym.getCouponPaymentDate() != null && !noRelatedSym.getCouponPaymentDate().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.CouponPaymentDate(noRelatedSym.getCouponPaymentDate()));
+			} // for String type
+			if (noRelatedSym.getCouponRate() != 0.0) {
+				groupNoRelatedSym.set(new quickfix.field.CouponRate(noRelatedSym.getCouponRate()));
+			} // for double
+			if (noRelatedSym.getCreditRating() != null && !noRelatedSym.getCreditRating().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.CreditRating(noRelatedSym.getCreditRating()));
+			} // for String type
+			if (noRelatedSym.getDatedDate() != null && !noRelatedSym.getDatedDate().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.DatedDate(noRelatedSym.getDatedDate()));
+			} // for String type
+			if (noRelatedSym.getEncodedIssuer() != null && !noRelatedSym.getEncodedIssuer().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.EncodedIssuer(noRelatedSym.getEncodedIssuer()));
+			} // for String type
+			if (noRelatedSym.getEncodedIssuerLen() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.EncodedIssuerLen(noRelatedSym.getEncodedIssuerLen()));
+			} // for int
+			if (noRelatedSym.getEncodedSecurityDesc() != null && !noRelatedSym.getEncodedSecurityDesc().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.EncodedSecurityDesc(noRelatedSym.getEncodedSecurityDesc()));
+			} // for String type
+			if (noRelatedSym.getEncodedSecurityDescLen() != 0) {
+				groupNoRelatedSym
+						.set(new quickfix.field.EncodedSecurityDescLen(noRelatedSym.getEncodedSecurityDescLen()));
+			} // for int
+			if (noRelatedSym.getFactor() != 0.0) {
+				groupNoRelatedSym.set(new quickfix.field.Factor(noRelatedSym.getFactor()));
+			} // for double
+			if (noRelatedSym.getInstrRegistry() != null && !noRelatedSym.getInstrRegistry().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.InstrRegistry(noRelatedSym.getInstrRegistry()));
+			} // for String type
+			if (noRelatedSym.getInterestAccrualDate() != null && !noRelatedSym.getInterestAccrualDate().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.InterestAccrualDate(noRelatedSym.getInterestAccrualDate()));
+			} // for String type
+			if (noRelatedSym.getIssueDate() != null && !noRelatedSym.getIssueDate().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.IssueDate(noRelatedSym.getIssueDate()));
+			} // for String type
+			if (noRelatedSym.getIssuer() != null && !noRelatedSym.getIssuer().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.Issuer(noRelatedSym.getIssuer()));
+			} // for String type
+			if (noRelatedSym.getLocaleOfIssue() != null && !noRelatedSym.getLocaleOfIssue().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.LocaleOfIssue(noRelatedSym.getLocaleOfIssue()));
+			} // for String type
+			if (noRelatedSym.getMaturityDate() != null && !noRelatedSym.getMaturityDate().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.MaturityDate(noRelatedSym.getMaturityDate()));
+			} // for String type
+			if (noRelatedSym.getMaturityMonthYear() != null && !noRelatedSym.getMaturityMonthYear().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.MaturityMonthYear(noRelatedSym.getMaturityMonthYear()));
+			} // for String type
+			if (noRelatedSym.getNoEvents() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.NoEvents(noRelatedSym.getNoEvents()));
+			} // for int
+			if (noRelatedSym.getNoLegs() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.NoLegs(noRelatedSym.getNoLegs()));
+			} // for int
+			if (noRelatedSym.getNoSecurityAltID() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.NoSecurityAltID(noRelatedSym.getNoSecurityAltID()));
+			} // for int
+			if (noRelatedSym.getNoUnderlyings() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.NoUnderlyings(noRelatedSym.getNoUnderlyings()));
+			} // for int
+			if (noRelatedSym.getPool() != null && !noRelatedSym.getPool().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.Pool(noRelatedSym.getPool()));
+			} // for String type
+			if (noRelatedSym.getProduct() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.Product(noRelatedSym.getProduct()));
+			} // for int
+			if (noRelatedSym.getPutOrCall() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.PutOrCall(noRelatedSym.getPutOrCall()));
+			} // for int
+			if (noRelatedSym.getRedemptionDate() != null && !noRelatedSym.getRedemptionDate().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.RedemptionDate(noRelatedSym.getRedemptionDate()));
+			} // for String type
+			if (noRelatedSym.getRepoCollateralSecurityType() != null
+					&& !noRelatedSym.getRepoCollateralSecurityType().isEmpty()) {
+				groupNoRelatedSym.set(
+						new quickfix.field.RepoCollateralSecurityType(noRelatedSym.getRepoCollateralSecurityType()));
+			} // for String type
+			if (noRelatedSym.getRepurchaseRate() != 0.0) {
+				groupNoRelatedSym.set(new quickfix.field.RepurchaseRate(noRelatedSym.getRepurchaseRate()));
+			} // for double
+			if (noRelatedSym.getRepurchaseTerm() != 0) {
+				groupNoRelatedSym.set(new quickfix.field.RepurchaseTerm(noRelatedSym.getRepurchaseTerm()));
+			} // for int
+			if (noRelatedSym.getSecurityDesc() != null && !noRelatedSym.getSecurityDesc().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SecurityDesc(noRelatedSym.getSecurityDesc()));
+			} // for String type
+			if (noRelatedSym.getSecurityExchange() != null && !noRelatedSym.getSecurityExchange().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SecurityExchange(noRelatedSym.getSecurityExchange()));
+			} // for String type
+			if (noRelatedSym.getSecurityID() != null && !noRelatedSym.getSecurityID().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SecurityID(noRelatedSym.getSecurityID()));
+			} // for String type
+			if (noRelatedSym.getSecurityIDSource() != null && !noRelatedSym.getSecurityIDSource().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SecurityIDSource(noRelatedSym.getSecurityIDSource()));
+			} // for String type
+			if (noRelatedSym.getSecuritySubType() != null && !noRelatedSym.getSecuritySubType().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SecuritySubType(noRelatedSym.getSecuritySubType()));
+			} // for String type
+			if (noRelatedSym.getSecurityType() != null && !noRelatedSym.getSecurityType().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SecurityType(noRelatedSym.getSecurityType()));
+			} // for String type
+			if (noRelatedSym.getStateOrProvinceOfIssue() != null
+					&& !noRelatedSym.getStateOrProvinceOfIssue().isEmpty()) {
+				groupNoRelatedSym
+						.set(new quickfix.field.StateOrProvinceOfIssue(noRelatedSym.getStateOrProvinceOfIssue()));
+			} // for String type
+			if (noRelatedSym.getStrikeCurrency() != null && !noRelatedSym.getStrikeCurrency().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.StrikeCurrency(noRelatedSym.getStrikeCurrency()));
+			} // for String type
+			if (noRelatedSym.getStrikePrice() != 0.0) {
+				groupNoRelatedSym.set(new quickfix.field.StrikePrice(noRelatedSym.getStrikePrice()));
+			} // for double
+			if (noRelatedSym.getSymbol() != null && !noRelatedSym.getSymbol().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.Symbol(noRelatedSym.getSymbol()));
+			} // for String type
+			if (noRelatedSym.getSymbolSfx() != null && !noRelatedSym.getSymbolSfx().isEmpty()) {
+				groupNoRelatedSym.set(new quickfix.field.SymbolSfx(noRelatedSym.getSymbolSfx()));
+			} // for String type
+			message.addGroup(groupNoRelatedSym);
+		}
+		
+		List<appfix.model.message.MarketDataRequest.NoMDEntryTypes> listNoMDEntryTypes = marketDataRequest
+				.getListNoMDEntryTypes();
+		for (appfix.model.message.MarketDataRequest.NoMDEntryTypes noMDEntryTypes : listNoMDEntryTypes) {
+			quickfix.fix44.MarketDataRequest.NoMDEntryTypes groupNoMDEntryTypes = new quickfix.fix44.MarketDataRequest.NoMDEntryTypes();
+			if (!Character.isWhitespace(noMDEntryTypes.getMDEntryType())) {
+				groupNoMDEntryTypes.set(new quickfix.field.MDEntryType(noMDEntryTypes.getMDEntryType()));
+			} 
+			message.addGroup(groupNoMDEntryTypes);
+		}
+		return message;
+	}
+
 } // End Class MarketDataRequestConverter

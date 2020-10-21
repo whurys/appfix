@@ -17,44 +17,44 @@ import quickfix.Group;
 import quickfix.Message;
 import quickfix.field.MsgType;
 
-public class Populator {
+public class CodeGeneratorConvert {
 
 	private static List<Class> listClass;
 	private static final String GETTERS = "public quickfix.field.";
 
-	public static void main(String[] args) throws Exception {
-
-		listClass = new ArrayList<>();
-		listClass.add(quickfix.fix44.MarketDataRequest.class);
-
-		for (Class cl : listClass) {
-
-			System.out.println("package appfix.model.message;");
-			System.out.println("import quickfix.FieldMap;");
-			System.out.println("import quickfix.Field;");
-			System.out.println("import quickfix.FieldNotFound;");
-			System.out.println("import quickfix.Group;");
-			System.out.println("import java.util.List;");
-			System.out.println("import java.util.ArrayList;");
-			System.out.println("import java.util.Iterator;");
-
-			String nameClass = cl.getSimpleName() + "Converter";
-
-			System.out.println("public class " + nameClass + "{"); // Start  Class
-
-			String methodName = cl.getSimpleName();
-			System.out.println(
-					"public static " + methodName + " fromMessageToModel(FieldMap fieldMap) throws FieldNotFound {");
-
-			scriptClass(cl);
-
-			System.out.println("return " + lowerFirstLetter(methodName) + ";");
-			System.out.println("}");
-
-			System.out.println("}  // End Class " + nameClass); // End Models
-		}
-
-	}
+//	public static void main(String[] args) throws Exception {
+//
+//		listClass = new ArrayList<>();
+//		listClass.add(quickfix.fix44.MarketDataRequest.class);
+//
+//		for (Class cl : listClass) {
+//
+//			System.out.println("package appfix.model.message;");
+//			System.out.println("import quickfix.FieldMap;");
+//			System.out.println("import quickfix.Field;");
+//			System.out.println("import quickfix.FieldNotFound;");
+//			System.out.println("import quickfix.Group;");
+//			System.out.println("import java.util.List;");
+//			System.out.println("import java.util.ArrayList;");
+//			System.out.println("import java.util.Iterator;");
+//
+//			String nameClass = cl.getSimpleName() + "Converter";
+//
+//			System.out.println("public class " + nameClass + "{"); // Start  Class
+//
+//			String methodName = cl.getSimpleName();
+//			System.out.println(
+//					"public static " + methodName + " fromMessageToModel(FieldMap fieldMap) throws FieldNotFound {");
+//
+//			scriptClass(cl);
+//
+//			System.out.println("return " + lowerFirstLetter(methodName) + ";");
+//			System.out.println("}");
+//
+//			System.out.println("}  // End Class " + nameClass); // End Models
+//		}
+//
+//	}
 
 	private static void scriptClass(Class clazz) {
 
@@ -208,41 +208,100 @@ public class Populator {
 		return result.toArray(new Method[result.size()]);
 	}
 
-	public void print(DataDictionary dd, Message message) throws FieldNotFound {
-		String msgType = message.getHeader().getString(MsgType.FIELD);
+	
 
-		System.out.println(msgType);
 
-		printFieldMap("", message);
+	public static void main(String[] args) throws Exception {
+
+		listClass = new ArrayList<>();
+		listClass.add(quickfix.fix44.MarketDataRequest.class);
+
+		for (Class cl : listClass) {
+
+			System.out.println("public static "+cl.getName()+" fromModel(appfix.model.message."+cl.getSimpleName()+" "+lowerFirstLetter(cl.getSimpleName())+") {");
+			
+			System.out.println(cl.getName()+" message = new "+cl.getName()+"();");
+			
+			scriptConvertModel(cl);
+
+			System.out.println("return message;");
+			System.out.println("}");
+
+		}
 
 	}
 
-	private void printFieldMap(String prefix, FieldMap fieldMap) throws FieldNotFound {
+	
+	private static void scriptConvertModel(Class clazz) {
 
-		Iterator fieldIterator = fieldMap.iterator();
-		while (fieldIterator.hasNext()) {
-			Field field = (Field) fieldIterator.next();
-			String value = fieldMap.getString(field.getTag());
-			System.out.println(prefix + field.getTag() + ": " + value);
-		}
+		Map<String, String> mapAttributes = getterAttributs(clazz);
 
-		Iterator groupsKeys = fieldMap.groupKeyIterator();
-		while (groupsKeys.hasNext()) {
-			int groupCountTag = ((Integer) groupsKeys.next()).intValue();
-			System.out.println(prefix + groupCountTag + ": count = " + fieldMap.getInt(groupCountTag));
-			Group g = new Group(groupCountTag, 0);
-			int i = 1;
-			while (fieldMap.hasGroup(i, groupCountTag)) {
-				if (i > 1) {
-					System.out.println(prefix + "  ----");
-				}
-				fieldMap.getGroup(i, g);
-				printFieldMap(prefix + "  ", g);
-				i++;
+		generateScriptConvertModelToMessage(mapAttributes, lowerFirstLetter(clazz.getSimpleName()),"message");
+
+		if (hasMoreGroup(clazz)) { //
+			
+			Class[] classes = clazz.getDeclaredClasses();
+			
+			for (Class cl : classes) {
+				
+				Map<String, String> mapAttributesGroup = getterAttributs(cl);
+				
+				String type = "appfix.model.message."+clazz.getSimpleName()+"."+cl.getSimpleName();
+				String list = "list"+cl.getSimpleName();
+				System.out.println("List<"+type+"> "+ list+" = "+lowerFirstLetter(clazz.getSimpleName())+".get"+upperFirstLetter(list)+"();");
+				
+				System.out.println("for("+type+" "+lowerFirstLetter(cl.getSimpleName())+":"+list+") {");
+				
+				String group = "group"+cl.getSimpleName();
+				
+				System.out.println(clazz.getName()+"."+cl.getSimpleName()+" "+ group + " = new "+clazz.getName()+"."+cl.getSimpleName()+"();");
+					
+					generateScriptConvertModelToMessage(mapAttributesGroup, lowerFirstLetter(cl.getSimpleName()), group);
+				
+				System.out.println("message.addGroup("+group+");");
+				System.out.println("}");
 			}
 		}
+
 	}
 
+	
+	public static void generateScriptConvertModelToMessage(Map<String, String> groupGetters, String OBJECT, String group) {
+		groupGetters.forEach((key, value) -> {
+		
+			if (value.equals("String")) {
+				System.out.println("if ("+OBJECT+".get" + key + "() != null && !"+OBJECT+".get" + key
+						+ "().isEmpty()){"+group+".set(new quickfix.field." + key + "("+OBJECT+".get" + key
+						+ "()));} //for String type");
+			}
+			if (value.equals("Char")) {
+				System.out
+						.println("if (!Character.isWhitespace("+OBJECT+".get" + key + "())) {"+group+".set(new quickfix.field."
+								+ key + "("+OBJECT+".get" + key + "()));} // for Char type");
+			}
+
+			if (value.equals("int")) {
+				System.out.println("if ("+OBJECT+".get" + key + "() != 0) {"+group+".set(new quickfix.field." + key
+						+ "("+OBJECT+".get" + key + "()));} //for int");
+			}
+
+			if (value.equals("LocalDateTime")) {
+				System.out.println("if ("+OBJECT+".get" + key + "() != null) {"+group+".set(new quickfix.field." + key
+						+ "("+OBJECT+".get" + key + "()));} // for LocalDateTime");
+			}
+
+			if (value.equals("double")) {
+				System.out.println("if ("+OBJECT+".get" + key + "() != 0.0) {"+group+".set(new quickfix.field." + key
+						+ "("+OBJECT+".get" + key + "()));} // for double");
+			}
+
+		});
+	}
+	
+	
+	
+	
+	
 	public static String lowerFirstLetter(String str) {
 		return str.substring(0, 1).toLowerCase() + str.substring(1);
 	}

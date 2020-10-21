@@ -22,7 +22,7 @@ import quickfix.DataDictionary;
 import quickfix.FieldNotFound;
 import quickfix.Message;
 
-public class Scripter {
+public class CodeGeneratorModel {
 
 	private static final Gson gson = new Gson();
 	private static final String OBJECT = "model";
@@ -32,10 +32,15 @@ public class Scripter {
 
 	static int k = 0;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
+		
+		
 
 		listClass = new ArrayList<>();
 		listClass.add(quickfix.fix44.MarketDataRequest.class);
+		listClass.add(quickfix.fix44.MarketDataRequestReject.class);
+		listClass.add(quickfix.fix44.MarketDataIncrementalRefresh.class);
+		listClass.add(quickfix.fix44.MarketDataSnapshotFullRefresh.class);
 
 		for (Class cl : listClass) {
 
